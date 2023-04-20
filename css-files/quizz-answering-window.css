@@ -1,7 +1,7 @@
 /* CSS do Augusto*/
 .container-show-quiz{
     width:100%;
-    height: 1500px;
+    height: auto;
 
     margin-top:69px;
 }
@@ -108,7 +108,244 @@
     color: #000000;    
 }
 
-.answer-selected{
+/*answer not-selected = dim images and text
+answer selected = change text color*/
 
+.answer-selected-correct p{ /*add to quiz-answer -> correct answer*/
+    color: #009C22;
 }
 
+.answer-selected-incorrect p{ /*add to quiz-answer -> all incorrect-answers*/
+    color: #FF4B4B;
+}
+
+.answer-not-selected{ /*add to quiz-answer*/
+    opacity: 0.3;
+}
+
+/*finishing the quiz*/
+
+.quiz-finishing-box{
+    width: 759px;
+    height: 430px;
+    
+    margin-top:42px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
+
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz-finishing-header{
+    width: 727px;
+    height: 99px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #EC362D;
+}
+
+.quiz-finishing-header p{
+    font-family: Roboto;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: 0em;
+    text-align: center;
+    color:#FFFFFF;
+}
+
+.quiz-finishing-content{
+    width: 727px;
+    height: 272px;
+
+    margin-top: 18px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.quiz-finishing-content img{
+    width: 364px;
+    height: 273px;
+}
+
+.quiz-finishing-content-text{
+    width: 328px;
+    height: 250px;
+}
+
+.quiz-finishing-content-text p{
+    font-family: Roboto;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #484848;    
+}
+
+/*buttons at the end*/
+.reset-quiz{
+    width: 260px;
+    height: 52px;
+
+    background-color: #EC362D;
+    border-radius: 15px;
+    border: none;
+
+    margin-top: 50px;
+
+    font-family: Roboto;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #FFF5F4;
+}
+
+.back-home{
+    width: 220px;
+    height: 44px;
+
+    background-color: #ffffff;
+    border: none;
+
+    margin-top: 15px;
+
+    font-family: Roboto;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #818181;
+}
+
+@media (max-width: 1100px) {
+    .quiz-title{
+        height:142px;
+        margin-top:18px;
+    }
+
+    .quiz-title p{
+        font-size: 19px;
+        font-weight: 400;
+        line-height: 22px;             
+    }
+
+    .quiz-question-box{
+        width: 100%;
+        height: auto;
+        margin-top: 25px;
+    }
+
+    .quiz-question-box *{
+        flex: 0 0 auto;
+    }
+
+    .quiz-question{
+        width: 90%;
+        height: 89px;
+        margin-top: 18px;
+        margin-bottom: 13px;
+    }
+
+    .quiz-question p{
+        font-size: 19px;
+        line-height: 22px;     
+    }
+
+    .quiz-answer-box{
+        width: 90%;
+        height: auto;
+        margin-bottom: 13px;
+    }
+
+    .quiz-answer{
+        width: 45%;
+        max-width:330px;
+        height: auto;
+        max-height: 210px;
+    }
+    
+    .quiz-answer img{
+        width: 100%;
+        height: auto;
+        max-height: 175px;
+    }
+
+    .quiz-answer-text{
+        margin-top: 5px;
+    }
+
+    .quiz-answer-text p{
+        font-size: 13px;
+        line-height: 15px;
+    }
+
+    .quiz-finishing-box{
+        width: 100%;
+        height: auto;
+        
+        margin-top:24px;
+    }
+    
+    .quiz-finishing-header{
+        width: 90%;
+        margin-top: 18px;
+    }
+    
+    .quiz-finishing-header p{
+        font-size: 19px;
+        line-height: 22px;
+    }
+    
+    .quiz-finishing-content{
+        width: 90%;
+        height: auto;
+    
+        margin-top: 9px;
+        margin-bottom: 15px;
+    
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .quiz-finishing-content img{
+        width: 100%;
+        max-width: 500px;
+        height: 255px;
+    }
+    
+    .quiz-finishing-content-text{
+        width: 100%;
+        height: auto;
+    }
+    
+    .quiz-finishing-content-text p{
+        font-size: 17px;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    .reset-quiz{
+        width: 220px;
+        height: 44px;
+
+        font-size: 18px;
+        line-height: 21px;
+    }
+    
+    .back-home{
+        font-size: 18px;
+        line-height: 21px;
+    }
+}
