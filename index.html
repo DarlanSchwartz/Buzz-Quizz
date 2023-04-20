@@ -8,18 +8,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="./css-files/reset.css">
-    <link rel="stylesheet" href="./css-files/fixed.css">
     <link rel="stylesheet" href="./css-files/quiz-feed.css">
     <link rel="stylesheet" href="./css-files/quizz-answering-window.css">
     <link rel="stylesheet" href="./css-files/quizz-create-window.css">
+    <link rel="stylesheet" href="./css-files/fixed.css">
     <title>BuzzQuizz</title>
 </head>
 <body>
 
     <header>
-        <h1>BuzzQuizz</h1>
+        <h1 class="non-selectable">BuzzQuizz</h1>
     </header>
 
 
@@ -44,7 +43,7 @@
         <!------------------Perguntas do quizz--------------->
         <div class="create-quizz-second-step hidden">
             <h1>Crie suas perguntas</h1>
-            <div class="question-box1 question-open">
+            <div class="question-box question-open">
                 <div class="create-quizz-subtitle">Pergunta 1</div>
                 <div class="question-fields">
                     <div class="question">
@@ -73,7 +72,7 @@
                 <ion-icon class="hidden" name="create-outline"></ion-icon>
             </div>
 
-            <div class="question-box2 question-closed">
+            <div class="question-box question-closed">
                 <div class="create-quizz-subtitle">Pergunta 2</div>
                 <div class="question-fields hidden">
                     <div class="question">
@@ -102,7 +101,7 @@
                 <ion-icon class="" name="create-outline"></ion-icon>
             </div>
 
-            <div class="question-box3 question-closed">
+            <div class="question-box question-closed">
                 <div class="create-quizz-subtitle">Pergunta 3</div>
                 <div class="question-fields hidden">
                     <div class="question">
@@ -134,9 +133,9 @@
             <button class="proceed-create-levels-btn">Prosseguir para criar níveis</button>
         </div>
         <!------------------Níveis do quizz--------------->
-        <div class="create-quizz-third-step">
+        <div class="create-quizz-third-step hidden">
             <h1>Agora, decida os níveis</h1>
-            <div class="levels-box1 level-open">
+            <div class="levels-box level-open">
                 <div class="create-quizz-subtitle">Nível 1</div>
                 <ion-icon class="hidden" name="create-outline"></ion-icon>
                 <div class="input-level-box">
@@ -147,7 +146,7 @@
                 </div>
             </div>
 
-            <div class="levels-box2 level-closed">
+            <div class="levels-box level-closed">
                 <div class="create-quizz-subtitle">Nível 2</div>
                 <ion-icon class="" name="create-outline"></ion-icon>
                 <div class="input-level-box hidden">
@@ -165,7 +164,7 @@
             <h1>Seu quizz está pronto!</h1>
             <div class="final-quizz-image-box">
                 <div class="image-overlay-box">
-                    <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
+                    <img class="finalize-creation-quizz-image" src="https://i.pinimg.com/550x/ec/a2/4e/eca24e3b84cb794eab1c0af0a0897400.jpg" alt="">
                     <div class="image-overlay-gradient"></div>
                 </div>
                 <div class="finalize-creation-quizz-title">O quão brabo é você?</div>
