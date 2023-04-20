@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="./css-files/reset.css">
     <link rel="stylesheet" href="./css-files/fixed.css">
     <link rel="stylesheet" href="./css-files/quiz-feed.css">
@@ -20,6 +22,159 @@
         <h1>BuzzQuizz</h1>
     </header>
 
+
+
+
+    <!---CÓDIGO DARLAN--------------------------------->
+    <!------------------CRIAÇÃO DE QUIZZ--------------->
+
+    <div class="create-quizz-window">
+
+        <!------------------Informações básicas--------------->
+        <div class="create-quizz-first-step hidden">
+            <h1>Comece pelo começo</h1>
+            <div class="basic-info-box">
+                <input class = "quizz-title-input quizz-create-input" type="text" placeholder="Título do seu quizz">
+                <input class = "quizz-imageURL-input quizz-create-input" type="text" placeholder="URL da imagem do seu quizz">
+                <input class = "quizz-questions-amount-input quizz-create-input" type="text" placeholder="Quantidade de perguntas do quizz">
+                <input class = "quizz-levels-amount-input quizz-create-input" type="text" placeholder="Quantidade de níveis do quizz">
+            </div>
+            <button class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
+        </div>
+        <!------------------Perguntas do quizz--------------->
+        <div class="create-quizz-second-step hidden">
+            <h1>Crie suas perguntas</h1>
+            <div class="question-box1 question-open">
+                <div class="create-quizz-subtitle">Pergunta 1</div>
+                <div class="question-fields">
+                    <div class="question">
+                        <input class="input-question-text quizz-create-input" type="text" placeholder="Texto da pergunta">
+                        <input class ="input-question-color quizz-create-input"type="text" placeholder="Cor de fundo da pergunta">
+                    </div>
+                    <div class="create-quizz-subtitle">Resposta correta</div>
+                    <div class="wrong-answers">
+                        <input class ="input-question-answer-text quizz-create-input"type="text" placeholder="Resposta correta">
+                        <input class ="input-question-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem">
+                    </div>
+                    <div class="create-quizz-subtitle">Respostas Incorretas</div>
+                    <div class="input-wrong-questions-box1">
+                        <input class ="input-wrong-question1-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 1">
+                        <input class ="input-wrong-question1-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 1">
+                    </div>
+                    <div class="input-wrong-questions-box2">
+                        <input class ="input-wrong-question2-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 2">
+                        <input class ="input-wrong-question2-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 2">
+                    </div>
+                    <div class="input-wrong-questions-box3">
+                        <input class ="input-wrong-question3-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 3">
+                        <input class ="input-wrong-question3-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 3">
+                    </div>
+                </div>
+                <ion-icon class="hidden" name="create-outline"></ion-icon>
+            </div>
+
+            <div class="question-box2 question-closed">
+                <div class="create-quizz-subtitle">Pergunta 2</div>
+                <div class="question-fields hidden">
+                    <div class="question">
+                        <input class="input-question-text quizz-create-input" type="text" placeholder="Texto da pergunta">
+                        <input class ="input-question-color quizz-create-input"type="text" placeholder="Cor de fundo da pergunta">
+                    </div>
+                    <div class="create-quizz-subtitle">Resposta correta</div>
+                    <div class="wrong-answers">
+                        <input class ="input-question-answer-text quizz-create-input"type="text" placeholder="Resposta correta">
+                        <input class ="input-question-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem">
+                    </div>
+                    <div class="create-quizz-subtitle">Respostas Incorretas</div>
+                    <div class="input-wrong-questions-box1">
+                        <input class ="input-wrong-question1-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 1">
+                        <input class ="input-wrong-question1-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 1">
+                    </div>
+                    <div class="input-wrong-questions-box2">
+                        <input class ="input-wrong-question2-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 2">
+                        <input class ="input-wrong-question2-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 2">
+                    </div>
+                    <div class="input-wrong-questions-box3">
+                        <input class ="input-wrong-question3-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 3">
+                        <input class ="input-wrong-question3-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 3">
+                    </div>
+                </div>
+                <ion-icon class="" name="create-outline"></ion-icon>
+            </div>
+
+            <div class="question-box3 question-closed">
+                <div class="create-quizz-subtitle">Pergunta 3</div>
+                <div class="question-fields hidden">
+                    <div class="question">
+                        <input class="input-question-text quizz-create-input" type="text" placeholder="Texto da pergunta">
+                        <input class ="input-question-color quizz-create-input"type="text" placeholder="Cor de fundo da pergunta">
+                    </div>
+                    <div class="create-quizz-subtitle">Resposta correta</div>
+                    <div class="wrong-answers">
+                        <input class ="input-question-answer-text quizz-create-input"type="text" placeholder="Resposta correta">
+                        <input class ="input-question-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem">
+                    </div>
+                    <div class="create-quizz-subtitle">Respostas Incorretas</div>
+                    <div class="input-wrong-questions-box1">
+                        <input class ="input-wrong-question1-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 1">
+                        <input class ="input-wrong-question1-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 1">
+                    </div>
+                    <div class="input-wrong-questions-box2">
+                        <input class ="input-wrong-question2-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 2">
+                        <input class ="input-wrong-question2-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 2">
+                    </div>
+                    <div class="input-wrong-questions-box3">
+                        <input class ="input-wrong-question3-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 3">
+                        <input class ="input-wrong-question3-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 3">
+                    </div>
+                </div>
+                <ion-icon class="" name="create-outline"></ion-icon>
+            </div>
+
+            <button class="proceed-create-levels-btn">Prosseguir para criar níveis</button>
+        </div>
+        <!------------------Níveis do quizz--------------->
+        <div class="create-quizz-third-step">
+            <h1>Agora, decida os níveis</h1>
+            <div class="levels-box1 level-open">
+                <div class="create-quizz-subtitle">Nível 1</div>
+                <ion-icon class="hidden" name="create-outline"></ion-icon>
+                <div class="input-level-box">
+                    <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
+                    <input class ="input-level-percentage quizz-create-input"type="text" placeholder="% de acerto mínima">
+                    <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
+                    <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
+                </div>
+            </div>
+
+            <div class="levels-box2 level-closed">
+                <div class="create-quizz-subtitle">Nível 2</div>
+                <ion-icon class="" name="create-outline"></ion-icon>
+                <div class="input-level-box hidden">
+                    <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
+                    <input class ="input-level-percentage quizz-create-input"type="text" placeholder="% de acerto mínima">
+                    <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
+                    <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
+                </div>
+            </div>
+
+            <button class="finish-quizz-creation-btn">Finalizar Quizz</button>
+        </div>
+        <!------------------Quizz finalizado--------------->
+        <div class="create-quizz-fourth-step hidden">
+            <h1>Seu quizz está pronto!</h1>
+            <div class="final-quizz-image-box">
+                <div class="image-overlay-box">
+                    <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
+                    <div class="image-overlay-gradient"></div>
+                </div>
+                <div class="finalize-creation-quizz-title">O quão brabo é você?</div>
+            </div>
+            <button class="finalize-creation-quizz-acess-btn">Acessar Quizz</button>
+            <button class="finalize-creation-quizz-return-btn">Voltar pra home</button>
+        </div>
+
+    </div>
 
     <!--AXIOS LINK-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

@@ -10,6 +10,7 @@ header
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 99;
 }
 
 header h1
@@ -24,7 +25,5 @@ header h1
 
 body
 {
-    background-color: #E5E5E5;
+    background: #FAFAFA;
 }
-
-
