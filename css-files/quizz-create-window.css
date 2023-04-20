@@ -10,8 +10,6 @@ ion-icon
     box-sizing: border-box;
 }
 
-
-
 .create-quizz-window
 {
     width: 100%;
@@ -30,7 +28,7 @@ ion-icon
     font-weight: 400;
     font-size: 19px;
     line-height: 22px;
-    color: #BABABA;
+    color: #727272;
     padding-left: 23px;
     padding-right: 23px;
     background: #FFFFFF;
@@ -40,6 +38,11 @@ ion-icon
     height: 46px;
     resize: none;
     transition: all 300ms ease-in;
+}
+
+.quizz-create-input::placeholder
+{
+    color: #BABABA;
 }
 
 .create-quizz-first-step,
@@ -237,7 +240,7 @@ ion-icon
 .input-wrong-questions-box1,
 .input-wrong-questions-box2,
 .input-wrong-questions-box3,
-.wrong-answers,
+.correct-answer,
 .question,
 .input-level-box
 {
