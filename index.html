@@ -113,7 +113,7 @@
     <!---CÓDIGO DARLAN--------------------------------->
     <!------------------CRIAÇÃO DE QUIZZ--------------->
 
-    <div class="create-quizz-window">
+    <div class="create-quizz-window hidden">
 
         <!------------------Informações básicas--------------->
         <div class="create-quizz-first-step hidden">
@@ -124,7 +124,7 @@
                 <input class = "quizz-questions-amount-input quizz-create-input" type="text" placeholder="Quantidade de perguntas do quizz">
                 <input class = "quizz-levels-amount-input quizz-create-input" type="text" placeholder="Quantidade de níveis do quizz">
             </div>
-            <button class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
+            <button onclick="tryToProceedToCreateQuestions()" class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
         </div>
         <!------------------Perguntas do quizz--------------->
         <div class="create-quizz-second-step hidden">
@@ -195,7 +195,7 @@
                         <input class ="input-question-color quizz-create-input"type="text" placeholder="Cor de fundo da pergunta">
                     </div>
                     <div class="create-quizz-subtitle">Resposta correta</div>
-                    <div class="wrong-answers">
+                    <div class="correct-answer">
                         <input class ="input-question-answer-text quizz-create-input"type="text" placeholder="Resposta correta">
                         <input class ="input-question-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem">
                     </div>
@@ -216,7 +216,7 @@
                 <ion-icon class="" name="create-outline"></ion-icon>
             </div>
 
-            <button class="proceed-create-levels-btn">Prosseguir para criar níveis</button>
+            <button onclick="tryToProceedToCreateLevels()" class="proceed-create-levels-btn">Prosseguir para criar níveis</button>
         </div>
         <!------------------Níveis do quizz--------------->
         <div class="create-quizz-third-step hidden">
