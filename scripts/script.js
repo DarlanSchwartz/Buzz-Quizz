@@ -58,7 +58,6 @@ function startCreatingQuizz()
     ;
 }
 
-startCreatingQuizz();
 
 function isValidImageURL(urlToCheck)
 {

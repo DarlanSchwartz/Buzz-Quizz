@@ -55,6 +55,7 @@
     text-align: center;
     color: #EC362D;
     margin-bottom: 33px;
+    cursor: pointer;
 }
 
 .container-quizzes ul {
