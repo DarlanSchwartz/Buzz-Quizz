@@ -7,9 +7,6 @@ const createQuizzSecondStep = document.querySelector(".create-quizz-second-step"
 const createQuizzThirdStep = document.querySelector(".create-quizz-third-step");
 const createQuizzFinishedWindow = document.querySelector(".create-quizz-fourth-step");
 
-
-
-
 // CÓDIGO DARLAN
 // Variaveis de criação de um quizz
 
@@ -343,7 +340,90 @@ function proceedToCreateLevels()
 
       createQuizzThirdStep.classList.remove('hidden');
       createQuizzWindow.classList.remove('hidden');
-      
+      // Esconder outras janelas de criação de quizz
+      createQuizzFirstStep.classList.add('hidden');  
+      createQuizzSecondStep.classList.add('hidden');
+      createQuizzFinishedWindow.classList.add('hidden');
+
+      createQuizzThirdStep.innerHTML = 
+      `
+      <h1>Agora, decida os níveis</h1>
+            <div class="levels-box level-open">
+                <div class="create-quizz-subtitle">Nível 1</div>
+                <ion-icon onclick="expandLevel(this)" class="hidden" name="create-outline"></ion-icon>
+                <div class="input-level-box">
+                    <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
+                    <input class ="input-level-percentage quizz-create-input"type="text" placeholder="% de acerto mínima">
+                    <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
+                    <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
+                </div>
+            </div>
+      `;
+
+      quizzCreateLevelsAmount = 3;
+
+      for (let i = 0; i < quizzCreateLevelsAmount -1; i++) 
+      {
+        createQuizzThirdStep.innerHTML +=
+        `
+        <div class="levels-box level-closed">
+                <div class="create-quizz-subtitle">Nível ${i+2}</div>
+                <ion-icon onclick="expandLevel(this)" class="" name="create-outline"></ion-icon>
+                <div class="input-level-box hidden">
+                    <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
+                    <input class ="input-level-percentage quizz-create-input"type="text" placeholder="% de acerto mínima">
+                    <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
+                    <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
+                </div>
+            </div>
+        `;
+      }
+
+
+      createQuizzThirdStep.innerHTML +=`
+      <button onclick= "tryToFinishQuizzCreation()"class="finish-quizz-creation-btn">Finalizar Quizz</button>
+      `;
+}
+
+function expandLevel(level)
+{
+    level = level.parentNode;
+    level.classList.remove('level-closed');
+    level.classList.add('level-open');
+    level.querySelector('.input-level-box').classList.remove('hidden');
+    level.querySelector('ion-icon').classList.add('hidden');
+}
+
+function tryToFinishQuizzCreation()
+{
+    console.log("tryed");
+
+    const allLevels = document.querySelectorAll('.input-level-box');
+
+    quizzCreateLevels = [];
+
+    allLevels.forEach( level =>{
+
+        let levelTitle = level.querySelector('.input-level-title').value;
+        let levelPercentage = level.querySelector('.input-level-percentage').value;
+        let levelImageURL = level.querySelector('.input-level-imageURL').value;
+        let levelDescription = level.querySelector('.input-level-description-area').value;
+       
+        quizzCreateLevels.push(
+            {
+                title: levelTitle,
+                image: levelImageURL,
+                text: levelDescription,
+                minValue: levelPercentage
+            }
+        );
+    });
+
+    console.log(quizzCreateLevels);
+
+    // Verificar se todos níveis estão OK
+}
+
 // CÓDIGO AUGUSTO
 //item to test functions, to be replaced with response from server
 let itemTest = [
@@ -477,90 +557,5 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
     containerQuestions.innerHTML += `<button class="reset-quiz">Reiniciar Quiz</button>
                             <button class="back-home">Voltar pra home</button>`;
 }
-      // Esconder outras janelas de criação de quizz
-      createQuizzFirstStep.classList.add('hidden');  
-      createQuizzSecondStep.classList.add('hidden');
-      createQuizzFinishedWindow.classList.add('hidden');
-
-      createQuizzThirdStep.innerHTML = 
-      `
-      <h1>Agora, decida os níveis</h1>
-            <div class="levels-box level-open">
-                <div class="create-quizz-subtitle">Nível 1</div>
-                <ion-icon onclick="expandLevel(this)" class="hidden" name="create-outline"></ion-icon>
-                <div class="input-level-box">
-                    <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
-                    <input class ="input-level-percentage quizz-create-input"type="text" placeholder="% de acerto mínima">
-                    <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
-                    <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
-                </div>
-            </div>
-      `;
-
-      quizzCreateLevelsAmount = 3;
-
-      for (let i = 0; i < quizzCreateLevelsAmount -1; i++) 
-      {
-        createQuizzThirdStep.innerHTML +=
-        `
-        <div class="levels-box level-closed">
-                <div class="create-quizz-subtitle">Nível ${i+2}</div>
-                <ion-icon onclick="expandLevel(this)" class="" name="create-outline"></ion-icon>
-                <div class="input-level-box hidden">
-                    <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
-                    <input class ="input-level-percentage quizz-create-input"type="text" placeholder="% de acerto mínima">
-                    <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
-                    <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
-                </div>
-            </div>
-        `;
-      }
-
-
-      createQuizzThirdStep.innerHTML +=`
-      <button onclick= "tryToFinishQuizzCreation()"class="finish-quizz-creation-btn">Finalizar Quizz</button>
-      `;
-}
-
-function expandLevel(level)
-{
-    level = level.parentNode;
-    level.classList.remove('level-closed');
-    level.classList.add('level-open');
-    level.querySelector('.input-level-box').classList.remove('hidden');
-    level.querySelector('ion-icon').classList.add('hidden');
-}
-
-function tryToFinishQuizzCreation()
-{
-    console.log("tryed");
-
-    const allLevels = document.querySelectorAll('.input-level-box');
-
-    quizzCreateLevels = [];
-
-    allLevels.forEach( level =>{
-
-        let levelTitle = level.querySelector('.input-level-title').value;
-        let levelPercentage = level.querySelector('.input-level-percentage').value;
-        let levelImageURL = level.querySelector('.input-level-imageURL').value;
-        let levelDescription = level.querySelector('.input-level-description-area').value;
-       
-        quizzCreateLevels.push(
-            {
-                title: levelTitle,
-                image: levelImageURL,
-                text: levelDescription,
-                minValue: levelPercentage
-            }
-        );
-    });
-
-    console.log(quizzCreateLevels);
-
-    // Verificar se todos níveis estão OK
-}
-
-
 
 //showQuiz(itemTest);
