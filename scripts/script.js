@@ -17,7 +17,7 @@ const createQuizzFinishedWindow = document.querySelector(".create-quizz-fourth-s
 let quizzCreateTitle ='';
 let quizzCreateMainImageURL = '';
 let quizzCreateQuestionsAmount = 0;
-let quizzCreateLevesAmount = 0;
+let quizzCreateLevelsAmount = 0;
 
 // Perguntas
 
@@ -26,24 +26,9 @@ let quizzCreateLevesAmount = 0;
 let quizzCreateQuestions = [];
 
 // Níveis
-// Essa array vai ser populada com uma quantidade de objetos igual tamanho da var quizzCreateLevesAmount
+// Essa array vai ser populada com uma quantidade de objetos igual tamanho da var quizzCreateLevelsAmount
 // O objeto vai ser criado na função final de enviar o quizz 
-/*
-[
-		{
-			title: "Título do nível 1",
-			image: "https://http.cat/411.jpg",
-			text: "Descrição do nível 1",
-			minValue: 0
-		},
-		{
-			title: "Título do nível 2",
-			image: "https://http.cat/412.jpg",
-			text: "Descrição do nível 2",
-			minValue: 50
-		}
-	]
-*/
+
 let quizzCreateLevels = [];
 
 // Função que inicia a criação de quizz escondendo as outras janelas e mostrando apenas a tela de criação de quiz inicial
@@ -59,7 +44,7 @@ function startCreatingQuizz()
     createQuizzFinishedWindow.classList.add('hidden');
 }
 
-startCreatingQuizz();
+proceedToCreateLevels();
 
 function isValidImageURL(urlToCheck)
 {
@@ -67,12 +52,10 @@ function isValidImageURL(urlToCheck)
     return imageExtensions.test(urlToCheck);
 }
 
-
 function isValidColor(colorToCheck) {
     const hexColorRegex = /^#?([0-9A-F]{3}){1,2}$/i;
     return hexColorRegex.test(colorToCheck);
 }
-
 
 // Tentativa de proceder para criar perguntas do quizz
 function tryToProceedToCreateQuestions()
@@ -98,7 +81,7 @@ function tryToProceedToCreateQuestions()
         quizzCreateTitle = quizzTitleInput;
         quizzCreateMainImageURL = quizzImageUrlInput;
         quizzCreateQuestionsAmount = Number(quizzQuestionsAmountInput);
-        quizzCreateLevesAmount = Number(quizzLevelsAmountInput);
+        quizzCreateLevelsAmount = Number(quizzLevelsAmountInput);
         proceedToCreateQuestions();
     }
     else
@@ -109,18 +92,13 @@ function tryToProceedToCreateQuestions()
         alertText += hasMinimumAmountOfLevels ? "" : "Cheque se a quantidade de níveis é no mínimo 2";
         alert(alertText);
     }
-    
-    // console.log(hasMinimumAmountOfLevels);
-    // console.log(hasMinimumAmountOfQuestions);
-    // console.log(isValidImageURL);
-    // console.log(isValidTitle);
 }
 
 function proceedToCreateQuestions()
 {
      // Mostrar janela de criação de perguntas do quizz
      createQuizzSecondStep.classList.remove('hidden');
- 
+     createQuizzWindow.classList.remove('hidden');
      // Esconder outras janelas de criação de quizz
      createQuizzFirstStep.classList.add('hidden');  
      createQuizzThirdStep.classList.add('hidden');
@@ -258,60 +236,196 @@ function tryToProceedToCreateLevels()
     });
 
 
-    console.log(quizzCreateQuestions);
-
-    let hasAllCorrectAnswers = false;
+    let hasAllCorrectAnswers = true;
+    let hasAllCorrectAnswersImage = true;
+    let hasAllCorrectColors = true;
+    let hasAllAtLeastOneWrongAnwers = true;
+    let hasAllAtLeastOneWrongAnwersImage = true;
+    let hasAllTitlesLenghtCorrect = true;
 
     let i =0;
-    quizzCreateQuestions.forEach(question =>{  
+    quizzCreateQuestions.forEach(question =>{ 
 
-
-        if(isValidImageURL(question.answers[0].image) && isValidImageURL(question.answers[1].image) && isValidImageURL(question.answers[2].image) && isValidImageURL(question.answers[3].image))
+        //#region  Checar se o título é não valido
+        if(question.title.length <20)
         {
-            console.log("Todas url de imagens válidas da pergunta" + i);
+            hasAllTitlesLenghtCorrect = false;
+            console.log("A pergunta número " + (i+1) +" não é valida, possui " + question.title.length + " caracteres");
         }
         else
         {
-            console.log("Algum url de imagem não é válido na pergunta: " + i);
+            console.log("A pergunta número " + (i+1) +" é valida, possui " + question.title.length + " caracteres");
         }
+        //#endregion
 
-        if(isValidColor(question.color))
+        //#region  Checar se a cor é não valida
+        if(!isValidColor(question.color))
         {
-            console.log("A cor da pergunta " + i +" é valida!");
+            console.log("A cor da pergunta " + (i+1) +" é valida!");
+            hasAllCorrectColors = false;
         }
         else
         {
-            console.log("A cor da pergunta " + i + " não é valida");
+            console.log("A cor da pergunta " + (i+1) + " não é valida");
         }
-
-        if(question.title.length >=20)
+        //#endregion
+        
+        //#region  Checar se a resposta correta não é valida
+        if(question.answers[0].text == "")
         {
-            console.log("A pergunta número " + i +" é valida, possui " + question.title.length + " caracteres");
-        }
-        else
-        {
-            console.log("A pergunta número " + i +" não é valida, possui " + question.title.length + " caracteres");
-        }
-
-        if(question.answers[0].text != "" && question.answers[0].text != undefined && question.answers[0].text != null)
-        {
-            hasAllCorrectAnswers = true;
-            console.log("A resposta correta da pergunta número " + i + "é valida");
-        }
-        else
-        {
-            console.log("A resposta correta da pergunta número " + i + " não é valida");
+            console.log("A resposta correta da pergunta número " + (i+1)+ " não é valida");
             hasAllCorrectAnswers = false;
         }
+        else
+        {
+            console.log("A resposta correta da pergunta número " + (i+1) + "é valida");
+        }
+        //#endregion
+        
+        //#region  Checar a imagem de resposta correta não é valida
+        if(!isValidImageURL(question.answers[0].image))
+        {
+            hasAllCorrectAnswersImage = false;
+            console.log("A url de imagem da pergunta número " + (i+1)+ " não é valida");
+        }
+        else
+        {
+            console.log("A url de imagem da pergunta número " + (i+1)+ " é valida");
+        }
+        //#endregion
+
+        //#region  Checar se a resposta incorreta não é valida
+        if(question.answers[1].text == "" && question.answers[2].text == "" && question.answers[3].text == "")
+        {
+            hasAllAtLeastOneWrongAnwers = false;
+
+            if(question.answers[1].text == "")
+            {
+                console.log("A resposta incorreta da pergunta:" + (i+1) + "resposta incorreta 1 não é valida");
+            }
+            else if(question.answers[2].text == "")
+            {
+                console.log("A resposta incorreta da pergunta:" + (i+1) + "resposta incorreta 2 não é valida");
+            }
+            else if(question.answers[3].text == "")
+            {
+                console.log("A resposta incorreta da pergunta:" + (i+1) + "resposta incorreta 3 não é valida");
+            }
+        }
+        //#endregion
+
+        //#region  Checar se a imagem de resposta incorreta não é valida
+        if(!isValidImageURL(question.answers[1].image) && !isValidImageURL(question.answers[2].image) && !isValidImageURL(question.answers[3].image))
+        {
+            hasAllAtLeastOneWrongAnwersImage = false;
+        }
+        //#endregion
 
         i++;
     });
 
+    console.log("Tem a resposta certa em cada pergunta: " + hasAllCorrectAnswers);
+    console.log("Tem todas as imagens corretas de cada pergunta: " + hasAllCorrectAnswersImage);
+    console.log("Tem pelo menos uma resposta errada em cada pergunta: " + hasAllAtLeastOneWrongAnwers);
+    console.log("Tem pelo menos uma imagem de resposta errada em cada pergunta: " + hasAllAtLeastOneWrongAnwersImage);
+    console.log("Tem pelo todas as cores válidas: " + hasAllCorrectColors);
+    console.log("Tem todos os titulos válidas: " + hasAllTitlesLenghtCorrect);
 
-    if(hasAllCorrectAnswers)
+    if(hasAllCorrectAnswers && hasAllAtLeastOneWrongAnwers && hasAllCorrectAnswersImage && hasAllAtLeastOneWrongAnwersImage && hasAllTitlesLenghtCorrect && hasAllCorrectColors)
     {
-        
+        proceedToCreateLevels();
     }
+}
+
+function proceedToCreateLevels()
+{
+      // Mostrar janela de criação de niveis do quizz
+
+      createQuizzThirdStep.classList.remove('hidden');
+      createQuizzWindow.classList.remove('hidden');
+      
+      // Esconder outras janelas de criação de quizz
+      createQuizzFirstStep.classList.add('hidden');  
+      createQuizzSecondStep.classList.add('hidden');
+      createQuizzFinishedWindow.classList.add('hidden');
+
+      createQuizzThirdStep.innerHTML = 
+      `
+      <h1>Agora, decida os níveis</h1>
+            <div class="levels-box level-open">
+                <div class="create-quizz-subtitle">Nível 1</div>
+                <ion-icon onclick="expandLevel(this)" class="hidden" name="create-outline"></ion-icon>
+                <div class="input-level-box">
+                    <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
+                    <input class ="input-level-percentage quizz-create-input"type="text" placeholder="% de acerto mínima">
+                    <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
+                    <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
+                </div>
+            </div>
+      `;
+
+      quizzCreateLevelsAmount = 3;
+
+      for (let i = 0; i < quizzCreateLevelsAmount -1; i++) 
+      {
+        createQuizzThirdStep.innerHTML +=
+        `
+        <div class="levels-box level-closed">
+                <div class="create-quizz-subtitle">Nível ${i+2}</div>
+                <ion-icon onclick="expandLevel(this)" class="" name="create-outline"></ion-icon>
+                <div class="input-level-box hidden">
+                    <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
+                    <input class ="input-level-percentage quizz-create-input"type="text" placeholder="% de acerto mínima">
+                    <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
+                    <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
+                </div>
+            </div>
+        `;
+      }
+
+
+      createQuizzThirdStep.innerHTML +=`
+      <button onclick= "tryToFinishQuizzCreation()"class="finish-quizz-creation-btn">Finalizar Quizz</button>
+      `;
+}
+
+function expandLevel(level)
+{
+    level = level.parentNode;
+    level.classList.remove('level-closed');
+    level.classList.add('level-open');
+    level.querySelector('.input-level-box').classList.remove('hidden');
+    level.querySelector('ion-icon').classList.add('hidden');
+}
+
+function tryToFinishQuizzCreation()
+{
+    console.log("tryed");
+
+    const allLevels = document.querySelectorAll('.input-level-box');
+
+    quizzCreateLevels = [];
+
+    allLevels.forEach( level =>{
+
+        let levelTitle = level.querySelector('.input-level-title').value;
+        let levelPercentage = level.querySelector('.input-level-percentage').value;
+        let levelImageURL = level.querySelector('.input-level-imageURL').value;
+        let levelDescription = level.querySelector('.input-level-description-area').value;
+       
+        quizzCreateLevels.push(
+            {
+                title: levelTitle,
+                image: levelImageURL,
+                text: levelDescription,
+                minValue: levelPercentage
+            }
+        );
+    });
+
+    console.log(quizzCreateLevels);
+
+    // Verificar se todos níveis estão OK
 }
 
 
