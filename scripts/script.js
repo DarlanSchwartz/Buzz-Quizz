@@ -58,8 +58,6 @@ function startCreatingQuizz()
     ;
 }
 
-startCreatingQuizz();
-
 function isValidImageURL(urlToCheck)
 {
     let imageExtensions = /\.(jpeg|jpg|gif|png)$/i;
