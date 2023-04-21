@@ -28,6 +28,8 @@ let quizzCreateQuestions = [];
 
 let quizzCreateLevels = [];
 
+let createdQuizz = null;
+
 // Função que inicia a criação de quizz escondendo as outras janelas e mostrando apenas a tela de criação de quiz inicial
 function startCreatingQuizz()
 {
@@ -39,9 +41,24 @@ function startCreatingQuizz()
     createQuizzSecondStep.classList.add('hidden');
     createQuizzThirdStep.classList.add('hidden');
     createQuizzFinishedWindow.classList.add('hidden');
+
+    // Renderizar janela de informações básicas
+
+    createQuizzFirstStep.innerHTML = 
+        `
+        <h1>Comece pelo começo</h1>
+        <div class="basic-info-box">
+            <input class = "quizz-title-input quizz-create-input" type="text" placeholder="Título do seu quizz">
+            <input class = "quizz-imageURL-input quizz-create-input" type="text" placeholder="URL da imagem do seu quizz">
+            <input class = "quizz-questions-amount-input quizz-create-input" type="text" placeholder="Quantidade de perguntas do quizz">
+            <input class = "quizz-levels-amount-input quizz-create-input" type="text" placeholder="Quantidade de níveis do quizz">
+        </div>
+        <button onclick="tryToProceedToCreateQuestions()" class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
+        `
+    ;
 }
 
-//proceedToCreateLevels();
+startCreatingQuizz();
 
 function isValidImageURL(urlToCheck)
 {
@@ -360,8 +377,6 @@ function proceedToCreateLevels()
             </div>
       `;
 
-      quizzCreateLevelsAmount = 3;
-
       for (let i = 0; i < quizzCreateLevelsAmount -1; i++) 
       {
         createQuizzThirdStep.innerHTML +=
@@ -396,8 +411,6 @@ function expandLevel(level)
 
 function tryToFinishQuizzCreation()
 {
-    console.log("tryed");
-
     const allLevels = document.querySelectorAll('.input-level-box');
 
     quizzCreateLevels = [];
@@ -405,7 +418,7 @@ function tryToFinishQuizzCreation()
     allLevels.forEach( level =>{
 
         let levelTitle = level.querySelector('.input-level-title').value;
-        let levelPercentage = level.querySelector('.input-level-percentage').value;
+        let levelPercentage = Number(level.querySelector('.input-level-percentage').value);
         let levelImageURL = level.querySelector('.input-level-imageURL').value;
         let levelDescription = level.querySelector('.input-level-description-area').value;
        
@@ -419,10 +432,137 @@ function tryToFinishQuizzCreation()
         );
     });
 
-    console.log(quizzCreateLevels);
+    let i  = 1;
+    let hasAllLevelsTitleValid = true;
+    let hasAllLevelsPercentageValid = true;
+    let hasAllLevelsImageURLValid = true;
+    let hasAllLevelsDescriptionValid = true;
+    quizzCreateLevels.forEach(level =>{
+
+        if(level.title.length <10)
+        {
+            console.log("O título do nível " + i + " não é válido, ele possui " + level.title.length + " caracteres!");
+            hasAllLevelsTitleValid = false;
+        }
+        else
+        {
+            console.log("O título do nível " + i + "é válido");
+        }
+
+        if(level.minValue < 0 || level.minValue > 100)
+        {
+            console.log("A porcentagem de acerto mínima do nível " + i + " não é válida, digite um número de 0 a 100!");
+            hasAllLevelsPercentageValid = false;
+        }
+        else
+        {
+            console.log("A porcentagem de acerto mínima do nível " + i + " é válida");
+        }
+
+        if(!isValidImageURL(level.image))
+        {
+            console.log("A url de imagem do nível " + i + " é inválida");
+            hasAllLevelsImageURLValid = false;
+        }
+        else
+        {
+            console.log("A url de imagem do nível " + i + " é válida");
+        }
+
+        if(level.text.length < 30)
+        {
+            console.log("A descrição do nível " + i + " não é válida, ela possui " + level.text.length + " caracteres!");
+            hasAllLevelsDescriptionValid = false;
+        }
+        else
+        {
+            console.log("A descrição do nível " + i + "é válida");
+        }
+
+        i++;
+
+        
+    });
 
     // Verificar se todos níveis estão OK
+    if(hasAllLevelsTitleValid && hasAllLevelsPercentageValid && hasAllLevelsImageURLValid && hasAllLevelsDescriptionValid)
+    {
+        createdQuizz = 
+        {
+            title: quizzCreateTitle,
+            image: quizzCreateMainImageURL,
+            questions: quizzCreateQuestions,
+            levels: quizzCreateLevels
+        }
+
+        console.log(createdQuizz);
+        const creationTry = axios.post("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes", createdQuizz);
+        creationTry.then(finishQuizzCreation);
+
+    }
 }
+
+function hideQuizzCreationWindow(returnToMain)
+{
+    // Esconder outras janelas de criação de quizz
+    createQuizzWindow.classList.add('hidden');
+    createQuizzFirstStep.classList.add('hidden');  
+    createQuizzSecondStep.classList.add('hidden');
+    createQuizzThirdStep.classList.add('hidden');
+    createQuizzFinishedWindow.classList.add('hidden');
+
+    createQuizzSecondStep.innerHTML = '';
+    createQuizzThirdStep.innerHTML = '';
+    createQuizzFinishedWindow.innerHTML = '';
+    quizzCreateTitle ='';
+    quizzCreateMainImageURL = '';
+    quizzCreateQuestionsAmount = 0;
+    quizzCreateLevelsAmount = 0;
+    createdQuizz = null;
+
+    if(returnToMain == true)
+    {
+        // Mostrar janela principal feed de quizzes do Brendo
+    }
+}
+
+function finishedQuizzCreationAcessQuizz()
+{
+    if(createdQuizz !=null)
+    {
+        showQuiz(createdQuizz);
+    }
+}
+
+function finishQuizzCreation()
+{
+    // Mostrar janela de criação de niveis do quizz
+    createQuizzWindow.classList.remove('hidden');
+    createQuizzFinishedWindow.classList.remove('hidden');
+    // Esconder outras janelas de criação de quizz
+    createQuizzFirstStep.classList.add('hidden');  
+    createQuizzSecondStep.classList.add('hidden');
+    createQuizzThirdStep.classList.add('hidden');
+    
+    createQuizzFinishedWindow.innerHTML =
+    `
+        <h1>Seu quizz está pronto!</h1>
+        <div class="final-quizz-image-box">
+            <div class="image-overlay-box">
+                <img class="finalize-creation-quizz-image" src="${quizzCreateMainImageURL}" alt="">
+                <div class="image-overlay-gradient"></div>
+            </div>
+            <div class="finalize-creation-quizz-title">${quizzCreateTitle}</div>
+        </div>
+        <button onclick ="finishedQuizzCreationAcessQuizz()" class="finalize-creation-quizz-acess-btn">Acessar Quizz</button>
+        <button onclick="hideQuizzCreationWindow(true)" class="finalize-creation-quizz-return-btn">Voltar pra home</button>
+    `;
+
+
+}
+
+
+
 
 // CÓDIGO AUGUSTO
 //item to test functions, to be replaced with response from server
