@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -13,6 +12,7 @@
     <link rel="stylesheet" href="./css-files/quizz-answering-window.css">
     <link rel="stylesheet" href="./css-files/quizz-create-window.css">
     <link rel="stylesheet" href="./css-files/fixed.css">
+    <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico">
     <title>BuzzQuizz</title>
 </head>
 <body>
@@ -116,14 +116,6 @@
     <div class="create-quizz-window hidden">
         <!------------------Informações básicas--------------->
         <div class="create-quizz-first-step hidden">
-            <h1>Comece pelo começo</h1>
-            <div class="basic-info-box">
-                <input class = "quizz-title-input quizz-create-input" type="text" placeholder="Título do seu quizz">
-                <input class = "quizz-imageURL-input quizz-create-input" type="text" placeholder="URL da imagem do seu quizz">
-                <input class = "quizz-questions-amount-input quizz-create-input" type="text" placeholder="Quantidade de perguntas do quizz">
-                <input class = "quizz-levels-amount-input quizz-create-input" type="text" placeholder="Quantidade de níveis do quizz">
-            </div>
-            <button onclick="tryToProceedToCreateQuestions()" class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
         </div>
         <!------------------Perguntas do quizz Renderizado via script--------------->
         <div class="create-quizz-second-step hidden">
@@ -133,16 +125,6 @@
         </div>
         <!------------------Quizz finalizado  Renderizado via script--------------->
         <div class="create-quizz-fourth-step hidden">
-            <h1>Seu quizz está pronto!</h1>
-            <div class="final-quizz-image-box">
-                <div class="image-overlay-box">
-                    <img class="finalize-creation-quizz-image" src="https://i.pinimg.com/550x/ec/a2/4e/eca24e3b84cb794eab1c0af0a0897400.jpg" alt="">
-                    <div class="image-overlay-gradient"></div>
-                </div>
-                <div class="finalize-creation-quizz-title">O quão brabo é você?</div>
-            </div>
-            <button class="finalize-creation-quizz-acess-btn">Acessar Quizz</button>
-            <button class="finalize-creation-quizz-return-btn">Voltar pra home</button>
         </div>
 
     </div>
