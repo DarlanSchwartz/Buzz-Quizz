@@ -44,7 +44,7 @@ function startCreatingQuizz()
     createQuizzFinishedWindow.classList.add('hidden');
 }
 
-proceedToCreateLevels();
+//proceedToCreateLevels();
 
 function isValidImageURL(urlToCheck)
 {
@@ -344,6 +344,139 @@ function proceedToCreateLevels()
       createQuizzThirdStep.classList.remove('hidden');
       createQuizzWindow.classList.remove('hidden');
       
+// CÓDIGO AUGUSTO
+//item to test functions, to be replaced with response from server
+let itemTest = [
+	{
+		id: 1,
+		title: "Título do quizz",
+		image: "https://http.cat/411.jpg",
+		questions: [
+			{
+				title: "Título da pergunta 1",
+				color: "#FFFF00",
+				answers: [
+					{
+						text: "Texto da resposta 1",
+						image: "https://http.cat/411.jpg",
+						isCorrectAnswer: true
+					},
+					{
+						text: "Texto da resposta 2",
+						image: "https://http.cat/412.jpg",
+						isCorrectAnswer: false
+					}
+				]
+			},
+			{
+				title: "Título da pergunta 2",
+				color: "blue",
+				answers: [
+					{
+						text: "Texto da resposta 1",
+						image: "https://http.cat/411.jpg",
+						isCorrectAnswer: true
+					},
+					{
+						text: "Texto da resposta 2",
+						image: "https://http.cat/412.jpg",
+						isCorrectAnswer: false
+					}
+				]
+			},
+			{
+				title: "Título da pergunta 3",
+				color: "red",
+				answers: [
+					{
+						text: "Texto da resposta 1",
+						image: "https://http.cat/411.jpg",
+						isCorrectAnswer: true
+					},
+					{
+						text: "Texto da resposta 2",
+						image: "https://http.cat/412.jpg",
+						isCorrectAnswer: false
+					}
+				]
+			}
+		],
+		levels: [
+			{
+				title: "Título do nível 1",
+				image: "https://http.cat/411.jpg",
+				text: "Descrição do nível 1",
+				minValue: 0
+			},
+			{
+				title: "Título do nível 2",
+				image: "https://http.cat/412.jpg",
+				text: "Descrição do nível 2",
+				minValue: 50
+			}
+		]
+	}
+]
+
+//to shuffle
+function comparador(){ 
+    return Math.random() - 0.5; 
+}
+
+//function showResult
+
+function showQuiz(quizz){ //pass object as an argument => object===quizz
+    let item = quizz[0];
+
+    //select the main container and show the title and image
+    const container = document.querySelector('.container-show-quiz');
+
+    container.innerHTML =   `<div class="quiz-title">
+                                <p>${item.title}</p>
+                            </div>
+                            <div class="container-quiz-questions"></div>
+                            `;
+
+    const quizImage = document.querySelector('.quiz-title');
+    quizImage.style.backgroundImage = `url(${item.image})`; 
+
+    //get container for questions and show them
+    const containerQuestions = document.querySelector('.container-quiz-questions');
+
+    item.questions.forEach(question => {
+        containerQuestions.innerHTML += `<div class="quiz-question-box">
+                                            <div class="quiz-question">
+                                                <p>${question.title}</p>
+                                            </div>
+                                            <div class="quiz-answer-box"></div>
+                                        </div>`;
+
+        const quizTitle = document.querySelectorAll('.quiz-question');
+        quizTitle[quizTitle.length-1].style.backgroundColor = question.color; 
+
+        const containerAnswers = document.querySelectorAll('.quiz-answer-box');
+
+        //shuffle the answers and show them
+        let answersArray = [];
+        question.answers.forEach(answer => {
+            answersArray.push(answer);
+        })
+
+        answersArray.sort(comparador);
+
+        answersArray.forEach(answer => {
+            containerAnswers[containerAnswers.length-1].innerHTML +=   `<div class="quiz-answer">
+                                                <img src=${answer.image} alt="">
+                                                <div class="quiz-answer-text">
+                                                    <p>${answer.text}</p>
+                                                </div>
+                                            </div>`;
+        })
+    })
+
+    containerQuestions.innerHTML += `<button class="reset-quiz">Reiniciar Quiz</button>
+                            <button class="back-home">Voltar pra home</button>`;
+}
       // Esconder outras janelas de criação de quizz
       createQuizzFirstStep.classList.add('hidden');  
       createQuizzSecondStep.classList.add('hidden');
@@ -429,3 +562,5 @@ function tryToFinishQuizzCreation()
 }
 
 
+
+//showQuiz(itemTest);
