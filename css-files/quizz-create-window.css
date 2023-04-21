@@ -313,11 +313,6 @@ ion-icon
     opacity: 50%;
 }
 
-.final-quizz-image-box:hover .finalize-creation-quizz-title
-{
-   font-weight: 700;
-}
-
 .image-overlay-box{
     height: auto;
     position: relative;

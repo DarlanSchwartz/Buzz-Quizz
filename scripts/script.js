@@ -6,6 +6,7 @@ const createQuizzFirstStep = document.querySelector(".create-quizz-first-step");
 const createQuizzSecondStep = document.querySelector(".create-quizz-second-step");
 const createQuizzThirdStep = document.querySelector(".create-quizz-third-step");
 const createQuizzFinishedWindow = document.querySelector(".create-quizz-fourth-step");
+const quizzFeedWindow = document.querySelector(".quizzFeedWindow");
 
 // CÓDIGO DARLAN
 // Variaveis de criação de um quizz
@@ -41,6 +42,7 @@ function startCreatingQuizz()
     createQuizzSecondStep.classList.add('hidden');
     createQuizzThirdStep.classList.add('hidden');
     createQuizzFinishedWindow.classList.add('hidden');
+    quizzFeedWindow.classList.add('hidden');
 
     // Renderizar janela de informações básicas
 
@@ -56,8 +58,15 @@ function startCreatingQuizz()
         <button onclick="tryToProceedToCreateQuestions()" class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
         `
     ;
+
+    /*const test = axios.get("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/" + 55);
+    test.then(logData);*/
 }
 
+/*function logData(dataToLog)
+{
+    console.log(dataToLog.data.id);
+}*/
 
 function isValidImageURL(urlToCheck)
 {
@@ -493,11 +502,11 @@ function tryToFinishQuizzCreation()
             questions: quizzCreateQuestions,
             levels: quizzCreateLevels
         }
-
         console.log(createdQuizz);
         const creationTry = axios.post("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes", createdQuizz);
+        console.log(creationTry);
         creationTry.then(finishQuizzCreation);
-
+        creationTry.catch(alert);
     }
 }
 
@@ -521,7 +530,7 @@ function hideQuizzCreationWindow(returnToMain)
 
     if(returnToMain == true)
     {
-        // Mostrar janela principal feed de quizzes do Brendo
+        quizzFeedWindow.classList.remove('hidden');
     }
 }
 
@@ -533,7 +542,7 @@ function finishedQuizzCreationAcessQuizz()
     }
 }
 
-function finishQuizzCreation()
+function finishQuizzCreation(quizzServerResponse)
 {
     // Mostrar janela de criação de niveis do quizz
     createQuizzWindow.classList.remove('hidden');
@@ -557,7 +566,18 @@ function finishQuizzCreation()
         <button onclick="hideQuizzCreationWindow(true)" class="finalize-creation-quizz-return-btn">Voltar pra home</button>
     `;
 
+    let idObject = { id: quizzServerResponse.data.id};
 
+    if(localStorage.getItem('ids') !=undefined)
+    {
+        const localStorageIds = JSON.parse(localStorage.getItem('ids'));
+        localStorageIds.push(idObject)
+        localStorage.setItem("ids",JSON.stringify(localStorageIds));
+    }
+    else
+    {
+        localStorage.setItem("ids",JSON.stringify(idObject));
+    }
 }
 
 
