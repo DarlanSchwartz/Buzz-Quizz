@@ -21,63 +21,25 @@
         <h1 class="non-selectable">BuzzQuizz</h1>
     </header>
 
-
 <!-- Aplicação de "css do Brendo" no Index padrão - Page: 'Desktop 1'-->
-<div class="quizzFeedWindow">
+
+<!-- Template desktop 1 -->
+<div class="list-All-Quizzes-Window">
     <div class="container">
         <div class="create-quizz-area">
             <h1><span style="color: #B9B9B9;">Você não criou nenhum quizz ainda :(</span></h1>
                 <input onclick="startCreatingQuizz()" type="button" value="Criar Quizz">
         </div>
         <h1 class="title-list-quizzes">Todos os Quizzes</h1>
-        <div class="container-quizzes">
-            <ul>
-                <li onclick="showQuiz" class="quizz-area">
-                    <div class="image-inside-box">
-                        <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
-                        <div class="image-inside-gradient"></div>
-                        <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
-                    </div>
-                </li>
-                <li class="quizz-area">
-                    <div class="image-inside-box">
-                        <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
-                        <div class="image-inside-gradient"></div>
-                        <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
-                    </div>
-                </li>
-                <li class="quizz-area">
-                    <div class="image-inside-box">
-                        <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
-                        <div class="image-inside-gradient"></div>
-                        <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
-                    </div>
-                </li>
-                <li class="quizz-area">
-                    <div class="image-inside-box">
-                        <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
-                        <div class="image-inside-gradient"></div>
-                        <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
-                    </div>
-                </li>
-                <li class="quizz-area">
-                    <div class="image-inside-box">
-                        <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
-                        <div class="image-inside-gradient"></div>
-                        <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
-                    </div>
-                </li>
-                <li class="quizz-area">
-                    <div class="image-inside-box">
-                        <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
-                        <div class="image-inside-gradient"></div>
-                        <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
-                    </div>
-                </li>
+            <ul class="container-quizzes">
+                
             </ul>
-        </div>
     </div>
     
+</div>
+
+<!-- Template desktop 2 -->
+<div class="list-User-Quizzes-Window">
     <div class="container hidden">
         <div class="quizz-selected-area">
             <div class="container-selected-quizzes">
@@ -88,7 +50,7 @@
                 <ul>
                     <li class="quizz-area">
                         <div class="image-inside-box">
-                            <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
+                            <img class="quizz-img" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
                             <div class="image-inside-gradient"></div>
                             <p>Acerte os personagens corretos dos Simpsons e prove seu amor!</p>
                         </div>
@@ -99,44 +61,44 @@
         <h1 class="title-quizzes-2">Todos os Quizzes</h1>
             <div class="container-quizzes">
                 <ul>
-                    <li class="quizz-area">
+                    <li onclick="showQuiz" class="quizz-area">
                         <div class="image-inside-box">
-                            <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
+                            <img class="quizz-img" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
                             <div class="image-inside-gradient"></div>
                             <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
                         </div>
                     </li>
-                    <li class="quizz-area">
+                    <li onclick="showQuiz" class="quizz-area">
                         <div class="image-inside-box">
-                            <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
+                            <img class="quizz-img" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
                             <div class="image-inside-gradient"></div>
                             <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
                         </div>
                     </li>
-                    <li class="quizz-area">
+                    <li onclick="showQuiz" class="quizz-area">
                         <div class="image-inside-box">
-                            <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
+                            <img class="quizz-img" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
                             <div class="image-inside-gradient"></div>
                             <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
                         </div>
                     </li>
-                    <li class="quizz-area">
+                    <li onclick="showQuiz" class="quizz-area">
                         <div class="image-inside-box">
-                            <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
+                            <img class="quizz-img" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
                             <div class="image-inside-gradient"></div>
                             <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
                         </div>
                     </li>
-                    <li class="quizz-area">
+                    <li onclick="showQuiz" class="quizz-area">
                         <div class="image-inside-box">
-                            <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
+                            <img class="quizz-img" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
                             <div class="image-inside-gradient"></div>
                             <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
                         </div>
                     </li>
-                    <li class="quizz-area">
+                    <li onclick="showQuiz" class="quizz-area">
                         <div class="image-inside-box">
-                            <img class="finalize-creation-quizz-image" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
+                            <img class="quizz-img" src="https://www.petz.com.br/blog/wp-content/uploads/2020/08/cat-sitter-felino-1280x720.jpg" alt="">
                             <div class="image-inside-gradient"></div>
                             <p>Acerte os personagens corretos dos Simpsons e prove seu amor! </p>
                         </div>
@@ -146,14 +108,10 @@
     </div>
 </div>
 
-
-
     <!---CÓDIGO AUGUSTO--------------------------------->
     <!------------------EXIBIÇÃO DE QUIZZ--------------->
     <div class="container-show-quiz">
     </div>
-
-
 
 
 
