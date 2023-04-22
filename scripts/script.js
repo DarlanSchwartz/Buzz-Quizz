@@ -614,8 +614,10 @@ function finishQuizzCreation(quizzServerResponse)
 // CÓDIGO AUGUSTO
 //promise to test code
 
-//let promise = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/55');
+//let promise = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/104');
 //promise.then(showQuiz);
+
+let currentQuizz;
 
 //to shuffle
 function comparador(){ 
@@ -658,7 +660,8 @@ function finishQuiz(quizz){
     
     //get the level
     let levels = item.levels;
-    let currentLevel = [];
+    let currentLevel;
+
     levels.forEach(level => {
         if(score >= level.minValue){
             currentLevel = level;
@@ -710,17 +713,21 @@ function selectAnswer(thisAnswer){
     let questions = document.querySelectorAll('.quiz-question-box');
     const questionsArr = Array.from(questions);
     let nextQuestion = questionsArr.filter(question => question.id==nextId)[0];
+
+    let questionsSelected = document.querySelectorAll('.answer-selected');
     
     if(nextQuestion !== undefined){
         setTimeout(scrollPage, 2000, nextQuestion);
-    } else { //next question undefined === finished
+    } 
+    
+    if(questions.length === questionsSelected.length){ //next question undefined === finished
         finishQuiz(currentQuizz);
         let finishing = document.querySelector('.quiz-finishing-box');
         setTimeout(scrollPage, 2000, finishing);
     }
 }
 
-let currentQuizz;
+
 
 function showQuiz(quizz){ //pass object as an argument => object===quizz
     currentQuizz = quizz;
@@ -809,13 +816,13 @@ function renderAllQuizzes(){
         </li>
         `;
     };
+    renderUserQuizzes();
 }
 
 
 function successSearchingQuizzes(response){
     console.log(response.data);
     allQuizzes = response.data;
-
     renderAllQuizzes();
 }
 function errorSearchingQuizzes(error){
@@ -829,4 +836,39 @@ function listAllQuizzes(){
     promisse.then(successSearchingQuizzes);
     promisse.catch(errorSearchingQuizzes);
 }
+
+
+
+
+
+
+
+
+
+
+function renderUserQuizz(response){
+    console.log(response.id);
+}
+
+function failRenderId(error){
+    console.log(error);
+}
+
+function renderUserQuizzes(){
+    //pegar os quizzes salvos no computador
+    const getIds = localStorage.getItem('ids');
+    //transformar os quizzes em uma array
+    const convertIds = JSON.parse(getIds);
+    //mostrar na tela os quizzes salvos baseado no id dos quizzes salvos
+    for (let i = 0; i < convertIds.length; i++){
+        const promisse = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/' + convertIds[i]);
+    promisse.then(renderUserQuizz);
+    promisse.catch(failRenderId);
+    }
+}
+
+
+
+
+
 

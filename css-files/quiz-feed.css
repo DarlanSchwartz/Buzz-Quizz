@@ -1,4 +1,8 @@
 /* CSS do Brendo*/
+* {
+    box-sizing: border-box;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -7,8 +11,8 @@
 }
 
 .create-quizz-area {
-    width: 1051px;
-    height: 181px;
+    width: 1040px;
+    height: 100%;
     background-color: #FAFAFA;
     border: 1px dashed #D5D5D5;
     border-radius: 5px;
@@ -32,6 +36,7 @@
     width: 250px;
     height: 107px;
     background-color: #FAFAFA;
+    left: 0;
 }
 
 .create-quizz-area button {
@@ -73,11 +78,7 @@ ul {
     text-align: center;
     color: #000000;
     margin-bottom: 10px;
-    position: absolute;
-    width: 158px;
-    height: 23px;
-    left: 0;
-    top: -35px;
+    
 }
 
 .quizz-area {
