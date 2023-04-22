@@ -141,12 +141,28 @@ ion-icon
     height: 54px;
     margin-top: 85px;
     cursor: pointer;
+    transition: all 200ms ease-in;
+}
+
+.proceed-create-questions-btn:hover
+{
+    background-color: white;
+    color: red;
+    border: 1px dashed;
 }
 
 .proceed-create-levels-btn{
     width: 354px;
     height: 54px;
     margin-top: 81px;
+    transition: all 200ms ease-in;
+}
+
+.proceed-create-levels-btn:hover
+{
+    background-color: white;
+    color: red;
+    border: 1px dashed;
 }
 
 .finish-quizz-creation-btn{
@@ -154,6 +170,13 @@ ion-icon
     height: 54px;
     margin-top: 79px;
     cursor: pointer;
+}
+
+.finish-quizz-creation-btn:hover
+{
+    background-color: white;
+    color: red;
+    border: 1px dashed;
 }
 
 .finalize-creation-quizz-acess-btn,
@@ -235,6 +258,17 @@ ion-icon
 {
     padding-right: 17px;
     font-size: 26px;
+    transition: all 20ms ease-in;
+}
+
+.question-box.question-closed ion-icon:hover
+{
+    font-size: 30px;
+}
+
+.levels-box.level-closed ion-icon:hover
+{
+    font-size: 30px;
 }
 
 .input-wrong-questions-box1,

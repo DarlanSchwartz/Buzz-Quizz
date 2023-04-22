@@ -8,6 +8,8 @@ const createQuizzThirdStep = document.querySelector(".create-quizz-third-step");
 const createQuizzFinishedWindow = document.querySelector(".create-quizz-fourth-step");
 const quizzFeedWindow = document.querySelector(".list-All-Quizzes-Window");
 
+const userQuizzesContainer = document.querySelector(".user-quizzes-items");
+
 
 
 //função que apresenta pagina inicial com lista de quizzes do site:
@@ -21,22 +23,18 @@ let quizzCreateTitle ='';
 let quizzCreateMainImageURL = '';
 let quizzCreateQuestionsAmount = 0;
 let quizzCreateLevelsAmount = 0;
-
 // Perguntas
-
 // Essa array vai ser populada com uma quantidade de objetos igual tamanho da var quizzCreateQuestionsAmount
 // O objeto vai ser criado na função final de enviar o quizz 
 let quizzCreateQuestions = [];
-
 // Níveis
 // Essa array vai ser populada com uma quantidade de objetos igual tamanho da var quizzCreateLevelsAmount
 // O objeto vai ser criado na função final de enviar o quizz 
-
 let quizzCreateLevels = [];
-
+// Objeto que vai ser enviado ao servidor na criação
 let createdQuizz = null;
+// Objeto recebido pelo servidor que ira ser usado para abrir o quiz no final da criação
 let createdQuizzServerResponse = null;
-
 // Função que inicia a criação de quizz escondendo as outras janelas e mostrando apenas a tela de criação de quiz inicial
 function startCreatingQuizz()
 {
@@ -49,12 +47,12 @@ function startCreatingQuizz()
     createQuizzThirdStep.classList.add('hidden');
     createQuizzFinishedWindow.classList.add('hidden');
     quizzFeedWindow.classList.add('hidden');
-
+    
     // Renderizar janela de informações básicas
 
     createQuizzFirstStep.innerHTML = 
         `
-        <h1>Comece pelo começo</h1>
+        <h1 class="non-selectable" >Comece pelo começo</h1>
         <div class="basic-info-box">
             <input class = "quizz-title-input quizz-create-input" type="text" placeholder="Título do seu quizz">
             <input class = "quizz-imageURL-input quizz-create-input" type="text" placeholder="URL da imagem do seu quizz">
@@ -125,7 +123,7 @@ function proceedToCreateQuestions()
      createQuizzFinishedWindow.classList.add('hidden');
 
      createQuizzSecondStep.innerHTML = `
-     <h1>Crie suas perguntas</h1>
+     <h1 class="non-selectable">Crie suas perguntas</h1>
             <div class="question-box question-open">
                 <div class="create-quizz-subtitle">Pergunta 1</div>
                 <div class="question-fields">
@@ -608,9 +606,6 @@ function finishQuizzCreation(quizzServerResponse)
     createdQuizzServerResponse = quizzServerResponse;
 }
 
-
-
-
 // CÓDIGO AUGUSTO
 //promise to test code
 
@@ -644,6 +639,8 @@ function returnHome(){
     //remove hidden from tela1
     let home = document.querySelector('.list-All-Quizzes-Window');
     home.classList.remove('hidden');
+
+    scrollPage(document.querySelector('.container'));
 }
 
 function finishQuiz(quizz){
@@ -727,11 +724,11 @@ function selectAnswer(thisAnswer){
     }
 }
 
-
-
 function showQuiz(quizz){ //pass object as an argument => object===quizz
     currentQuizz = quizz;
     hideQuizzCreationWindow(false);
+    hideFedd();
+    
 
     let item = quizz.data;
 
@@ -788,6 +785,8 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
     containerQuestions.innerHTML += `<div class="quiz-finishing-box hidden"></div>
                             <button class="reset-quiz" onclick="resetQuiz()" data-test="restart">Reiniciar Quiz</button>
                             <button class="back-home" onclick="returnHome()" data-test="go-home">Voltar pra home</button>`;
+    // Scrolla página para o inicio do quizz, previne bug de abrir a página do quizz aparecendo só o final dele
+                            document.querySelector('.quiz-title').scrollIntoView();
 }
 
 
@@ -796,75 +795,86 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
 
 let allQuizzes = [];
 
+function hideFedd()
+{
+    document.querySelector('.list-All-Quizzes-Window').classList.add("hidden");
+}
+
 function renderAllQuizzes(){
 
+    //Pegar os quizzes salvos no computador
+    if(localStorage.getItem('ids') !=undefined)
+    {
+        const getIds = localStorage.getItem('ids');
+         //transformar os quizzes em uma array
+        const convertIds = JSON.parse(getIds);
+        userQuizzesContainer.innerHTML = "";
+        document.querySelector('.create-quizz-area').classList.add('hidden');
+        document.querySelector('.user-quizzes').classList.remove('hidden');
+        //mostrar na tela os quizzes salvos baseado no id dos quizzes salvos
+        for (let i = 0; i < convertIds.length; i++)
+        {
+            const promisse = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/' + convertIds[i].id);
+            promisse.then(renderUserQuizz);
+            promisse.catch(console.log);
+        }
+    }
+    else
+    {
+        document.querySelector('.create-quizz-area').classList.remove('hidden');
+        document.querySelector('.user-quizzes').classList.add('hidden');
+    }
+    
     const elementUL = document.querySelector('.container-quizzes');
     elementUL.innerHTML = '';
 
     elementUL.innerHTML = `<h1 class="title-list-quizzes">Todos os Quizzes</h1>`;
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < allQuizzes.length; i++) {
         let quizzToRender = allQuizzes[i];
         
         elementUL.innerHTML += `
-        <li id="${quizzToRender.id}" onclick="showQuiz" class="quizz-area">
+        <li id="${quizzToRender.id}" onclick="openQuizzFromFeed(this)" class="quizz-area">
             <div class="image-inside-box">
                 <img class="finalize-creation-quizz-image" src="${quizzToRender.image}" alt="">
-                    <div class="image-inside-gradient"></div>
-                    <p>${quizzToRender.title}</p>
+                <div class="image-inside-gradient"></div>
+                <p>${quizzToRender.title}</p>
             </div>
         </li>
         `;
     };
-    renderUserQuizzes();
 }
 
+function openQuizzFromFeed(quizzToOpen)
+{
+    const promise = axios.get("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/"+ quizzToOpen.getAttribute('id'));
+    promise.then(showQuiz);
+    promise.catch(alert);
+}
 
 function successSearchingQuizzes(response){
-    console.log(response.data);
     allQuizzes = response.data;
     renderAllQuizzes();
 }
-function errorSearchingQuizzes(error){
-    console.log(error);
-}
 
 function listAllQuizzes(){
-
     // Mostrar janela com lista de todos os quizzes fornecidos pelo site
     const promisse = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes')
     promisse.then(successSearchingQuizzes);
-    promisse.catch(errorSearchingQuizzes);
+    promisse.catch(console.log());
 }
-
-
-
-
-
-
-
-
-
 
 function renderUserQuizz(response){
-    console.log(response.id);
-}
-
-function failRenderId(error){
-    console.log(error);
-}
-
-function renderUserQuizzes(){
-    //pegar os quizzes salvos no computador
-    const getIds = localStorage.getItem('ids');
-    //transformar os quizzes em uma array
-    const convertIds = JSON.parse(getIds);
-    //mostrar na tela os quizzes salvos baseado no id dos quizzes salvos
-    for (let i = 0; i < convertIds.length; i++){
-        const promisse = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/' + convertIds[i]);
-    promisse.then(renderUserQuizz);
-    promisse.catch(failRenderId);
-    }
+    userQuizzesContainer.innerHTML +=
+    `
+        <div id="${response.data.id}" onclick="openQuizzFromFeed(this)" class="user-quizz">
+            <div class="user-quizz-img-box">
+                <img class="user-quizz-img" src="${response.data.image}" alt="">
+                <div class="user-image-inside-gradient"></div>
+            </div>
+            <p>${response.data.title}</p>
+        </div>
+    `;
 }
 
 
