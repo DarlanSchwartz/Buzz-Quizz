@@ -35,6 +35,7 @@ let quizzCreateQuestions = [];
 let quizzCreateLevels = [];
 
 let createdQuizz = null;
+let createdQuizzServerResponse = null;
 
 // Função que inicia a criação de quizz escondendo as outras janelas e mostrando apenas a tela de criação de quiz inicial
 function startCreatingQuizz()
@@ -57,8 +58,8 @@ function startCreatingQuizz()
         <div class="basic-info-box">
             <input class = "quizz-title-input quizz-create-input" type="text" placeholder="Título do seu quizz">
             <input class = "quizz-imageURL-input quizz-create-input" type="text" placeholder="URL da imagem do seu quizz">
-            <input class = "quizz-questions-amount-input quizz-create-input" type="text" placeholder="Quantidade de perguntas do quizz">
-            <input class = "quizz-levels-amount-input quizz-create-input" type="text" placeholder="Quantidade de níveis do quizz">
+            <input class = "quizz-questions-amount-input quizz-create-input" type="number" placeholder="Quantidade de perguntas do quizz">
+            <input class = "quizz-levels-amount-input quizz-create-input" type="number" placeholder="Quantidade de níveis do quizz">
         </div>
         <button onclick="tryToProceedToCreateQuestions()" class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
         `
@@ -391,7 +392,7 @@ function proceedToCreateLevels()
                 <ion-icon onclick="expandLevel(this)" class="hidden" name="create-outline"></ion-icon>
                 <div class="input-level-box">
                     <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
-                    <input class ="input-level-percentage quizz-create-input"type="text" placeholder="% de acerto mínima">
+                    <input class ="input-level-percentage quizz-create-input"type="number" placeholder="% de acerto mínima">
                     <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
                     <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
                 </div>
@@ -407,7 +408,7 @@ function proceedToCreateLevels()
                 <ion-icon onclick="expandLevel(this)" class="" name="create-outline"></ion-icon>
                 <div class="input-level-box hidden">
                     <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
-                    <input class ="input-level-percentage quizz-create-input"type="text" placeholder="% de acerto mínima">
+                    <input class ="input-level-percentage quizz-create-input"type="number" placeholder="% de acerto mínima">
                     <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
                     <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
                 </div>
@@ -559,12 +560,10 @@ function hideQuizzCreationWindow(returnToMain)
     }
 }
 
-function finishedQuizzCreationAcessQuizz()
+function acessQuizzAfterCreation()
 {
-    if(createdQuizz !=null)
-    {
-        showQuiz(createdQuizz);
-    }
+    showQuiz(createdQuizzServerResponse);
+    createdQuizzServerResponse = null;
 }
 
 function finishQuizzCreation(quizzServerResponse)
@@ -581,13 +580,13 @@ function finishQuizzCreation(quizzServerResponse)
     `
         <h1>Seu quizz está pronto!</h1>
         <div class="final-quizz-image-box">
-            <div class="image-overlay-box">
+            <div onclick="acessQuizzAfterCreation()" class="image-overlay-box">
                 <img class="finalize-creation-quizz-image" src="${quizzCreateMainImageURL}" alt="">
                 <div class="image-overlay-gradient"></div>
             </div>
             <div class="finalize-creation-quizz-title">${quizzCreateTitle}</div>
         </div>
-        <button onclick ="finishedQuizzCreationAcessQuizz()" class="finalize-creation-quizz-acess-btn">Acessar Quizz</button>
+        <button onclick="acessQuizzAfterCreation()" class="finalize-creation-quizz-acess-btn">Acessar Quizz</button>
         <button onclick="hideQuizzCreationWindow(true)" class="finalize-creation-quizz-return-btn">Voltar pra home</button>
     `;
 
@@ -606,9 +605,7 @@ function finishQuizzCreation(quizzServerResponse)
         localStorage.setItem("ids",JSON.stringify(ids));
     }
 
-
-    let arrayTest = [quizzServerResponse.data];
-    showQuiz(arrayTest);
+    createdQuizzServerResponse = quizzServerResponse;
 }
 
 
@@ -727,6 +724,7 @@ let currentQuizz;
 
 function showQuiz(quizz){ //pass object as an argument => object===quizz
     currentQuizz = quizz;
+    hideQuizzCreationWindow(false);
 
     let item = quizz.data;
 

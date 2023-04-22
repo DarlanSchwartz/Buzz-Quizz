@@ -27,6 +27,7 @@
     text-align: center;
     color: #FFFFFF;
     z-index: 1;
+    overflow: hidden;           
 }
 
 .quiz-title img{
@@ -69,6 +70,7 @@
     align-items: center;
 
     background: #434CA0;
+    overflow: hidden;
 }
 
 .quiz-question p{
@@ -79,6 +81,7 @@
     letter-spacing: 0em;
     text-align: center;
     color:#FFFFFF;
+    overflow: hidden;
 }
 
 .quiz-answer-box{
@@ -106,6 +109,7 @@
     justify-content: flex-start;
     align-items: center;
     margin-top: 8px;
+    overflow: hidden;
 }
 
 .quiz-answer-text p{
@@ -196,7 +200,8 @@ answer selected = change text color*/
     line-height: 25px;
     letter-spacing: 0em;
     text-align: left;
-    color: #484848;    
+    color: #484848;
+    line-break: anywhere;    
 }
 
 /*buttons at the end*/
@@ -246,11 +251,12 @@ answer selected = change text color*/
     .quiz-title p{
         font-size: 19px;
         font-weight: 400;
-        line-height: 22px;             
+        line-height: 22px;  
     }
 
     .quiz-question-box{
         width: 100%;
+        max-width: 688px;
         height: auto;
         margin-top: 25px;
     }
