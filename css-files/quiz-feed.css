@@ -3,164 +3,11 @@
     box-sizing: border-box;
 }
 
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.list-All-Quizzes-Window{
-
-    width:100%;
+.container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 80px;
-}
-
-.title-and-quizzes{
-
-    display: flex; 
-    justify-content: center;
-    flex-direction: column;  
-    width: 1040px;
-    height: 100%;
-
-}
-
-.user-quizzes-title{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 23px;
-    color: black;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.user-quizzes{
-    width: 1050px;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    margin-top: 120px;
-    position: relative;
-    gap: 15px;
-}
-.user-quizzes-items{
-    width: 100%;   
-    height: auto;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    position: relative;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.user-quizz{
-    width: 340px;
-    height: 181px;
-    cursor: pointer;
-    position: relative;
-    z-index: 3;
-}
-
-.user-quizz:hover .user-quizz-img
-{
-    opacity: 50%;
-}
-
-.user-quizz-img{
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    transition: all 200ms ease-in;
-    object-fit: cover;
-    z-index: 3;
-}
-
-.modify-buttons{
-    position: absolute;
-    right: 0;
-    top: 10px;
-    z-index: 4;
-}
-
-.edit-quizz-btn{
-    position: absolute;
-    right: 7px;
-    top: 20px;
-    z-index: 5;
-    color: white;
-    font-size: 25px;
-}
-
-.delete-quizz-btn{
-    position: absolute;
-    right: 9px;
-    top: 60px;
-    z-index: 5;
-    color: white;
-    font-size: 25px;
-}
-
-
-.delete-quizz-btn:hover,
-.edit-quizz-btn:hover
-{
-    color: #000000;
-}
-
-
-.user-quizz-img-box{
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-.user-image-inside-gradient
-{
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.747) 65.62%, rgba(0, 0, 0, 0.9) 100%);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-}
-
-.user-quizz p{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19px;
-    line-height: 22px;
-    color: #FFFFFF;
-    position: absolute;
-    bottom: 19px;
-    left: 15px;
-    line-break: anywhere;
-    width: 301px;
-    z-index: 3;
-}
-
-.create-quizz-mini-btn{
-    color: rgba(236, 54, 45, 1);
-    font-size: 31px;
-    position: absolute;
-    top: -5px;
-    left: 130px;
-}
-
-.create-quizz-mini-btn:hover
-{
-    color: rgb(126, 34, 29);
 }
 
 .user-quizzes-title{
@@ -323,6 +170,7 @@ body{
     width: 250px;
     height: 107px;
     background-color: #FAFAFA;
+    left: 0;
 }
 
 .create-quizz-area button {
@@ -351,12 +199,14 @@ body{
 }
 
 ul {
+    margin-top: 80px;
+    width: 1050px;
+    height: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
-
-
+    gap: 15px;;
+    position: relative;
 }
 
 .title-list-quizzes {
@@ -365,13 +215,10 @@ ul {
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
-    align-items:left;
-    text-align: left;
+    display: flex;
+    align-items: center;
+    text-align: center;
     color: #000000;
-    margin-top: 60px;
-    margin-bottom: 15px;
-    position: relative;
-
     margin-bottom: 10px;
     position: absolute;
     left: 0;
@@ -426,8 +273,6 @@ ul {
     bottom: 7px;
     left: 18px;
     color: #FFFFFF;
-}
-
     width: 100%;
     line-break: anywhere;
     margin-right: 10px;
@@ -450,26 +295,13 @@ ul {
     margin-bottom: 10px;
 }
 
-
-@media (max-width: 1100px) {
-
-    ul{
-        display: flex;
-        flex-direction: column;
-        align-items:  center;
-        justify-content: center;
-
-    }
-    .create-quizz-area{
-        width: 340px;
-        height: 181px;
-    }
-    .title-and-quizzes{
-        width: 340px;
-        height: 100%;
-    }
-    .list-All-Quizzes-Window{
-        width: 100%;
-        height: 1550px;
-    }
+.icon {
+    position: absolute;
+    width: 31px;
+    height: 30px;
+    left: 333px;
+    top: 134px;
+    background-color: #EC362D;
+    z-index: 9;
+    top: 150px;
 }
