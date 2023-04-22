@@ -372,19 +372,17 @@ function tryToProceedToCreateLevels()
         alert(alertText);
     }
 
-    /*console.log("Tem a resposta certa em cada pergunta: " + hasAllCorrectAnswers);
-    console.log("Tem todas as imagens corretas de cada pergunta: " + hasAllCorrectAnswersImage);
-    console.log("Tem pelo menos uma resposta errada em cada pergunta: " + hasAllAtLeastOneWrongAnwers);
-    console.log("Tem pelo menos uma imagem de resposta errada em cada pergunta: " + hasAllAtLeastOneWrongAnwersImage);
-    console.log("Tem pelo todas as cores válidas: " + hasAllCorrectColors);
-    console.log("Tem todos os titulos válidas: " + hasAllTitlesLenghtCorrect);
-    console.log("Tem todas respostas erradas" + hasAllWrongAnswers);
-    console.log("Tem todas imagens de resposta erradas" + hasAllWrongAnswersImage);*/
+    // Servidor não ta deixando enviar quizzes com só respostas em cada pergunta
 
     if(hasAllWrongAnswers && hasAllWrongAnswersImage && hasAllCorrectAnswers && hasAllAtLeastOneWrongAnwers && hasAllCorrectAnswersImage && hasAllAtLeastOneWrongAnwersImage && hasAllTitlesLenghtCorrect && hasAllCorrectColors)
     {
         proceedToCreateLevels();
     }
+
+    /*if(hasAllCorrectAnswers && hasAllAtLeastOneWrongAnwers && hasAllCorrectAnswersImage && hasAllAtLeastOneWrongAnwersImage && hasAllTitlesLenghtCorrect && hasAllCorrectColors)
+    {
+        proceedToCreateLevels();
+    }*/
 }
 
 function proceedToCreateLevels()
