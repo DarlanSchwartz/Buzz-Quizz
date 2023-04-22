@@ -458,6 +458,7 @@ function tryToFinishQuizzCreation()
     let hasAllLevelsPercentageValid = true;
     let hasAllLevelsImageURLValid = true;
     let hasAllLevelsDescriptionValid = true;
+    let hasAtLeastOneFullErrorQuiz = false;
     quizzCreateLevels.forEach(level =>{
 
         if(level.title.length <10)
@@ -500,13 +501,18 @@ function tryToFinishQuizzCreation()
             console.log("A descrição do nível " + i + "é válida");
         }
 
+        if(level.minValue == 0)
+        {
+            hasAtLeastOneFullErrorQuiz = true;
+        }
+
         i++;
 
         
     });
 
     // Verificar se todos níveis estão OK
-    if(hasAllLevelsTitleValid && hasAllLevelsPercentageValid && hasAllLevelsImageURLValid && hasAllLevelsDescriptionValid)
+    if(hasAtLeastOneFullErrorQuiz &&  hasAllLevelsTitleValid && hasAllLevelsPercentageValid && hasAllLevelsImageURLValid && hasAllLevelsDescriptionValid)
     {
         createdQuizz = 
         {
@@ -609,78 +615,12 @@ function finishQuizzCreation(quizzServerResponse)
 
 
 // CÓDIGO AUGUSTO
-//item to test functions, to be replaced with response from server
-let itemTest = [
-	{
-		id: 1,
-		title: "Título do quizz",
-		image: "https://http.cat/411.jpg",
-		questions: [
-			{
-				title: "Título da pergunta 1",
-				color: "#FFFF00",
-				answers: [
-					{
-						text: "Texto da resposta 1",
-						image: "https://http.cat/411.jpg",
-						isCorrectAnswer: true
-					},
-					{
-						text: "Texto da resposta 2",
-						image: "https://http.cat/412.jpg",
-						isCorrectAnswer: false
-					}
-				]
-			},
-			{
-				title: "Título da pergunta 2",
-				color: "blue",
-				answers: [
-					{
-						text: "Texto da resposta 1",
-						image: "https://http.cat/411.jpg",
-						isCorrectAnswer: true
-					},
-					{
-						text: "Texto da resposta 2",
-						image: "https://http.cat/412.jpg",
-						isCorrectAnswer: false
-					}
-				]
-			},
-			{
-				title: "Título da pergunta 3",
-				color: "red",
-				answers: [
-					{
-						text: "Texto da resposta 1",
-						image: "https://http.cat/411.jpg",
-						isCorrectAnswer: true
-					},
-					{
-						text: "Texto da resposta 2",
-						image: "https://http.cat/412.jpg",
-						isCorrectAnswer: false
-					}
-				]
-			}
-		],
-		levels: [
-			{
-				title: "Título do nível 1",
-				image: "https://http.cat/411.jpg",
-				text: "Descrição do nível 1",
-				minValue: 0
-			},
-			{
-				title: "Título do nível 2",
-				image: "https://http.cat/412.jpg",
-				text: "Descrição do nível 2",
-				minValue: 50
-			}
-		]
-	}
-]
+//promise to test code
+
+//let promise = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/104');
+//promise.then(showQuiz);
+
+let currentQuizz;
 
 //to shuffle
 function comparador(){ 
@@ -693,7 +633,7 @@ function scrollPage(whereTo){
 
 function resetQuiz(){
     //first get item test -> connect to server?
-    showQuiz(itemTest);//start again
+    showQuiz(currentQuizz); //start again
 
     let quizTitle = document.querySelector('.quiz-title');
     scrollPage(quizTitle);
@@ -705,12 +645,13 @@ function returnHome(){
     container.innerHTML = '';
 
     //remove hidden from tela1
-    let home = document.querySelector('.quizzFeedWindow');
+    let home = document.querySelector('.list-All-Quizzes-Window');
     home.classList.remove('hidden');
 }
 
 function finishQuiz(quizz){
-    let item = quizz[0];
+    let item = quizz.data;
+
     const containerFinishing = document.querySelector('.quiz-finishing-box');
     //get total questionś
     //get how many right answers -> box that has answer-selected-correct and answer-selected
@@ -722,9 +663,10 @@ function finishQuiz(quizz){
     
     //get the level
     let levels = item.levels;
-    let currentLevel = [];
+    let currentLevel;
+
     levels.forEach(level => {
-        if(score>level.minValue){
+        if(score >= level.minValue){
             currentLevel = level;
         }
     })
@@ -774,18 +716,26 @@ function selectAnswer(thisAnswer){
     let questions = document.querySelectorAll('.quiz-question-box');
     const questionsArr = Array.from(questions);
     let nextQuestion = questionsArr.filter(question => question.id==nextId)[0];
+
+    let questionsSelected = document.querySelectorAll('.answer-selected');
     
     if(nextQuestion !== undefined){
         setTimeout(scrollPage, 2000, nextQuestion);
-    } else { //next question undefined === finished
-        finishQuiz(itemTest);
+    } 
+    
+    if(questions.length === questionsSelected.length){ //next question undefined === finished
+        finishQuiz(currentQuizz);
         let finishing = document.querySelector('.quiz-finishing-box');
         setTimeout(scrollPage, 2000, finishing);
     }
 }
 
+
+
 function showQuiz(quizz){ //pass object as an argument => object===quizz
-    let item = quizz[0];
+    currentQuizz = quizz;
+
+    let item = quizz.data;
 
     //select the main container and show the title and image
     const container = document.querySelector('.container-show-quiz');
@@ -842,8 +792,6 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
                             <button class="back-home" onclick="returnHome()" data-test="go-home">Voltar pra home</button>`;
 }
 
-//showQuiz(itemTest);
-
 
 // CÓDIGO BRENDO
 // Listar todos os quizzes
@@ -854,6 +802,8 @@ function renderAllQuizzes(){
 
     const elementUL = document.querySelector('.container-quizzes');
     elementUL.innerHTML = '';
+
+    elementUL.innerHTML = `<h1 class="title-list-quizzes">Todos os Quizzes</h1>`;
 
     for (let i = 0; i < 6; i++) {
         let quizzToRender = allQuizzes[i];
