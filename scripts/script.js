@@ -611,8 +611,8 @@ function finishQuizzCreation(quizzServerResponse)
 // CÓDIGO AUGUSTO
 //promise to test code
 
-let promise = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/104');
-promise.then(showQuiz);
+//let promise = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/104');
+//promise.then(showQuiz);
 
 let currentQuizz;
 
