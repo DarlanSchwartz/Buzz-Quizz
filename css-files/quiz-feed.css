@@ -59,6 +59,7 @@ ul {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 15px;;
+    position: relative;
 }
 
 .title-list-quizzes {
@@ -75,8 +76,8 @@ ul {
     position: absolute;
     width: 158px;
     height: 23px;
-    left: 150px;
-    top: 380px;
+    left: 0;
+    top: -35px;
 }
 
 .quizz-area {

@@ -855,6 +855,8 @@ function renderAllQuizzes(){
     const elementUL = document.querySelector('.container-quizzes');
     elementUL.innerHTML = '';
 
+    elementUL.innerHTML = `<h1 class="title-list-quizzes">Todos os Quizzes</h1>`;
+
     for (let i = 0; i < 6; i++) {
         let quizzToRender = allQuizzes[i];
         
