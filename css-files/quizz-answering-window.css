@@ -79,6 +79,7 @@
     letter-spacing: 0em;
     text-align: center;
     color:#FFFFFF;
+    overflow: hidden;
 }
 
 .quiz-answer-box{
@@ -106,6 +107,7 @@
     justify-content: flex-start;
     align-items: center;
     margin-top: 8px;
+    overflow: hidden;
 }
 
 .quiz-answer-text p{

@@ -611,8 +611,10 @@ function finishQuizzCreation(quizzServerResponse)
 // CÓDIGO AUGUSTO
 //promise to test code
 
-//let promise = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/55');
-//promise.then(showQuiz);
+let promise = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/104');
+promise.then(showQuiz);
+
+let currentQuizz;
 
 //to shuffle
 function comparador(){ 
@@ -655,7 +657,8 @@ function finishQuiz(quizz){
     
     //get the level
     let levels = item.levels;
-    let currentLevel = [];
+    let currentLevel;
+
     levels.forEach(level => {
         if(score >= level.minValue){
             currentLevel = level;
@@ -707,17 +710,21 @@ function selectAnswer(thisAnswer){
     let questions = document.querySelectorAll('.quiz-question-box');
     const questionsArr = Array.from(questions);
     let nextQuestion = questionsArr.filter(question => question.id==nextId)[0];
+
+    let questionsSelected = document.querySelectorAll('.answer-selected');
     
     if(nextQuestion !== undefined){
         setTimeout(scrollPage, 2000, nextQuestion);
-    } else { //next question undefined === finished
+    } 
+    
+    if(questions.length === questionsSelected.length){ //next question undefined === finished
         finishQuiz(currentQuizz);
         let finishing = document.querySelector('.quiz-finishing-box');
         setTimeout(scrollPage, 2000, finishing);
     }
 }
 
-let currentQuizz;
+
 
 function showQuiz(quizz){ //pass object as an argument => object===quizz
     currentQuizz = quizz;
