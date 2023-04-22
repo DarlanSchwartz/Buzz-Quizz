@@ -264,6 +264,8 @@ function tryToProceedToCreateLevels()
     let hasAllAtLeastOneWrongAnwers = true;
     let hasAllAtLeastOneWrongAnwersImage = true;
     let hasAllTitlesLenghtCorrect = true;
+    let hasAllWrongAnswers = true;
+    let hasAllWrongAnswersImage = true;
 
     let i =0;
     quizzCreateQuestions.forEach(question =>{ 
@@ -316,6 +318,18 @@ function tryToProceedToCreateLevels()
         }
         //#endregion
 
+        if(question.answers[1].text == "" && question.answers[2].text == "" && question.answers[3].text == "")
+        {
+            hasAllWrongAnswers = false;
+        }
+
+        
+        if(!isValidImageURL(question.answers[1].image) && !isValidImageURL(question.answers[2].image) && !isValidImageURL(question.answers[3].image))
+        {
+            hasAllWrongAnswersImage = false;
+        }
+
+
         //#region  Checar se a resposta incorreta não é valida
         if(question.answers[1].text == "" && question.answers[2].text == "" && question.answers[3].text == "")
         {
@@ -352,8 +366,10 @@ function tryToProceedToCreateLevels()
     console.log("Tem pelo menos uma imagem de resposta errada em cada pergunta: " + hasAllAtLeastOneWrongAnwersImage);
     console.log("Tem pelo todas as cores válidas: " + hasAllCorrectColors);
     console.log("Tem todos os titulos válidas: " + hasAllTitlesLenghtCorrect);
+    console.log("Tem todas respostas erradas" + hasAllWrongAnswers);
+    console.log("Tem todas imagens de resposta erradas" + hasAllWrongAnswersImage);
 
-    if(hasAllCorrectAnswers && hasAllAtLeastOneWrongAnwers && hasAllCorrectAnswersImage && hasAllAtLeastOneWrongAnwersImage && hasAllTitlesLenghtCorrect && hasAllCorrectColors)
+    if(hasAllWrongAnswers && hasAllWrongAnswersImage && hasAllCorrectAnswers && hasAllAtLeastOneWrongAnwers && hasAllCorrectAnswersImage && hasAllAtLeastOneWrongAnwersImage && hasAllTitlesLenghtCorrect && hasAllCorrectColors)
     {
         proceedToCreateLevels();
     }
@@ -502,11 +518,17 @@ function tryToFinishQuizzCreation()
             questions: quizzCreateQuestions,
             levels: quizzCreateLevels
         }
+
         console.log(createdQuizz);
+
         const creationTry = axios.post("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes", createdQuizz);
         console.log(creationTry);
         creationTry.then(finishQuizzCreation);
         creationTry.catch(alert);
+    }
+    else
+    {
+        alert("Algo no niveis está errado!");
     }
 }
 
@@ -580,6 +602,10 @@ function finishQuizzCreation(quizzServerResponse)
         ids.push(idObject);
         localStorage.setItem("ids",JSON.stringify(ids));
     }
+
+
+    let arrayTest = [quizzServerResponse.data];
+    showQuiz(arrayTest);
 }
 
 
