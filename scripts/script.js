@@ -724,7 +724,7 @@ function finishQuiz(quizz){
     let levels = item.levels;
     let currentLevel = [];
     levels.forEach(level => {
-        if(score>level.minValue){
+        if(score>=level.minValue){
             currentLevel = level;
         }
     })
