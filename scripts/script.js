@@ -662,6 +662,10 @@ function comparador(){
     return Math.random() - 0.5; 
 }
 
+function scrollPage(whereTo){
+    whereTo.scrollIntoView({behavior: "smooth"});
+}
+
 function resetQuiz(){
     //first get item test -> connect to server?
     showQuiz(itemTest);//start again
@@ -670,12 +674,14 @@ function resetQuiz(){
     scrollPage(quizTitle);
 }
 
-/*function returnHome(){
-    
-}*/
+function returnHome(){
+    //clean show-quiz
+    const container = document.querySelector('.container-show-quiz');
+    container.innerHTML = '';
 
-function scrollPage(whereTo){
-    whereTo.scrollIntoView({behavior: "smooth"});
+    //remove hidden from tela1
+    let home = document.querySelector('.quizzFeedWindow');
+    home.classList.remove('hidden');
 }
 
 function finishQuiz(quizz){
@@ -701,12 +707,12 @@ function finishQuiz(quizz){
     //finishing quiz
     containerFinishing.classList.remove('hidden');
     containerFinishing.innerHTML += `
-                <div class="quiz-finishing-header">
+                <div class="quiz-finishing-header" data-test="level-title">
                     <p>${score}% de acerto: ${currentLevel.title}</p>
                 </div>
                 <div class="quiz-finishing-content">
-                    <img src=${currentLevel.image} alt="">
-                    <div class="quiz-finishing-content-text">
+                    <img src=${currentLevel.image} alt="" data-test="level-image">
+                    <div class="quiz-finishing-content-text" data-test="level-text">
                         <p>${currentLevel.text}</p>
                     </div>
                 </div>`    
@@ -759,14 +765,12 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
     //select the main container and show the title and image
     const container = document.querySelector('.container-show-quiz');
 
-    container.innerHTML =   `<div class="quiz-title">
+    container.innerHTML =   `<div class="quiz-title" data-test="banner">
                                 <p>${item.title}</p>
+                                <img src="${item.image}">
                             </div>
                             <div class="container-quiz-questions"></div>
                             `;
-
-    const quizImage = document.querySelector('.quiz-title');
-    quizImage.style.backgroundImage = `url(${item.image})`; 
 
     //get container for questions and show them
     const containerQuestions = document.querySelector('.container-quiz-questions');
@@ -775,8 +779,8 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
     let count = 0;
 
     item.questions.forEach(question => {
-        containerQuestions.innerHTML += `<div class="quiz-question-box" id=${count}>
-                                            <div class="quiz-question">
+        containerQuestions.innerHTML += `<div class="quiz-question-box" id=${count} data-test="question">
+                                            <div class="quiz-question" data-test="question-title">
                                                 <p>${question.title}</p>
                                             </div>
                                             <div class="quiz-answer-box"></div>
@@ -796,9 +800,9 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
         answersArray.sort(comparador);
 
         answersArray.forEach(answer => {
-            containerAnswers[containerAnswers.length-1].innerHTML +=   `<div class="quiz-answer ${answer.isCorrectAnswer}" onclick="selectAnswer(this)">
+            containerAnswers[containerAnswers.length-1].innerHTML +=   `<div class="quiz-answer ${answer.isCorrectAnswer}" onclick="selectAnswer(this)" data-test="answer">
                                                 <img src=${answer.image} alt="">
-                                                <div class="quiz-answer-text">
+                                                <div class="quiz-answer-text" data-test="answer-text">
                                                     <p>${answer.text}</p>
                                                 </div>
                                             </div>`;
@@ -809,8 +813,8 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
 
     //add buttons at the end
     containerQuestions.innerHTML += `<div class="quiz-finishing-box hidden"></div>
-                            <button class="reset-quiz" onclick="resetQuiz()">Reiniciar Quiz</button>
-                            <button class="back-home">Voltar pra home</button>`;
+                            <button class="reset-quiz" onclick="resetQuiz()" data-test="restart">Reiniciar Quiz</button>
+                            <button class="back-home" onclick="returnHome()" data-test="go-home">Voltar pra home</button>`;
 }
 
 showQuiz(itemTest);
