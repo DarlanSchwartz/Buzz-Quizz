@@ -662,7 +662,96 @@ function comparador(){
     return Math.random() - 0.5; 
 }
 
-//function showResult
+function resetQuiz(){
+    //first get item test -> connect to server?
+    showQuiz(itemTest);//start again
+
+    let quizTitle = document.querySelector('.quiz-title');
+    scrollPage(quizTitle);
+}
+
+/*function returnHome(){
+    
+}*/
+
+function scrollPage(whereTo){
+    whereTo.scrollIntoView({behavior: "smooth"});
+}
+
+function finishQuiz(quizz){
+    let item = quizz[0];
+    const containerFinishing = document.querySelector('.quiz-finishing-box');
+    //get total questionś
+    //get how many right answers -> box that has answer-selected-correct and answer-selected
+    let questionNumber = document.querySelectorAll('.quiz-question-box').length;
+    let rightAnswers = document.querySelectorAll('.answer-selected-correct.answer-selected').length;
+
+    let percentage = rightAnswers / questionNumber;
+    let score = Math.round(percentage*100);
+    
+    //get the level
+    let levels = item.levels;
+    let currentLevel = [];
+    levels.forEach(level => {
+        if(score>level.minValue){
+            currentLevel = level;
+        }
+    })
+
+    //finishing quiz
+    containerFinishing.classList.remove('hidden');
+    containerFinishing.innerHTML += `
+                <div class="quiz-finishing-header">
+                    <p>${score}% de acerto: ${currentLevel.title}</p>
+                </div>
+                <div class="quiz-finishing-content">
+                    <img src=${currentLevel.image} alt="">
+                    <div class="quiz-finishing-content-text">
+                        <p>${currentLevel.text}</p>
+                    </div>
+                </div>`    
+}
+
+function selectAnswer(thisAnswer){
+    //when selected, remove onclick from all the answers and apply the classes
+    //answer clicked img stays the same, all the others fade
+    //right answer one color, all the other ones another -> check class true or false
+    const answersNode = thisAnswer.parentNode;
+    let answers = answersNode.children;
+
+    for (const answer of answers) {
+        answer.removeAttribute('onclick');
+
+        if(answer.classList.contains(true)){
+            answer.classList.add('answer-selected-correct');
+        } else {
+            answer.classList.add('answer-selected-incorrect');
+        }
+
+        if(answer !== thisAnswer){
+            answer.classList.add('answer-not-selected');
+        } else {
+            answer.classList.add('answer-selected');
+        }
+    }
+
+    //get the next question and scroll to it
+    const questionNode = answersNode.parentNode;
+    let thisId = questionNode.id;
+    let nextId = Number(thisId)+1;
+
+    let questions = document.querySelectorAll('.quiz-question-box');
+    const questionsArr = Array.from(questions);
+    let nextQuestion = questionsArr.filter(question => question.id==nextId)[0];
+    
+    if(nextQuestion !== undefined){
+        setTimeout(scrollPage, 2000, nextQuestion);
+    } else { //next question undefined === finished
+        finishQuiz(itemTest);
+        let finishing = document.querySelector('.quiz-finishing-box');
+        setTimeout(scrollPage, 2000, finishing);
+    }
+}
 
 function showQuiz(quizz){ //pass object as an argument => object===quizz
     let item = quizz[0];
@@ -682,8 +771,11 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
     //get container for questions and show them
     const containerQuestions = document.querySelector('.container-quiz-questions');
 
+    //count to get the id for the question
+    let count = 0;
+
     item.questions.forEach(question => {
-        containerQuestions.innerHTML += `<div class="quiz-question-box">
+        containerQuestions.innerHTML += `<div class="quiz-question-box" id=${count}>
                                             <div class="quiz-question">
                                                 <p>${question.title}</p>
                                             </div>
@@ -704,17 +796,21 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
         answersArray.sort(comparador);
 
         answersArray.forEach(answer => {
-            containerAnswers[containerAnswers.length-1].innerHTML +=   `<div class="quiz-answer">
+            containerAnswers[containerAnswers.length-1].innerHTML +=   `<div class="quiz-answer ${answer.isCorrectAnswer}" onclick="selectAnswer(this)">
                                                 <img src=${answer.image} alt="">
                                                 <div class="quiz-answer-text">
                                                     <p>${answer.text}</p>
                                                 </div>
                                             </div>`;
         })
+    
+        count++;
     })
 
-    containerQuestions.innerHTML += `<button class="reset-quiz">Reiniciar Quiz</button>
+    //add buttons at the end
+    containerQuestions.innerHTML += `<div class="quiz-finishing-box hidden"></div>
+                            <button class="reset-quiz" onclick="resetQuiz()">Reiniciar Quiz</button>
                             <button class="back-home">Voltar pra home</button>`;
 }
 
-//showQuiz(itemTest);
+showQuiz(itemTest);
