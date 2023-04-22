@@ -28,11 +28,11 @@
     <div class="container">
         <div class="create-quizz-area hidden">
             <h1>Você não criou nenhum quizz ainda :(</h1>
-            <button onclick="startCreatingQuizz()">Criar Quizz</button>
+            <button data-test="create-btn" onclick="startCreatingQuizz()">Criar Quizz</button>
         </div>
         <div class="user-quizzes hidden">
             <h1 class="user-quizzes-title">Seus Quizzes</h1>
-            <ion-icon onclick="startCreatingQuizz()" class="create-quizz-mini-btn" name="add-circle"></ion-icon>
+            <ion-icon data-test="create-btn" onclick="startCreatingQuizz()" class="create-quizz-mini-btn" name="add-circle"></ion-icon>
             <div class="user-quizzes-items">
                 
             </div>
