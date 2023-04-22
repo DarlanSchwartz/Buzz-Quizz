@@ -170,6 +170,7 @@ ion-icon
     height: 54px;
     margin-top: 79px;
     cursor: pointer;
+    transition: all 100ms ease-in;
 }
 
 .finish-quizz-creation-btn:hover
@@ -179,11 +180,23 @@ ion-icon
     border: 1px dashed;
 }
 
+.finalize-creation-quizz-acess-btn:hover{
+    background-color: white;
+    color: red;
+    border: 1px dashed;
+}
+
+.finalize-creation-quizz-return-btn:hover
+{
+    color: red;
+}
+
 .finalize-creation-quizz-acess-btn,
 .finalize-creation-quizz-return-btn{
     width: 220px;
     height: 44px;
     cursor: pointer;
+    transition: all 100ms ease-in;
 }
 
 .finalize-creation-quizz-acess-btn
@@ -389,6 +402,7 @@ ion-icon
     color: #FFFFFF;
     z-index: 3;
     transition: all 200ms ease-in;
+    line-break: anywhere;
 }
 
 .finalize-creation-quizz-return-btn{
