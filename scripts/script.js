@@ -63,15 +63,7 @@ function startCreatingQuizz()
         <button onclick="tryToProceedToCreateQuestions()" class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
         `
     ;
-
-    /*const test = axios.get("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/" + 55);
-    test.then(logData);*/
 }
-
-/*function logData(dataToLog)
-{
-    console.log(dataToLog.data.id);
-}*/
 
 function isValidImageURL(urlToCheck)
 {
