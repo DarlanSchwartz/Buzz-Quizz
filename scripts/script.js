@@ -1,16 +1,7 @@
 axios.defaults.headers.common['Authorization'] = 'sI7b4Z8QE5opnAc5PF2Xgwuz';
-const quizzPostURL = "https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes";
-const createQuizzWindow = document.querySelector(".create-quizz-window");
 
-const createQuizzFirstStep = document.querySelector(".create-quizz-first-step");
-const createQuizzSecondStep = document.querySelector(".create-quizz-second-step");
-const createQuizzThirdStep = document.querySelector(".create-quizz-third-step");
-const createQuizzFinishedWindow = document.querySelector(".create-quizz-fourth-step");
 const quizzFeedWindow = document.querySelector(".list-All-Quizzes-Window");
-
 const userQuizzesContainer = document.querySelector(".user-quizzes-items");
-
-
 
 //função que apresenta pagina inicial com lista de quizzes do site:
 listAllQuizzes();
@@ -23,6 +14,14 @@ let quizzCreateTitle ='';
 let quizzCreateMainImageURL = '';
 let quizzCreateQuestionsAmount = 0;
 let quizzCreateLevelsAmount = 0;
+
+const quizzPostURL = "https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes";
+const createQuizzWindow = document.querySelector(".create-quizz-window");
+
+const createQuizzFirstStep = document.querySelector(".create-quizz-first-step");
+const createQuizzSecondStep = document.querySelector(".create-quizz-second-step");
+const createQuizzThirdStep = document.querySelector(".create-quizz-third-step");
+const createQuizzFinishedWindow = document.querySelector(".create-quizz-fourth-step");
 // Perguntas
 // Essa array vai ser populada com uma quantidade de objetos igual tamanho da var quizzCreateQuestionsAmount
 // O objeto vai ser criado na função final de enviar o quizz 
@@ -54,12 +53,12 @@ function startCreatingQuizz()
         `
         <h1 class="non-selectable" >Comece pelo começo</h1>
         <div class="basic-info-box">
-            <input class = "quizz-title-input quizz-create-input" type="text" placeholder="Título do seu quizz">
-            <input class = "quizz-imageURL-input quizz-create-input" type="text" placeholder="URL da imagem do seu quizz">
-            <input class = "quizz-questions-amount-input quizz-create-input" type="number" placeholder="Quantidade de perguntas do quizz">
-            <input class = "quizz-levels-amount-input quizz-create-input" type="number" placeholder="Quantidade de níveis do quizz">
+            <input data-test="title-input" class = "quizz-title-input quizz-create-input" type="text" placeholder="Título do seu quizz">
+            <input data-test="img-input" class = "quizz-imageURL-input quizz-create-input" type="text" placeholder="URL da imagem do seu quizz">
+            <input data-test="questions-amount-input" class = "quizz-questions-amount-input quizz-create-input" type="number" placeholder="Quantidade de perguntas do quizz">
+            <input data-test="levels-amount-input" class = "quizz-levels-amount-input quizz-create-input" type="number" placeholder="Quantidade de níveis do quizz">
         </div>
-        <button onclick="tryToProceedToCreateQuestions()" class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
+        <button data-test="go-create-questions" onclick="tryToProceedToCreateQuestions()" class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
         `
     ;
 }
@@ -124,33 +123,33 @@ function proceedToCreateQuestions()
 
      createQuizzSecondStep.innerHTML = `
      <h1 class="non-selectable">Crie suas perguntas</h1>
-            <div class="question-box question-open">
+            <div data-test="question-ctn" class="question-box question-open">
                 <div class="create-quizz-subtitle">Pergunta 1</div>
                 <div class="question-fields">
                     <div class="question">
-                        <input class="input-question-text quizz-create-input" type="text" placeholder="Texto da pergunta">
-                        <input class ="input-question-color quizz-create-input"type="text" placeholder="Cor de fundo da pergunta">
+                        <input data-test="question-input" class="input-question-text quizz-create-input" type="text" placeholder="Texto da pergunta">
+                        <input data-test="question-color-input" class ="input-question-color quizz-create-input"type="text" placeholder="Cor de fundo da pergunta">
                     </div>
                     <div class="create-quizz-subtitle">Resposta correta</div>
                     <div class="correct-answer">
-                        <input class ="input-question-answer-text quizz-create-input"type="text" placeholder="Resposta correta">
-                        <input class ="input-question-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem">
+                        <input  data-test="correct-answer-input" class ="input-question-answer-text quizz-create-input"type="text" placeholder="Resposta correta">
+                        <input  data-test="correct-img-input" class ="input-question-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem">
                     </div>
                     <div class="create-quizz-subtitle">Respostas Incorretas</div>
                     <div class="input-wrong-questions-box1">
-                        <input class ="input-wrong-question1-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 1">
-                        <input class ="input-wrong-question1-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 1">
+                        <input data-test="wrong-answer-input" class ="input-wrong-question1-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 1">
+                        <input data-test="wrong-img-input" class ="input-wrong-question1-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 1">
                     </div>
                     <div class="input-wrong-questions-box2">
-                        <input class ="input-wrong-question2-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 2">
-                        <input class ="input-wrong-question2-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 2">
+                        <input data-test="wrong-answer-input" class ="input-wrong-question2-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 2">
+                        <input data-test="wrong-img-input" class ="input-wrong-question2-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 2">
                     </div>
                     <div class="input-wrong-questions-box3">
-                        <input class ="input-wrong-question3-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 3">
-                        <input class ="input-wrong-question3-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 3">
+                        <input data-test="wrong-answer-input" class ="input-wrong-question3-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 3">
+                        <input data-test="wrong-img-input" class ="input-wrong-question3-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 3">
                     </div>
                 </div>
-                <ion-icon onclick="expandQuestion(this)" class="hidden" name="create-outline"></ion-icon>
+                <ion-icon data-test="toggle" onclick="expandQuestion(this)" class="hidden" name="create-outline"></ion-icon>
             </div>
      `
 
@@ -158,38 +157,38 @@ function proceedToCreateQuestions()
      {
         createQuizzSecondStep.innerHTML +=
         `
-        <div class="question-box question-closed">
+        <div data-test="question-ctn" class="question-box question-closed">
             <div class="create-quizz-subtitle">Pergunta ${i+2}</div>
             <div class="question-fields hidden">
                 <div class="question">
-                    <input class="input-question-text quizz-create-input" type="text" placeholder="Texto da pergunta">
-                    <input class ="input-question-color quizz-create-input"type="text" placeholder="Cor de fundo da pergunta">
+                    <input  data-test="question-input" class="input-question-text quizz-create-input" type="text" placeholder="Texto da pergunta">
+                    <input data-test="question-color-input" class ="input-question-color quizz-create-input"type="text" placeholder="Cor de fundo da pergunta">
                 </div>
                 <div class="create-quizz-subtitle">Resposta correta</div>
                 <div class="correct-answer">
-                    <input class ="input-question-answer-text quizz-create-input"type="text" placeholder="Resposta correta">
-                    <input class ="input-question-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem">
+                    <input  data-test="correct-answer-input" class ="input-question-answer-text quizz-create-input"type="text" placeholder="Resposta correta">
+                    <input data-test="correct-img-input" class ="input-question-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem">
                 </div>
                 <div class="create-quizz-subtitle">Respostas Incorretas</div>
                 <div class="input-wrong-questions-box1">
-                    <input class ="input-wrong-question1-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 1">
-                    <input class ="input-wrong-question1-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 1">
+                    <input data-test="wrong-answer-input" class ="input-wrong-question1-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 1">
+                    <input data-test="wrong-img-input" class ="input-wrong-question1-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 1">
                 </div>
                 <div class="input-wrong-questions-box2">
-                    <input class ="input-wrong-question2-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 2">
-                    <input class ="input-wrong-question2-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 2">
+                    <input data-test="wrong-answer-input" class ="input-wrong-question2-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 2">
+                    <input data-test="wrong-img-input" class ="input-wrong-question2-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 2">
                 </div>
                 <div class="input-wrong-questions-box3">
-                    <input class ="input-wrong-question3-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 3">
-                    <input class ="input-wrong-question3-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 3">
+                    <input data-test="wrong-answer-input" class ="input-wrong-question3-answer-text quizz-create-input"type="text" placeholder="Resposta incorreta 3">
+                    <input data-test="wrong-img-input" class ="input-wrong-question3-answer-imageURL quizz-create-input"type="text" placeholder="URL da imagem 3">
                 </div>
             </div>
-            <ion-icon onclick="expandQuestion(this)" class="" name="create-outline"></ion-icon>
+            <ion-icon data-test="toggle" onclick="expandQuestion(this)" class="" name="create-outline"></ion-icon>
         </div>
         `
      }
 
-     createQuizzSecondStep.innerHTML +=`<button onclick="tryToProceedToCreateLevels()" class="proceed-create-levels-btn">Prosseguir para criar níveis</button>`;
+     createQuizzSecondStep.innerHTML +=`<button data-test="go-create-levels" onclick="tryToProceedToCreateLevels()" class="proceed-create-levels-btn">Prosseguir para criar níveis</button>`;
 }
 
 function expandQuestion(question)
@@ -263,6 +262,8 @@ function tryToProceedToCreateLevels()
     let hasAllWrongAnswers = true;
     let hasAllWrongAnswersImage = true;
 
+    let alertText = "";
+
     let i =0;
     quizzCreateQuestions.forEach(question =>{ 
 
@@ -270,35 +271,38 @@ function tryToProceedToCreateLevels()
         if(question.title.length <20)
         {
             hasAllTitlesLenghtCorrect = false;
-            console.log("A pergunta número " + (i+1) +" não é valida, possui " + question.title.length + " caracteres");
+            //console.log("A pergunta número " + (i+1) +" não é valida, possui " + question.title.length + " caracteres");
+            alertText+= "A pergunta número " + (i+1) +" não é valida, possui " + question.title.length + " caracteres\n" ;
         }
         else
         {
-            console.log("A pergunta número " + (i+1) +" é valida, possui " + question.title.length + " caracteres");
+            //console.log("A pergunta número " + (i+1) +" é valida, possui " + question.title.length + " caracteres");
         }
         //#endregion
 
         //#region  Checar se a cor é não valida
         if(!isValidColor(question.color))
         {
-            console.log("A cor da pergunta " + (i+1) +" é valida!");
+            //console.log("A cor da pergunta " + (i+1) +" não é valida!");
+            alertText+= "A cor da pergunta " + (i+1) + " não é valida\n";
             hasAllCorrectColors = false;
         }
         else
         {
-            console.log("A cor da pergunta " + (i+1) + " não é valida");
+            //console.log("A cor da pergunta " + (i+1) + " é valida");
         }
         //#endregion
         
         //#region  Checar se a resposta correta não é valida
         if(question.answers[0].text == "")
         {
-            console.log("A resposta correta da pergunta número " + (i+1)+ " não é valida");
+            //console.log("A resposta correta da pergunta número " + (i+1)+ " não é valida");
+            alertText+= "A resposta correta da pergunta número " + (i+1)+ " não é valida\n";
             hasAllCorrectAnswers = false;
         }
         else
         {
-            console.log("A resposta correta da pergunta número " + (i+1) + "é valida");
+            //console.log("A resposta correta da pergunta número " + (i+1) + "é valida");
         }
         //#endregion
         
@@ -306,23 +310,26 @@ function tryToProceedToCreateLevels()
         if(!isValidImageURL(question.answers[0].image))
         {
             hasAllCorrectAnswersImage = false;
-            console.log("A url de imagem da pergunta número " + (i+1)+ " não é valida");
+            //console.log("A url de imagem da pergunta número " + (i+1)+ " não é valida");
+            alertText+= "A url de imagem da pergunta número " + (i+1)+ " não é valida\n";
         }
         else
         {
-            console.log("A url de imagem da pergunta número " + (i+1)+ " é valida");
+            //console.log("A url de imagem da pergunta número " + (i+1)+ " é valida");
         }
         //#endregion
 
         if(question.answers[1].text == "" && question.answers[2].text == "" && question.answers[3].text == "")
         {
             hasAllWrongAnswers = false;
+            alertText+= "Todas as respostas erradas da pergunta número " + (i+1)+ " não são válidas\n";
         }
 
         
         if(!isValidImageURL(question.answers[1].image) && !isValidImageURL(question.answers[2].image) && !isValidImageURL(question.answers[3].image))
         {
             hasAllWrongAnswersImage = false;
+            alertText+= "Todas as imagens de respostas erradas da pergunta número " + (i+1)+ " não são válidas\n";
         }
 
 
@@ -333,15 +340,18 @@ function tryToProceedToCreateLevels()
 
             if(question.answers[1].text == "")
             {
-                console.log("A resposta incorreta da pergunta:" + (i+1) + "resposta incorreta 1 não é valida");
+                //console.log("A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 1 não é valida");
+                alertText+= "A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 1 não é valida\n";
             }
             else if(question.answers[2].text == "")
             {
-                console.log("A resposta incorreta da pergunta:" + (i+1) + "resposta incorreta 2 não é valida");
+                //console.log("A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 2 não é valida");
+                alertText+= "A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 2 não é valida\n";
             }
             else if(question.answers[3].text == "")
             {
-                console.log("A resposta incorreta da pergunta:" + (i+1) + "resposta incorreta 3 não é valida");
+                //console.log("A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 3 não é valida");
+                alertText+= "A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 3 não é valida\n";
             }
         }
         //#endregion
@@ -356,14 +366,19 @@ function tryToProceedToCreateLevels()
         i++;
     });
 
-    console.log("Tem a resposta certa em cada pergunta: " + hasAllCorrectAnswers);
+    if(alertText !="")
+    {
+        alert(alertText);
+    }
+
+    /*console.log("Tem a resposta certa em cada pergunta: " + hasAllCorrectAnswers);
     console.log("Tem todas as imagens corretas de cada pergunta: " + hasAllCorrectAnswersImage);
     console.log("Tem pelo menos uma resposta errada em cada pergunta: " + hasAllAtLeastOneWrongAnwers);
     console.log("Tem pelo menos uma imagem de resposta errada em cada pergunta: " + hasAllAtLeastOneWrongAnwersImage);
     console.log("Tem pelo todas as cores válidas: " + hasAllCorrectColors);
     console.log("Tem todos os titulos válidas: " + hasAllTitlesLenghtCorrect);
     console.log("Tem todas respostas erradas" + hasAllWrongAnswers);
-    console.log("Tem todas imagens de resposta erradas" + hasAllWrongAnswersImage);
+    console.log("Tem todas imagens de resposta erradas" + hasAllWrongAnswersImage);*/
 
     if(hasAllWrongAnswers && hasAllWrongAnswersImage && hasAllCorrectAnswers && hasAllAtLeastOneWrongAnwers && hasAllCorrectAnswersImage && hasAllAtLeastOneWrongAnwersImage && hasAllTitlesLenghtCorrect && hasAllCorrectColors)
     {
@@ -385,14 +400,14 @@ function proceedToCreateLevels()
       createQuizzThirdStep.innerHTML = 
       `
       <h1>Agora, decida os níveis</h1>
-            <div class="levels-box level-open">
+            <div data-test="level-ctn" class="levels-box level-open">
                 <div class="create-quizz-subtitle">Nível 1</div>
-                <ion-icon onclick="expandLevel(this)" class="hidden" name="create-outline"></ion-icon>
+                <ion-icon data-test="toggle" onclick="expandLevel(this)" class="hidden" name="create-outline"></ion-icon>
                 <div class="input-level-box">
-                    <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
-                    <input class ="input-level-percentage quizz-create-input"type="number" placeholder="% de acerto mínima">
-                    <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
-                    <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
+                    <input data-test="level-input" class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
+                    <input data-test="level-percent-input" class ="input-level-percentage quizz-create-input"type="number" placeholder="% de acerto mínima">
+                    <input data-test="level-img-input" class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
+                    <textarea data-test="level-description-input" class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
                 </div>
             </div>
       `;
@@ -401,14 +416,14 @@ function proceedToCreateLevels()
       {
         createQuizzThirdStep.innerHTML +=
         `
-        <div class="levels-box level-closed">
+        <div data-test="level-ctn" class="levels-box level-closed">
                 <div class="create-quizz-subtitle">Nível ${i+2}</div>
-                <ion-icon onclick="expandLevel(this)" class="" name="create-outline"></ion-icon>
+                <ion-icon data-test="toggle" onclick="expandLevel(this)" class="" name="create-outline"></ion-icon>
                 <div class="input-level-box hidden">
-                    <input class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
-                    <input class ="input-level-percentage quizz-create-input"type="number" placeholder="% de acerto mínima">
-                    <input class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
-                    <textarea class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
+                    <input data-test="level-input" class ="input-level-title quizz-create-input" type="text" placeholder="Título do nível">
+                    <input data-test="level-percent-input" class ="input-level-percentage quizz-create-input"type="number" placeholder="% de acerto mínima">
+                    <input data-test="level-img-input" class ="input-level-imageURL quizz-create-input"type="text" placeholder="URL da imagem do nível">
+                    <textarea data-test="level-description-input" class ="input-level-description-area quizz-create-input"type="text" placeholder="Descrição do nível"></textarea>
                 </div>
             </div>
         `;
@@ -416,7 +431,7 @@ function proceedToCreateLevels()
 
 
       createQuizzThirdStep.innerHTML +=`
-      <button onclick= "tryToFinishQuizzCreation()"class="finish-quizz-creation-btn">Finalizar Quizz</button>
+      <button data-test="finish" onclick= "tryToFinishQuizzCreation()"class="finish-quizz-creation-btn">Finalizar Quizz</button>
       `;
 }
 
@@ -458,46 +473,51 @@ function tryToFinishQuizzCreation()
     let hasAllLevelsImageURLValid = true;
     let hasAllLevelsDescriptionValid = true;
     let hasAtLeastOneFullErrorQuiz = false;
+    let alertText = "";
     quizzCreateLevels.forEach(level =>{
 
         if(level.title.length <10)
         {
-            console.log("O título do nível " + i + " não é válido, ele possui " + level.title.length + " caracteres!");
+           // console.log("O título do nível " + i + " não é válido, ele possui " + level.title.length + " caracteres!");
+            alertText+= "O título do nível " + i + " não é válido, ele possui " + level.title.length + " caracteres!\n";
             hasAllLevelsTitleValid = false;
         }
         else
         {
-            console.log("O título do nível " + i + "é válido");
+            //console.log("O título do nível " + i + "é válido");
         }
 
         if(level.minValue < 0 || level.minValue > 100)
         {
-            console.log("A porcentagem de acerto mínima do nível " + i + " não é válida, digite um número de 0 a 100!");
+            //console.log("A porcentagem de acerto mínima do nível " + i + " não é válida, digite um número de 0 a 100!");
+            alertText+= "A porcentagem de acerto mínima do nível " + i + " não é válida, digite um número de 0 a 100!\n";
             hasAllLevelsPercentageValid = false;
         }
         else
         {
-            console.log("A porcentagem de acerto mínima do nível " + i + " é válida");
+            //console.log("A porcentagem de acerto mínima do nível " + i + " é válida");
         }
 
         if(!isValidImageURL(level.image))
         {
-            console.log("A url de imagem do nível " + i + " é inválida");
+            //console.log("A url de imagem do nível " + i + " é inválida");
+            alertText+="A url de imagem do nível " + i + " é inválida\n";
             hasAllLevelsImageURLValid = false;
         }
         else
         {
-            console.log("A url de imagem do nível " + i + " é válida");
+            //console.log("A url de imagem do nível " + i + " é válida");
         }
 
         if(level.text.length < 30)
         {
-            console.log("A descrição do nível " + i + " não é válida, ela possui " + level.text.length + " caracteres!");
+           // console.log("A descrição do nível " + i + " não é válida, ela possui " + level.text.length + " caracteres!");
+            alertText+= "A descrição do nível " + i + " não é válida, ela possui " + level.text.length + " caracteres!\n";
             hasAllLevelsDescriptionValid = false;
         }
         else
         {
-            console.log("A descrição do nível " + i + "é válida");
+            //console.log("A descrição do nível " + i + "é válida");
         }
 
         if(level.minValue == 0)
@@ -506,9 +526,17 @@ function tryToFinishQuizzCreation()
         }
 
         i++;
-
-        
     });
+
+    if(!hasAtLeastOneFullErrorQuiz)
+    {
+        alertText+= "Pelo menos um nível do quizz deve ter a porcentagem de acerto com o valor 0";
+    }
+
+    if(alertText!="")
+    {
+        alert(alertText);
+    }
 
     // Verificar se todos níveis estão OK
     if(hasAtLeastOneFullErrorQuiz &&  hasAllLevelsTitleValid && hasAllLevelsPercentageValid && hasAllLevelsImageURLValid && hasAllLevelsDescriptionValid)
@@ -521,23 +549,19 @@ function tryToFinishQuizzCreation()
             levels: quizzCreateLevels
         }
 
-        console.log(createdQuizz);
+        //console.log(createdQuizz);
 
         const creationTry = axios.post("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes", createdQuizz);
-        console.log(creationTry);
+        //console.log(creationTry);
         creationTry.then(finishQuizzCreation);
         creationTry.catch(alert);
-    }
-    else
-    {
-        alert("Algo no niveis está errado!");
     }
 }
 
 function hideQuizzCreationWindow(returnToMain)
 {
     // Esconder outras janelas de criação de quizz
-    createQuizzWindow.classList.add('hidden');
+    /*createQuizzWindow.classList.add('hidden');
     createQuizzFirstStep.classList.add('hidden');  
     createQuizzSecondStep.classList.add('hidden');
     createQuizzThirdStep.classList.add('hidden');
@@ -551,11 +575,13 @@ function hideQuizzCreationWindow(returnToMain)
     quizzCreateQuestionsAmount = 0;
     quizzCreateLevelsAmount = 0;
     createdQuizz = null;
-
+*/
     if(returnToMain == true)
     {
         quizzFeedWindow.classList.remove('hidden');
+        window.location.reload();
     }
+    
 }
 
 function acessQuizzAfterCreation()
@@ -577,15 +603,15 @@ function finishQuizzCreation(quizzServerResponse)
     createQuizzFinishedWindow.innerHTML =
     `
         <h1>Seu quizz está pronto!</h1>
-        <div class="final-quizz-image-box">
+        <div class="final-quizz-image-box" data-test="success-banner">
             <div onclick="acessQuizzAfterCreation()" class="image-overlay-box">
                 <img class="finalize-creation-quizz-image" src="${quizzCreateMainImageURL}" alt="">
                 <div class="image-overlay-gradient"></div>
             </div>
             <div class="finalize-creation-quizz-title">${quizzCreateTitle}</div>
         </div>
-        <button onclick="acessQuizzAfterCreation()" class="finalize-creation-quizz-acess-btn">Acessar Quizz</button>
-        <button onclick="hideQuizzCreationWindow(true)" class="finalize-creation-quizz-return-btn">Voltar pra home</button>
+        <button data-test="go-quiz" onclick="acessQuizzAfterCreation()" class="finalize-creation-quizz-acess-btn">Acessar Quizz</button>
+        <button data-test="go-home" onclick="hideQuizzCreationWindow(true)" class="finalize-creation-quizz-return-btn">Voltar pra home</button>
     `;
 
     let idObject = { id: quizzServerResponse.data.id};
@@ -835,7 +861,7 @@ function renderAllQuizzes(){
         
         elementUL.innerHTML += `
         <li id="${quizzToRender.id}" onclick="openQuizzFromFeed(this)" class="quizz-area">
-            <div class="image-inside-box">
+            <div data-test="others-quiz" class="image-inside-box">
                 <img class="finalize-creation-quizz-image" src="${quizzToRender.image}" alt="">
                 <div class="image-inside-gradient"></div>
                 <p>${quizzToRender.title}</p>
@@ -868,7 +894,7 @@ function renderUserQuizz(response){
     userQuizzesContainer.innerHTML +=
     `
         <div id="${response.data.id}" onclick="openQuizzFromFeed(this)" class="user-quizz">
-            <div class="user-quizz-img-box">
+            <div data-test="my-quiz" class="user-quizz-img-box">
                 <img class="user-quizz-img" src="${response.data.image}" alt="">
                 <div class="user-image-inside-gradient"></div>
                 <img class="modify-buttons" src="./images/Rectangle 43.png" alt="">
