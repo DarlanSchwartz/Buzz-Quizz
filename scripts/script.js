@@ -868,13 +868,13 @@ function renderAllQuizzes(){
         </li>
         `;
     };
+    renderUserQuizzes();
 }
 
 
 function successSearchingQuizzes(response){
     console.log(response.data);
     allQuizzes = response.data;
-
     renderAllQuizzes();
 }
 function errorSearchingQuizzes(error){
@@ -888,4 +888,39 @@ function listAllQuizzes(){
     promisse.then(successSearchingQuizzes);
     promisse.catch(errorSearchingQuizzes);
 }
+
+
+
+
+
+
+
+
+
+
+function renderUserQuizz(response){
+    console.log(response.id);
+}
+
+function failRenderId(error){
+    console.log(error);
+}
+
+function renderUserQuizzes(){
+    //pegar os quizzes salvos no computador
+    const getIds = localStorage.getItem('ids');
+    //transformar os quizzes em uma array
+    const convertIds = JSON.parse(getIds);
+    //mostrar na tela os quizzes salvos baseado no id dos quizzes salvos
+    for (let i = 0; i < convertIds.length; i++){
+        const promisse = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/' + convertIds[i]);
+    promisse.then(renderUserQuizz);
+    promisse.catch(failRenderId);
+    }
+}
+
+
+
+
+
 
