@@ -6,7 +6,7 @@ const createQuizzFirstStep = document.querySelector(".create-quizz-first-step");
 const createQuizzSecondStep = document.querySelector(".create-quizz-second-step");
 const createQuizzThirdStep = document.querySelector(".create-quizz-third-step");
 const createQuizzFinishedWindow = document.querySelector(".create-quizz-fourth-step");
-const quizzFeedWindow = document.querySelector(".quizzFeedWindow");
+const quizzFeedWindow = document.querySelector(".list-All-Quizzes-Window");
 
 
 
@@ -770,3 +770,4 @@ function listAllQuizzes(){
     promisse.then(successSearchingQuizzes);
     promisse.catch(errorSearchingQuizzes);
 }
+
