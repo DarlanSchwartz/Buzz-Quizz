@@ -328,4 +328,8 @@ ul {
         justify-content: center;
         width: 100%;
     }
+
+    .create-quizz-area{
+        width: 100%;
+    }
 }

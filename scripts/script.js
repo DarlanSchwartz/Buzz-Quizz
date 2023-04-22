@@ -661,7 +661,14 @@ function deleteQuizz(idToDelete)
             }
         });
 
-        localStorage.setItem('ids',JSON.stringify(newIds));
+        if(newIds.length == 0)
+        {
+            localStorage.removeItem('ids');
+        }
+        else
+        {
+            localStorage.setItem('ids',JSON.stringify(newIds));
+        }
         console.log(quizzToDeleteKey.key);
         
         const deleteObjectHeader =
