@@ -6,7 +6,12 @@ const createQuizzFirstStep = document.querySelector(".create-quizz-first-step");
 const createQuizzSecondStep = document.querySelector(".create-quizz-second-step");
 const createQuizzThirdStep = document.querySelector(".create-quizz-third-step");
 const createQuizzFinishedWindow = document.querySelector(".create-quizz-fourth-step");
-const quizzFeedWindow = document.querySelector(".quizzFeedWindow");
+const quizzFeedWindow = document.querySelector(".list-All-Quizzes-Window");
+
+
+
+//função que apresenta pagina inicial com lista de quizzes do site:
+listAllQuizzes();
 
 // CÓDIGO DARLAN
 // Variaveis de criação de um quizz
@@ -690,7 +695,102 @@ function comparador(){
     return Math.random() - 0.5; 
 }
 
-//function showResult
+function scrollPage(whereTo){
+    whereTo.scrollIntoView({behavior: "smooth"});
+}
+
+function resetQuiz(){
+    //first get item test -> connect to server?
+    showQuiz(itemTest);//start again
+
+    let quizTitle = document.querySelector('.quiz-title');
+    scrollPage(quizTitle);
+}
+
+function returnHome(){
+    //clean show-quiz
+    const container = document.querySelector('.container-show-quiz');
+    container.innerHTML = '';
+
+    //remove hidden from tela1
+    let home = document.querySelector('.quizzFeedWindow');
+    home.classList.remove('hidden');
+}
+
+function finishQuiz(quizz){
+    let item = quizz[0];
+    const containerFinishing = document.querySelector('.quiz-finishing-box');
+    //get total questionś
+    //get how many right answers -> box that has answer-selected-correct and answer-selected
+    let questionNumber = document.querySelectorAll('.quiz-question-box').length;
+    let rightAnswers = document.querySelectorAll('.answer-selected-correct.answer-selected').length;
+
+    let percentage = rightAnswers / questionNumber;
+    let score = Math.round(percentage*100);
+    
+    //get the level
+    let levels = item.levels;
+    let currentLevel = [];
+    levels.forEach(level => {
+        if(score>level.minValue){
+            currentLevel = level;
+        }
+    })
+
+    //finishing quiz
+    containerFinishing.classList.remove('hidden');
+    containerFinishing.innerHTML += `
+                <div class="quiz-finishing-header" data-test="level-title">
+                    <p>${score}% de acerto: ${currentLevel.title}</p>
+                </div>
+                <div class="quiz-finishing-content">
+                    <img src=${currentLevel.image} alt="" data-test="level-image">
+                    <div class="quiz-finishing-content-text" data-test="level-text">
+                        <p>${currentLevel.text}</p>
+                    </div>
+                </div>`    
+}
+
+function selectAnswer(thisAnswer){
+    //when selected, remove onclick from all the answers and apply the classes
+    //answer clicked img stays the same, all the others fade
+    //right answer one color, all the other ones another -> check class true or false
+    const answersNode = thisAnswer.parentNode;
+    let answers = answersNode.children;
+
+    for (const answer of answers) {
+        answer.removeAttribute('onclick');
+
+        if(answer.classList.contains(true)){
+            answer.classList.add('answer-selected-correct');
+        } else {
+            answer.classList.add('answer-selected-incorrect');
+        }
+
+        if(answer !== thisAnswer){
+            answer.classList.add('answer-not-selected');
+        } else {
+            answer.classList.add('answer-selected');
+        }
+    }
+
+    //get the next question and scroll to it
+    const questionNode = answersNode.parentNode;
+    let thisId = questionNode.id;
+    let nextId = Number(thisId)+1;
+
+    let questions = document.querySelectorAll('.quiz-question-box');
+    const questionsArr = Array.from(questions);
+    let nextQuestion = questionsArr.filter(question => question.id==nextId)[0];
+    
+    if(nextQuestion !== undefined){
+        setTimeout(scrollPage, 2000, nextQuestion);
+    } else { //next question undefined === finished
+        finishQuiz(itemTest);
+        let finishing = document.querySelector('.quiz-finishing-box');
+        setTimeout(scrollPage, 2000, finishing);
+    }
+}
 
 function showQuiz(quizz){ //pass object as an argument => object===quizz
     let item = quizz[0];
@@ -698,21 +798,22 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
     //select the main container and show the title and image
     const container = document.querySelector('.container-show-quiz');
 
-    container.innerHTML =   `<div class="quiz-title">
+    container.innerHTML =   `<div class="quiz-title" data-test="banner">
                                 <p>${item.title}</p>
+                                <img src="${item.image}">
                             </div>
                             <div class="container-quiz-questions"></div>
                             `;
 
-    const quizImage = document.querySelector('.quiz-title');
-    quizImage.style.backgroundImage = `url(${item.image})`; 
-
     //get container for questions and show them
     const containerQuestions = document.querySelector('.container-quiz-questions');
 
+    //count to get the id for the question
+    let count = 0;
+
     item.questions.forEach(question => {
-        containerQuestions.innerHTML += `<div class="quiz-question-box">
-                                            <div class="quiz-question">
+        containerQuestions.innerHTML += `<div class="quiz-question-box" id=${count} data-test="question">
+                                            <div class="quiz-question" data-test="question-title">
                                                 <p>${question.title}</p>
                                             </div>
                                             <div class="quiz-answer-box"></div>
@@ -732,17 +833,67 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
         answersArray.sort(comparador);
 
         answersArray.forEach(answer => {
-            containerAnswers[containerAnswers.length-1].innerHTML +=   `<div class="quiz-answer">
+            containerAnswers[containerAnswers.length-1].innerHTML +=   `<div class="quiz-answer ${answer.isCorrectAnswer}" onclick="selectAnswer(this)" data-test="answer">
                                                 <img src=${answer.image} alt="">
-                                                <div class="quiz-answer-text">
+                                                <div class="quiz-answer-text" data-test="answer-text">
                                                     <p>${answer.text}</p>
                                                 </div>
                                             </div>`;
         })
+    
+        count++;
     })
 
-    containerQuestions.innerHTML += `<button class="reset-quiz">Reiniciar Quiz</button>
-                            <button class="back-home">Voltar pra home</button>`;
+    //add buttons at the end
+    containerQuestions.innerHTML += `<div class="quiz-finishing-box hidden"></div>
+                            <button class="reset-quiz" onclick="resetQuiz()" data-test="restart">Reiniciar Quiz</button>
+                            <button class="back-home" onclick="returnHome()" data-test="go-home">Voltar pra home</button>`;
 }
 
 //showQuiz(itemTest);
+
+
+// CÓDIGO BRENDO
+// Listar todos os quizzes
+
+let allQuizzes = [];
+
+function renderAllQuizzes(){
+
+    const elementUL = document.querySelector('.container-quizzes');
+    elementUL.innerHTML = '';
+
+    for (let i = 0; i < 6; i++) {
+        let quizzToRender = allQuizzes[i];
+        
+        elementUL.innerHTML += `
+        <li id="${quizzToRender.id}" onclick="showQuiz" class="quizz-area">
+            <div class="image-inside-box">
+                <img class="finalize-creation-quizz-image" src="${quizzToRender.image}" alt="">
+                    <div class="image-inside-gradient"></div>
+                    <p>${quizzToRender.title}</p>
+            </div>
+        </li>
+        `;
+    };
+}
+
+
+function successSearchingQuizzes(response){
+    console.log(response.data);
+    allQuizzes = response.data;
+
+    renderAllQuizzes();
+}
+function errorSearchingQuizzes(error){
+    console.log(error);
+}
+
+function listAllQuizzes(){
+
+    // Mostrar janela com lista de todos os quizzes fornecidos pelo site
+    const promisse = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes')
+    promisse.then(successSearchingQuizzes);
+    promisse.catch(errorSearchingQuizzes);
+}
+

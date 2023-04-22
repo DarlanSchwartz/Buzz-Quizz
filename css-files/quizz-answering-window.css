@@ -14,8 +14,8 @@
     justify-content: center;
     align-items: center;
     
-    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/b8/93/e5/estadio-beira-rio.jpg?w=1200&h=1200&s=1);
-    background-size: cover;
+    position:relative;
+    background-color: #000000;
 }
 
 .quiz-title p{
@@ -26,6 +26,16 @@
     letter-spacing: 0em;
     text-align: center;
     color: #FFFFFF;
+    z-index: 1;
+}
+
+.quiz-title img{
+    position: absolute;
+    object-fit: cover;
+    width: inherit;
+    height: inherit;
+    
+    opacity: 0.6;
 }
 
 .container-quiz-questions{
