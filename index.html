@@ -21,7 +21,8 @@
         <h1 class="non-selectable">BuzzQuizz</h1>
     </header>
 
-<!-- Aplicação de "css do Brendo" no Index padrão - Page: 'Desktop 1'-->
+<!---CÓDIGO BRENDO--------------------------------->
+<!------------------EXIBIÇÃO DO FEED DE QUIZZES--------------->
 
 <!-- Template desktop 1 -->
     <div class="list-All-Quizzes-Window">
@@ -36,6 +37,23 @@
             </ul>
         </div>
     </div>
+<div class="list-All-Quizzes-Window">
+    <div class="container">
+        <div class="create-quizz-area hidden">
+            <h1>Você não criou nenhum quizz ainda :(</h1>
+            <button onclick="startCreatingQuizz()">Criar Quizz</button>
+        </div>
+        <div class="user-quizzes hidden">
+            <h1 class="user-quizzes-title">Seus Quizzes</h1>
+            <ion-icon onclick="startCreatingQuizz()" class="create-quizz-mini-btn" name="add-circle"></ion-icon>
+            <div class="user-quizzes-items">
+                
+            </div>
+        </div>
+        <ul class="container-quizzes"></ul>
+    </div>
+    
+</div>
 
 
 

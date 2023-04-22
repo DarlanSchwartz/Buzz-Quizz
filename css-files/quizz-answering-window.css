@@ -27,6 +27,7 @@
     text-align: center;
     color: #FFFFFF;
     z-index: 1;
+    overflow: hidden;           
 }
 
 .quiz-title img{
@@ -69,6 +70,7 @@
     align-items: center;
 
     background: #434CA0;
+    overflow: hidden;
 }
 
 .quiz-question p{
@@ -100,6 +102,7 @@
 .quiz-answer img{
     width: inherit;
     height: 175px;
+    object-fit: cover;
 }
 
 .quiz-answer-text{
@@ -198,7 +201,8 @@ answer selected = change text color*/
     line-height: 25px;
     letter-spacing: 0em;
     text-align: left;
-    color: #484848;    
+    color: #484848;
+    line-break: anywhere;    
 }
 
 /*buttons at the end*/
@@ -219,6 +223,20 @@ answer selected = change text color*/
     letter-spacing: 0em;
     text-align: center;
     color: #FFF5F4;
+    cursor: pointer;
+    transition: all 100ms ease-in;
+}
+
+.reset-quiz:hover
+{
+    background-color: white;
+    color: red;
+    border: 1px dashed;
+}
+
+.back-home:hover
+{
+    color: red;
 }
 
 .back-home{
@@ -237,6 +255,9 @@ answer selected = change text color*/
     letter-spacing: 0em;
     text-align: center;
     color: #818181;
+    margin-bottom: 85px;
+    cursor: pointer;
+    transition: all 100ms ease-in;
 }
 
 @media (max-width: 1100px) {
@@ -248,11 +269,12 @@ answer selected = change text color*/
     .quiz-title p{
         font-size: 19px;
         font-weight: 400;
-        line-height: 22px;             
+        line-height: 22px;  
     }
 
     .quiz-question-box{
         width: 100%;
+        max-width: 688px;
         height: auto;
         margin-top: 25px;
     }
@@ -277,6 +299,7 @@ answer selected = change text color*/
         width: 90%;
         height: auto;
         margin-bottom: 13px;
+        
     }
 
     .quiz-answer{
@@ -284,6 +307,7 @@ answer selected = change text color*/
         max-width:330px;
         height: auto;
         max-height: 210px;
+        cursor: pointer;
     }
     
     .quiz-answer img{
@@ -304,7 +328,7 @@ answer selected = change text color*/
     .quiz-finishing-box{
         width: 100%;
         height: auto;
-        
+        max-width: 759px;
         margin-top:24px;
     }
     
@@ -335,6 +359,7 @@ answer selected = change text color*/
         width: 100%;
         max-width: 500px;
         height: 255px;
+        object-fit: cover;
     }
     
     .quiz-finishing-content-text{
@@ -355,7 +380,7 @@ answer selected = change text color*/
         font-size: 18px;
         line-height: 21px;
     }
-    
+
     .back-home{
         font-size: 18px;
         line-height: 21px;
