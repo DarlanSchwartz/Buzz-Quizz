@@ -49,9 +49,10 @@
     height: 181px;
     cursor: pointer;
     position: relative;
+    z-index: 3;
 }
 
-.user-quizz:hover .user-quizz-img-box img
+.user-quizz:hover .user-quizz-img
 {
     opacity: 50%;
 }
@@ -61,7 +62,42 @@
     height: 100%;
     border-radius: 5px;
     transition: all 200ms ease-in;
+    object-fit: cover;
+    z-index: 3;
 }
+
+.modify-buttons{
+    position: absolute;
+    right: 0;
+    top: 10px;
+    z-index: 4;
+}
+
+.edit-quizz-btn{
+    position: absolute;
+    right: 7px;
+    top: 20px;
+    z-index: 5;
+    color: white;
+    font-size: 25px;
+}
+
+.delete-quizz-btn{
+    position: absolute;
+    right: 9px;
+    top: 60px;
+    z-index: 5;
+    color: white;
+    font-size: 25px;
+}
+
+
+.delete-quizz-btn:hover,
+.edit-quizz-btn:hover
+{
+    color: #000000;
+}
+
 
 .user-quizz-img-box{
     width: 100%;

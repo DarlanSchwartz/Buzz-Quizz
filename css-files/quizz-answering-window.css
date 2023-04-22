@@ -102,6 +102,7 @@
 .quiz-answer img{
     width: inherit;
     height: 175px;
+    object-fit: cover;
 }
 
 .quiz-answer-text{
@@ -327,7 +328,7 @@ answer selected = change text color*/
     .quiz-finishing-box{
         width: 100%;
         height: auto;
-        
+        max-width: 759px;
         margin-top:24px;
     }
     
@@ -358,6 +359,7 @@ answer selected = change text color*/
         width: 100%;
         max-width: 500px;
         height: 255px;
+        object-fit: cover;
     }
     
     .quiz-finishing-content-text{

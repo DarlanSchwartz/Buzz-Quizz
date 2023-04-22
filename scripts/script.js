@@ -871,6 +871,9 @@ function renderUserQuizz(response){
             <div class="user-quizz-img-box">
                 <img class="user-quizz-img" src="${response.data.image}" alt="">
                 <div class="user-image-inside-gradient"></div>
+                <img class="modify-buttons" src="./images/Rectangle 43.png" alt="">
+                <ion-icon class="edit-quizz-btn" name="create-outline"></ion-icon>
+                <ion-icon class="delete-quizz-btn" name="trash-outline"></ion-icon>
             </div>
             <p>${response.data.title}</p>
         </div>
