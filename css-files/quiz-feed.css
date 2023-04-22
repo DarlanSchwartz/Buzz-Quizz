@@ -51,7 +51,7 @@
     box-sizing: border-box;
 }
 
-.container-quizzes ul {
+ul {
     margin-top: 80px;
     width: 1050px;
     height: 100%;
@@ -75,26 +75,27 @@
     position: absolute;
     width: 158px;
     height: 23px;
-    left: 438px;
+    left: 150px;
     top: 380px;
 }
 
 .quizz-area {
     width: 340px;
-    height: auto;
+    height: 181px;
 }
 
 .image-inside-box{
     width: 100%;
-    height: auto;
+    height: 100%;
     position: relative;
 }
 
-.finalize-creation-quizz-image{
+.quizz-img{
     width: 100%;
     border-radius: 5px;
     z-index: 1;
     height: auto;
+    object-fit: cover;
 }
 
 .image-inside-gradient {

@@ -6,7 +6,12 @@ const createQuizzFirstStep = document.querySelector(".create-quizz-first-step");
 const createQuizzSecondStep = document.querySelector(".create-quizz-second-step");
 const createQuizzThirdStep = document.querySelector(".create-quizz-third-step");
 const createQuizzFinishedWindow = document.querySelector(".create-quizz-fourth-step");
-const quizzFeedWindow = document.querySelector(".quizzFeedWindow");
+const quizzFeedWindow = document.querySelector(".list-All-Quizzes-Window");
+
+
+
+//função que apresenta pagina inicial com lista de quizzes do site:
+listAllQuizzes();
 
 // CÓDIGO DARLAN
 // Variaveis de criação de um quizz
@@ -576,7 +581,9 @@ function finishQuizzCreation(quizzServerResponse)
     }
     else
     {
-        localStorage.setItem("ids",JSON.stringify(idObject));
+        let ids = [];
+        ids.push(idObject);
+        localStorage.setItem("ids",JSON.stringify(ids));
     }
 }
 
@@ -817,4 +824,50 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
                             <button class="back-home" onclick="returnHome()" data-test="go-home">Voltar pra home</button>`;
 }
 
-showQuiz(itemTest);
+//showQuiz(itemTest);
+
+
+// CÓDIGO BRENDO
+// Listar todos os quizzes
+
+let allQuizzes = [];
+
+function renderAllQuizzes(){
+
+    const elementUL = document.querySelector('.container-quizzes');
+    elementUL.innerHTML = '';
+
+    for (let i = 0; i < 6; i++) {
+        let quizzToRender = allQuizzes[i];
+        
+        elementUL.innerHTML += `
+        <li id="${quizzToRender.id}" onclick="showQuiz" class="quizz-area">
+            <div class="image-inside-box">
+                <img class="finalize-creation-quizz-image" src="${quizzToRender.image}" alt="">
+                    <div class="image-inside-gradient"></div>
+                    <p>${quizzToRender.title}</p>
+            </div>
+        </li>
+        `;
+    };
+}
+
+
+function successSearchingQuizzes(response){
+    console.log(response.data);
+    allQuizzes = response.data;
+
+    renderAllQuizzes();
+}
+function errorSearchingQuizzes(error){
+    console.log(error);
+}
+
+function listAllQuizzes(){
+
+    // Mostrar janela com lista de todos os quizzes fornecidos pelo site
+    const promisse = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes')
+    promisse.then(successSearchingQuizzes);
+    promisse.catch(errorSearchingQuizzes);
+}
+
