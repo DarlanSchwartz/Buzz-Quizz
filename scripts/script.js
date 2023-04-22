@@ -554,10 +554,19 @@ function tryToFinishQuizzCreation()
 
         const creationTry = axios.post("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes", createdQuizz);
         //console.log(creationTry);
+        loadingWindow.classList.remove('hidden');
+        createQuizzWindow.classList.add('hidden');
         creationTry.then(finishQuizzCreation);
-        creationTry.catch(alert);
+        creationTry.catch(errorCreatingQuizz);
     }
 }
+
+function errorCreatingQuizz(error)
+{
+    alert(error);
+    window.location.reload();
+}
+
 
 function hideQuizzCreationWindow(reloadMainAfterCreation)
 {
@@ -595,6 +604,7 @@ function acessQuizzAfterCreation()
 function finishQuizzCreation(quizzServerResponse)
 {
     // Mostrar janela de criação de niveis do quizz
+    loadingWindow.classList.add('hidden');
     createQuizzWindow.classList.remove('hidden');
     createQuizzFinishedWindow.classList.remove('hidden');
     // Esconder outras janelas de criação de quizz
@@ -709,7 +719,7 @@ function returnHome(){
     //remove hidden from tela1
     
     loadingWindow.classList.remove('hidden');
-
+    listAllQuizzes();
     setTimeout(() => {
         let home = document.querySelector('.list-All-Quizzes-Window');
         loadingWindow.classList.add('hidden');
