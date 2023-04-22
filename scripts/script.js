@@ -2,7 +2,8 @@ axios.defaults.headers.common['Authorization'] = 'sI7b4Z8QE5opnAc5PF2Xgwuz';
 
 const quizzFeedWindow = document.querySelector(".list-All-Quizzes-Window");
 const userQuizzesContainer = document.querySelector(".user-quizzes-items");
-
+const loadingWindow = document.querySelector(".loading-window");
+//loading-window
 //função que apresenta pagina inicial com lista de quizzes do site:
 listAllQuizzes();
 
@@ -392,6 +393,8 @@ function proceedToCreateLevels()
 
       createQuizzThirdStep.classList.remove('hidden');
       createQuizzWindow.classList.remove('hidden');
+      quizzFeedWindow.classList.add('hidden');
+
       // Esconder outras janelas de criação de quizz
       createQuizzFirstStep.classList.add('hidden');  
       createQuizzSecondStep.classList.add('hidden');
@@ -558,10 +561,10 @@ function tryToFinishQuizzCreation()
     }
 }
 
-function hideQuizzCreationWindow(returnToMain)
+function hideQuizzCreationWindow(reloadMainAfterCreation)
 {
     // Esconder outras janelas de criação de quizz
-    /*createQuizzWindow.classList.add('hidden');
+    createQuizzWindow.classList.add('hidden');
     createQuizzFirstStep.classList.add('hidden');  
     createQuizzSecondStep.classList.add('hidden');
     createQuizzThirdStep.classList.add('hidden');
@@ -575,19 +578,20 @@ function hideQuizzCreationWindow(returnToMain)
     quizzCreateQuestionsAmount = 0;
     quizzCreateLevelsAmount = 0;
     createdQuizz = null;
-*/
-    if(returnToMain == true)
+
+    if(reloadMainAfterCreation == true)
     {
-        quizzFeedWindow.classList.remove('hidden');
         window.location.reload();
     }
-    
 }
 
 function acessQuizzAfterCreation()
 {
-    showQuiz(createdQuizzServerResponse);
-    createdQuizzServerResponse = null;
+    loadingWindow.classList.remove('hidden');
+    hideQuizzCreationWindow(false);
+    setTimeout(() => {
+        showQuiz(createdQuizzServerResponse);
+    }, 1000);
 }
 
 function finishQuizzCreation(quizzServerResponse)
@@ -614,29 +618,64 @@ function finishQuizzCreation(quizzServerResponse)
         <button data-test="go-home" onclick="hideQuizzCreationWindow(true)" class="finalize-creation-quizz-return-btn">Voltar pra home</button>
     `;
 
-    let idObject = { id: quizzServerResponse.data.id};
+    let objectTosave = { 
+        id: quizzServerResponse.data.id,
+        key: quizzServerResponse.data.key
+    };
 
     if(localStorage.getItem('ids') !=undefined)
     {
         const localStorageIds = JSON.parse(localStorage.getItem('ids'));
-        localStorageIds.push(idObject)
+        localStorageIds.push(objectTosave)
         localStorage.setItem("ids",JSON.stringify(localStorageIds));
     }
     else
     {
         let ids = [];
-        ids.push(idObject);
+        ids.push(objectTosave);
         localStorage.setItem("ids",JSON.stringify(ids));
     }
 
     createdQuizzServerResponse = quizzServerResponse;
 }
 
+function deleteQuizz(idToDelete)
+{
+    idToDelete = idToDelete.parentNode.parentNode.getAttribute('id');
+    
+    if(localStorage.getItem('ids') !=undefined)
+    {
+        const localStorageIds = JSON.parse(localStorage.getItem('ids'));
+        const newIds = [];
+
+        let quizzToDeleteKey;
+
+        localStorageIds.forEach( savedQuizz =>{
+            if(savedQuizz.id == idToDelete)
+            {
+                quizzToDeleteKey = savedQuizz.key;
+            }
+            else
+            {
+                newIds.push(savedQuizz);
+            }
+        });
+
+        localStorage.setItem('ids',JSON.stringify(newIds));
+        console.log(quizzToDeleteKey.key);
+        
+        const deleteObjectHeader =
+        { 
+            headers: {"Secret-Key":quizzToDeleteKey.toString()}
+        };
+
+        const deletePromise =  axios.delete("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/" + idToDelete, deleteObjectHeader);
+        deletePromise.then(()=>{window.location.reload();});
+    }
+}
+
 // CÓDIGO AUGUSTO
 //promise to test code
-
-//let promise = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/104');
-//promise.then(showQuiz);
 
 let currentQuizz;
 
@@ -663,8 +702,14 @@ function returnHome(){
     container.innerHTML = '';
 
     //remove hidden from tela1
-    let home = document.querySelector('.list-All-Quizzes-Window');
-    home.classList.remove('hidden');
+    
+    loadingWindow.classList.remove('hidden');
+
+    setTimeout(() => {
+        let home = document.querySelector('.list-All-Quizzes-Window');
+        loadingWindow.classList.add('hidden');
+        home.classList.remove('hidden');
+    }, 1000);
 
     scrollPage(document.querySelector('.container'));
 }
@@ -754,8 +799,7 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
     currentQuizz = quizz;
     hideQuizzCreationWindow(false);
     hideFedd();
-    
-
+    loadingWindow.classList.add('hidden');
     let item = quizz.data;
 
     //select the main container and show the title and image
@@ -852,7 +896,7 @@ function renderAllQuizzes(){
     }
     
     const elementUL = document.querySelector('.container-quizzes');
-    elementUL.innerHTML = '';
+    elementUL.innerHTML = `<div class="title-list-quizzes">Todos os Quizzes</div>`;
 
 
     for (let i = 0; i < allQuizzes.length; i++) {
@@ -873,17 +917,22 @@ function renderAllQuizzes(){
 function openQuizzFromFeed(quizzToOpen)
 {
     const promise = axios.get("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/"+ quizzToOpen.getAttribute('id'));
+    loadingWindow.classList.remove('hidden');
+    quizzFeedWindow.classList.add('hidden');
     promise.then(showQuiz);
     promise.catch(alert);
 }
 
 function successSearchingQuizzes(response){
     allQuizzes = response.data;
+    loadingWindow.classList.add('hidden');
+    document.querySelector('.container-quizzes').classList.remove('hidden');
     renderAllQuizzes();
 }
 
 function listAllQuizzes(){
     // Mostrar janela com lista de todos os quizzes fornecidos pelo site
+    loadingWindow.classList.remove('hidden');
     const promisse = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes')
     promisse.then(successSearchingQuizzes);
     promisse.catch(console.log());
@@ -898,7 +947,7 @@ function renderUserQuizz(response){
                 <div class="user-image-inside-gradient"></div>
                 <img class="modify-buttons" src="./images/Rectangle 43.png" alt="">
                 <ion-icon class="edit-quizz-btn" name="create-outline"></ion-icon>
-                <ion-icon class="delete-quizz-btn" name="trash-outline"></ion-icon>
+                <ion-icon onclick="deleteQuizz(this)" class="delete-quizz-btn" name="trash-outline"></ion-icon>
             </div>
             <p>${response.data.title}</p>
         </div>

@@ -18,8 +18,8 @@
     line-height: 23px;
     color: black;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 5px;
+    top: -5px;
 }
 
 .user-quizzes{
@@ -135,7 +135,7 @@
     color: rgba(236, 54, 45, 1);
     font-size: 31px;
     position: absolute;
-    top: -5px;
+    top: -9px;
     left: 130px;
 }
 
@@ -221,7 +221,7 @@ ul {
     color: #000000;
     margin-bottom: 10px;
     position: absolute;
-    left: 0;
+    left: 5px;
     top: -35px;
 }
 
@@ -312,11 +312,20 @@ ul {
         height: auto;
         display: flex;
         flex-direction: column;
+        justify-content: center;
     }
     ul{
         width: 350px;
         height: auto;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .user-quizzes-items{
+        align-items: center;
+        justify-content: center;
+        width: 100%;
     }
 }

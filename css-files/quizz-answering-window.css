@@ -329,7 +329,7 @@ answer selected = change text color*/
     .quiz-finishing-box{
         width: 100%;
         height: auto;
-        max-width: 759px;
+        max-width: 559px;
         margin-top:24px;
     }
     
@@ -371,7 +371,9 @@ answer selected = change text color*/
     .quiz-finishing-content-text p{
         font-size: 17px;
         line-height: 20px;
-        text-align: center;
+        margin-top: 20px;
+        line-break: auto;
+        text-align: left;
     }
 
     .reset-quiz{

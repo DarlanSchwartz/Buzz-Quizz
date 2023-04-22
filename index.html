@@ -24,6 +24,12 @@
 <!---CÓDIGO BRENDO--------------------------------->
 <!------------------EXIBIÇÃO DO FEED DE QUIZZES--------------->
 
+
+<div class="loading-window hidden">
+    <img data-test="spinner" class="loading-gif" src="./images/loading.gif" alt="">
+    <div class="loading-text">Carregando</div>
+</div>
+
 <div class="list-All-Quizzes-Window">
     <div class="container">
         <div class="create-quizz-area hidden">
@@ -37,8 +43,9 @@
                 
             </div>
         </div>
-        <div class="title-list-quizzes">Todos os Quizzes</div>
-        <ul class="container-quizzes">
+        
+        <ul class="container-quizzes hidden">
+            <div class="title-list-quizzes">Todos os Quizzes</div>
 
         </ul>
     </div>

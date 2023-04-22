@@ -137,7 +137,7 @@ ion-icon
 }
 
 .proceed-create-questions-btn{
-    width: 368px;
+    width: 350px;
     height: 54px;
     margin-top: 85px;
     cursor: pointer;
@@ -424,15 +424,12 @@ ion-icon
     .create-quizz-second-step,
     .create-quizz-third-step,
     .create-quizz-fourth-step,
-    .question-box1.question-open,
-    .question-box2.question-open,
-    .question-box3.question-open,
-    .question-box1.question-closed,
-    .question-box2.question-closed,
-    .question-box3.question-closed,
+    .question-box.question-open,
+    .question-box.question-closed,
     .question-fields,
     .levels-box.level-open,
-    .levels-box.level-closed
+    .levels-box.level-closed,
+    .basic-info-box
     {
         width: 100%;
         max-width: 600px;
@@ -453,3 +450,62 @@ ion-icon
         width: 100%;
     }
 }
+
+@media (max-width: 600px)
+{
+    .final-quizz-image-box
+    {
+        width: 95%;
+        max-width: 500px;
+        max-height: 266px;
+    }
+
+    .finalize-creation-quizz-acess-btn
+    {
+        margin-top: 27px;
+    }
+
+    .create-quizz-first-step,
+    .create-quizz-second-step,
+    .create-quizz-third-step,
+    .create-quizz-fourth-step,
+    .question-box.question-open,
+    .question-box.question-closed,
+    .question-fields,
+    .levels-box.level-open,
+    .levels-box.level-closed,
+    .basic-info-box
+    {
+        width: 100%;
+       
+        max-width: 100%;
+    }
+
+    .quizz-create-input
+    {
+        width: 95%;
+    }
+
+    .input-level-description-area{
+        height: 177px;
+        box-sizing: border-box;
+    }
+    
+    body
+    {
+        width: 100%;
+    }
+}
+
+@media (max-width: 320px)
+{
+    .finish-quizz-creation-btn,
+    .proceed-create-questions-btn,
+    .finalize-creation-quizz-acess-btn,
+    .proceed-create-levels-btn
+    {
+        max-width: 95%;
+    }
+}
+
+
