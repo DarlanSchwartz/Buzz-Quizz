@@ -458,6 +458,7 @@ function tryToFinishQuizzCreation()
     let hasAllLevelsPercentageValid = true;
     let hasAllLevelsImageURLValid = true;
     let hasAllLevelsDescriptionValid = true;
+    let hasAtLeastOneFullErrorQuiz = false;
     quizzCreateLevels.forEach(level =>{
 
         if(level.title.length <10)
@@ -500,13 +501,18 @@ function tryToFinishQuizzCreation()
             console.log("A descrição do nível " + i + "é válida");
         }
 
+        if(level.minValue == 0)
+        {
+            hasAtLeastOneFullErrorQuiz = true;
+        }
+
         i++;
 
         
     });
 
     // Verificar se todos níveis estão OK
-    if(hasAllLevelsTitleValid && hasAllLevelsPercentageValid && hasAllLevelsImageURLValid && hasAllLevelsDescriptionValid)
+    if(hasAtLeastOneFullErrorQuiz &&  hasAllLevelsTitleValid && hasAllLevelsPercentageValid && hasAllLevelsImageURLValid && hasAllLevelsDescriptionValid)
     {
         createdQuizz = 
         {
@@ -786,7 +792,7 @@ function selectAnswer(thisAnswer){
 
 function showQuiz(quizz){ //pass object as an argument => object===quizz
     let item = quizz[0];
-
+    
     //select the main container and show the title and image
     const container = document.querySelector('.container-show-quiz');
 
