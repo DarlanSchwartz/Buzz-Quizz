@@ -576,7 +576,9 @@ function finishQuizzCreation(quizzServerResponse)
     }
     else
     {
-        localStorage.setItem("ids",JSON.stringify(idObject));
+        let ids = [];
+        ids.push(idObject);
+        localStorage.setItem("ids",JSON.stringify(ids));
     }
 }
 
