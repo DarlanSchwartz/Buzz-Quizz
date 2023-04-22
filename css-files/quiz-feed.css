@@ -305,3 +305,18 @@ ul {
     z-index: 9;
     top: 150px;
 }
+
+@media  (max-width: 1100px){
+    .user-quizzes{
+        width: 350px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    ul{
+        width: 350px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+}
