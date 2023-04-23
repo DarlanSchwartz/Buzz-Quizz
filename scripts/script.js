@@ -214,7 +214,7 @@ function proceedToCreateQuestions()
         // pegar os valores do quizz que esta sendo editado e colocar nas caixas
         const allQuestions = document.querySelectorAll(".question-box");
 
-        for (let index = 0; index < quizzCreateQuestionsAmount; index++) {
+        for (let index = 0; index < editingQuizz.data.questions.length; index++) {
             const questionFound = allQuestions[index];
             questionFound.querySelector(".question-fields").querySelector(".question").querySelector(".input-question-text").value = editingQuizz.data.questions[index].title == undefined ? "" :  editingQuizz.data.questions[index].title;
             questionFound.querySelector(".question-fields").querySelector(".question").querySelector(".input-question-color").value = editingQuizz.data.questions[index].color == undefined ? "" :  editingQuizz.data.questions[index].color;
@@ -479,7 +479,7 @@ function proceedToCreateLevels()
         // pegar os valores do quizz que esta sendo editado e colocar nas caixas
         const allLevels = document.querySelectorAll(".levels-box");
 
-        for (let index = 0; index < quizzCreateLevelsAmount; index++) {
+        for (let index = 0; index < editingQuizz.data.levels.length; index++) {
             const levelFound = allLevels[index];
             levelFound.querySelector(".input-level-box").querySelector(".input-level-title").value = editingQuizz.data.levels[index].title == undefined ? "" :  editingQuizz.data.levels[index].title;
             levelFound.querySelector(".input-level-box").querySelector(".input-level-percentage").value = editingQuizz.data.levels[index].minValue  == undefined ? "" :  editingQuizz.data.levels[index].minValue;
