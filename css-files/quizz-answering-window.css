@@ -81,6 +81,8 @@
     letter-spacing: 0em;
     text-align: center;
     color:#FFFFFF;
+    line-break: auto;
+    max-width: 100%;
     overflow: hidden;
 }
 
@@ -205,7 +207,7 @@ answer selected = change text color*/
     letter-spacing: 0em;
     text-align: left;
     color: #484848;
-    line-break: anywhere;    
+    line-break: auto;    
     overflow: hidden;
 }
 
