@@ -97,7 +97,7 @@
 .quiz-answer{
     width: 330px;
     height: 210px;
-
+    cursor: pointer;
     margin-top:18px;
 }
 
@@ -313,7 +313,6 @@ answer selected = change text color*/
         max-width:330px;
         height: auto;
         max-height: 210px;
-        cursor: pointer;
     }
     
     .quiz-answer img{
