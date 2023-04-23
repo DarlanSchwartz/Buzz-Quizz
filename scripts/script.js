@@ -15,7 +15,7 @@ let quizzCreateTitle ='';
 let quizzCreateMainImageURL = '';
 let quizzCreateQuestionsAmount = 0;
 let quizzCreateLevelsAmount = 0;
-
+let editingQuizz = null;
 const quizzPostURL = "https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes";
 const createQuizzWindow = document.querySelector(".create-quizz-window");
 
@@ -35,8 +35,18 @@ let quizzCreateLevels = [];
 let createdQuizz = null;
 // Objeto recebido pelo servidor que ira ser usado para abrir o quiz no final da criação
 let createdQuizzServerResponse = null;
+
+
+function startEditingQuizz(quizzElement)
+{
+    let quizzID = quizzElement.parentNode.parentNode.getAttribute('id');
+    const quizzPromise = axios.get("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/"+ quizzID);
+    quizzPromise.then(startCreatingQuizz);
+    quizzPromise.catch(alert);
+}
+
 // Função que inicia a criação de quizz escondendo as outras janelas e mostrando apenas a tela de criação de quiz inicial
-function startCreatingQuizz()
+function startCreatingQuizz(quizzToEdit)
 {
     // Mostrar janela de quizz e janela inicial de criação quizz
     createQuizzWindow.classList.remove('hidden');
@@ -51,17 +61,25 @@ function startCreatingQuizz()
     // Renderizar janela de informações básicas
 
     createQuizzFirstStep.innerHTML = 
-        `
-        <h1 class="non-selectable" >Comece pelo começo</h1>
-        <div class="basic-info-box">
-            <input data-test="title-input" class = "quizz-title-input quizz-create-input" type="text" placeholder="Título do seu quizz">
-            <input data-test="img-input" class = "quizz-imageURL-input quizz-create-input" type="text" placeholder="URL da imagem do seu quizz">
-            <input data-test="questions-amount-input" class = "quizz-questions-amount-input quizz-create-input" type="number" placeholder="Quantidade de perguntas do quizz">
-            <input data-test="levels-amount-input" class = "quizz-levels-amount-input quizz-create-input" type="number" placeholder="Quantidade de níveis do quizz">
-        </div>
-        <button data-test="go-create-questions" onclick="tryToProceedToCreateQuestions()" class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
-        `
-    ;
+    `
+    <h1 class="non-selectable" >Comece pelo começo</h1>
+    <div class="basic-info-box">
+        <input data-test="title-input" class = "quizz-title-input quizz-create-input" type="text" placeholder="Título do seu quizz">
+        <input data-test="img-input" class = "quizz-imageURL-input quizz-create-input" type="text" placeholder="URL da imagem do seu quizz">
+        <input data-test="questions-amount-input" class = "quizz-questions-amount-input quizz-create-input" type="number" placeholder="Quantidade de perguntas do quizz">
+        <input data-test="levels-amount-input" class = "quizz-levels-amount-input quizz-create-input" type="number" placeholder="Quantidade de níveis do quizz">
+    </div>
+    <button data-test="go-create-questions" onclick="tryToProceedToCreateQuestions()" class="proceed-create-questions-btn">Prosseguir para criar perguntas</button>
+    `;
+
+    if(quizzToEdit != null)
+    {
+        document.querySelector(".basic-info-box").querySelector('.quizz-title-input').value = quizzToEdit.data.title;
+        document.querySelector(".basic-info-box").querySelector('.quizz-imageURL-input').value = quizzToEdit.data.image;
+        document.querySelector(".basic-info-box").querySelector('.quizz-questions-amount-input').value = quizzToEdit.data.questions.length;
+        document.querySelector(".basic-info-box").querySelector('.quizz-levels-amount-input').value = quizzToEdit.data.levels.length;
+        editingQuizz = quizzToEdit;
+    }
 }
 
 function isValidImageURL(urlToCheck)
@@ -162,7 +180,7 @@ function proceedToCreateQuestions()
             <div class="create-quizz-subtitle">Pergunta ${i+2}</div>
             <div class="question-fields hidden">
                 <div class="question">
-                    <input  data-test="question-input" class="input-question-text quizz-create-input" type="text" placeholder="Texto da pergunta">
+                    <input data-test="question-input" class="input-question-text quizz-create-input" type="text" placeholder="Texto da pergunta">
                     <input data-test="question-color-input" class ="input-question-color quizz-create-input"type="text" placeholder="Cor de fundo da pergunta">
                 </div>
                 <div class="create-quizz-subtitle">Resposta correta</div>
@@ -190,6 +208,27 @@ function proceedToCreateQuestions()
      }
 
      createQuizzSecondStep.innerHTML +=`<button data-test="go-create-levels" onclick="tryToProceedToCreateLevels()" class="proceed-create-levels-btn">Prosseguir para criar níveis</button>`;
+
+     if(editingQuizz != null)
+     {
+        // pegar os valores do quizz que esta sendo editado e colocar nas caixas
+        const allQuestions = document.querySelectorAll(".question-box");
+
+        for (let index = 0; index < quizzCreateQuestionsAmount; index++) {
+            const questionFound = allQuestions[index];
+            questionFound.querySelector(".question-fields").querySelector(".question").querySelector(".input-question-text").value = editingQuizz.data.questions[index].title == undefined ? "" :  editingQuizz.data.questions[index].title;
+            questionFound.querySelector(".question-fields").querySelector(".question").querySelector(".input-question-color").value = editingQuizz.data.questions[index].color == undefined ? "" :  editingQuizz.data.questions[index].color;
+            questionFound.querySelector(".question-fields").querySelector(".correct-answer").querySelector(".input-question-answer-text").value = editingQuizz.data.questions[index].answers[0].text  == undefined ? "" : editingQuizz.data.questions[index].answers[0].text;
+            questionFound.querySelector(".question-fields").querySelector(".correct-answer").querySelector(".input-question-answer-imageURL").value = editingQuizz.data.questions[index].answers[0].image  == undefined ? "" : editingQuizz.data.questions[index].answers[0].image;
+            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box1").querySelector(".input-wrong-question1-answer-text").value = editingQuizz.data.questions[index].answers[1].text  == undefined ? "" : editingQuizz.data.questions[index].answers[1].text;
+            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box1").querySelector(".input-wrong-question1-answer-imageURL").value = editingQuizz.data.questions[index].answers[1].image  == undefined ? "" : editingQuizz.data.questions[index].answers[1].image;
+            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box2").querySelector(".input-wrong-question2-answer-text").value = editingQuizz.data.questions[index].answers[2].text  == undefined ? "" :  editingQuizz.data.questions[index].answers[2].text;
+            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box2").querySelector(".input-wrong-question2-answer-imageURL").value = editingQuizz.data.questions[index].answers[2].image  == undefined ? "" : editingQuizz.data.questions[index].answers[2].image;
+            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box3").querySelector(".input-wrong-question3-answer-text").value = editingQuizz.data.questions[index].answers[3].text  == undefined ? "" : editingQuizz.data.questions[index].answers[3].text;
+            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box3").querySelector(".input-wrong-question3-answer-imageURL").value = editingQuizz.data.questions[index].answers[3].image  == undefined ? "" : editingQuizz.data.questions[index].answers[3].image;
+        }
+     }
+
 }
 
 function expandQuestion(question)
@@ -434,6 +473,20 @@ function proceedToCreateLevels()
       createQuizzThirdStep.innerHTML +=`
       <button data-test="finish" onclick= "tryToFinishQuizzCreation()"class="finish-quizz-creation-btn">Finalizar Quizz</button>
       `;
+
+      if(editingQuizz != null)
+     {
+        // pegar os valores do quizz que esta sendo editado e colocar nas caixas
+        const allLevels = document.querySelectorAll(".levels-box");
+
+        for (let index = 0; index < quizzCreateLevelsAmount; index++) {
+            const levelFound = allLevels[index];
+            levelFound.querySelector(".input-level-box").querySelector(".input-level-title").value = editingQuizz.data.levels[index].title == undefined ? "" :  editingQuizz.data.levels[index].title;
+            levelFound.querySelector(".input-level-box").querySelector(".input-level-percentage").value = editingQuizz.data.levels[index].minValue  == undefined ? "" :  editingQuizz.data.levels[index].minValue;
+            levelFound.querySelector(".input-level-box").querySelector(".input-level-imageURL").value = editingQuizz.data.levels[index].image  == undefined ? "" : editingQuizz.data.levels[index].image;
+            levelFound.querySelector(".input-level-box").querySelector(".input-level-description-area").value = editingQuizz.data.levels[index].text  == undefined ? "" : editingQuizz.data.levels[index].text;
+        }
+     }
 }
 
 function expandLevel(level)
@@ -626,6 +679,11 @@ function finishQuizzCreation(quizzServerResponse)
         <button data-test="go-home" onclick="hideQuizzCreationWindow(true)" class="finalize-creation-quizz-return-btn">Voltar pra home</button>
     `;
 
+    if(editingQuizz !=null)
+    {
+        deleteQuizz(editingQuizz.data.id, true);
+    }
+
     let objectTosave = { 
         id: quizzServerResponse.data.id,
         key: quizzServerResponse.data.key
@@ -644,12 +702,15 @@ function finishQuizzCreation(quizzServerResponse)
         localStorage.setItem("ids",JSON.stringify(ids));
     }
 
-    createdQuizzServerResponse = quizzServerResponse;
+    createdQuizzServerResponse = quizzServerResponse; 
 }
 
-function deleteQuizz(idToDelete)
+function deleteQuizz(idToDelete, afterEditing)
 {
-    idToDelete = idToDelete.parentNode.parentNode.getAttribute('id');
+    if(!afterEditing)
+    {
+        idToDelete = idToDelete.parentNode.parentNode.getAttribute('id');
+    }
     
     if(localStorage.getItem('ids') !=undefined)
     {
@@ -685,7 +746,10 @@ function deleteQuizz(idToDelete)
         };
 
         const deletePromise =  axios.delete("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/" + idToDelete, deleteObjectHeader);
-        deletePromise.then(()=>{window.location.reload();});
+       if(!afterEditing)
+       {
+            deletePromise.then(()=>{window.location.reload();});
+       }
     }
 }
 
@@ -961,8 +1025,8 @@ function renderUserQuizz(response){
                 <img class="user-quizz-img" src="${response.data.image}" alt="">
                 <div class="user-image-inside-gradient"></div>
                 <img class="modify-buttons" src="./images/Rectangle 43.png" alt="">
-                <ion-icon class="edit-quizz-btn" name="create-outline"></ion-icon>
-                <ion-icon onclick="deleteQuizz(this)" class="delete-quizz-btn" name="trash-outline"></ion-icon>
+                <ion-icon onclick="event.stopPropagation(); startEditingQuizz(this)" class="edit-quizz-btn" name="create-outline"></ion-icon>
+                <ion-icon onclick="event.stopPropagation(); deleteQuizz(this)" class="delete-quizz-btn" name="trash-outline"></ion-icon>
             </div>
             <p>${response.data.title}</p>
         </div>
