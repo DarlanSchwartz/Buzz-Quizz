@@ -647,6 +647,7 @@ function hideQuizzCreationWindow(reloadMainAfterCreation)
 
 function acessQuizzAfterCreation()
 {
+    editingQuizz =null;
     loadingWindow.classList.remove('hidden');
     hideQuizzCreationWindow(false);
     setTimeout(() => {
@@ -682,6 +683,7 @@ function finishQuizzCreation(quizzServerResponse)
     if(editingQuizz !=null)
     {
         deleteQuizz(editingQuizz.data.id, true);
+        editingQuizz =null;
     }
 
     let objectTosave = { 
@@ -738,7 +740,6 @@ function deleteQuizz(idToDelete, afterEditing)
         {
             localStorage.setItem('ids',JSON.stringify(newIds));
         }
-        console.log(quizzToDeleteKey.key);
         
         const deleteObjectHeader =
         { 
@@ -750,6 +751,8 @@ function deleteQuizz(idToDelete, afterEditing)
        {
             deletePromise.then(()=>{window.location.reload();});
        }
+
+       deletePromise.catch(()=>{alert("Algo deu errado ao deletar o quizz");});
     }
 }
 
