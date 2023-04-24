@@ -41,8 +41,18 @@ function startEditingQuizz(quizzElement)
 {
     let quizzID = quizzElement.parentNode.parentNode.getAttribute('id');
     const quizzPromise = axios.get("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/"+ quizzID);
-    quizzPromise.then(startCreatingQuizz);
+    quizzPromise.then(startCreatingQuizzWithLoading);
     quizzPromise.catch(alert);
+}
+
+
+function startCreatingQuizzWithLoading(quizzToEditOut)
+{
+    loadingWindow.classList.remove('hidden');
+    quizzFeedWindow.classList.add('hidden');
+    setTimeout(() => {
+        startCreatingQuizz(quizzToEditOut);
+    }, 1000);
 }
 
 // Função que inicia a criação de quizz escondendo as outras janelas e mostrando apenas a tela de criação de quiz inicial
@@ -57,6 +67,7 @@ function startCreatingQuizz(quizzToEdit)
     createQuizzThirdStep.classList.add('hidden');
     createQuizzFinishedWindow.classList.add('hidden');
     quizzFeedWindow.classList.add('hidden');
+    loadingWindow.classList.add('hidden');
     
     // Renderizar janela de informações básicas
 
@@ -1023,6 +1034,7 @@ function renderAllQuizzes(){
     }
 }
 
+
 function openQuizzFromFeed(quizzToOpen)
 {
     const promise = axios.get("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/"+ quizzToOpen.getAttribute('id'));
@@ -1055,8 +1067,8 @@ function renderUserQuizz(response){
                 <img class="user-quizz-img" src="${response.data.image}" alt="">
                 <div class="user-image-inside-gradient"></div>
                 <img class="modify-buttons" src="./images/Rectangle 43.png" alt="">
-                <ion-icon onclick="event.stopPropagation(); startEditingQuizz(this)" class="edit-quizz-btn" name="create-outline"></ion-icon>
-                <ion-icon onclick="event.stopPropagation(); deleteQuizz(this)" class="delete-quizz-btn" name="trash-outline"></ion-icon>
+                <ion-icon data-test="edit"onclick="event.stopPropagation(); startEditingQuizz(this)" class="edit-quizz-btn" name="create-outline"></ion-icon>
+                <ion-icon data-test="delete" onclick="event.stopPropagation(); deleteQuizz(this)" class="delete-quizz-btn" name="trash-outline"></ion-icon>
             </div>
             <p>${response.data.title}</p>
         </div>
