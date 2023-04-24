@@ -882,6 +882,7 @@ function selectAnswer(thisAnswer){
 
     for (const answer of answers) {
         answer.removeAttribute('onclick');
+        answer.classList.remove('pointer');
 
         if(answer.classList.contains(true)){
             answer.classList.add('answer-selected-correct');
@@ -963,7 +964,7 @@ function showQuiz(quizz){ //pass object as an argument => object===quizz
         answersArray.sort(comparador);
 
         answersArray.forEach(answer => {
-            containerAnswers[containerAnswers.length-1].innerHTML +=   `<div class="quiz-answer ${answer.isCorrectAnswer}" onclick="selectAnswer(this)" data-test="answer">
+            containerAnswers[containerAnswers.length-1].innerHTML +=   `<div class="quiz-answer pointer ${answer.isCorrectAnswer}" onclick="selectAnswer(this)" data-test="answer">
                                                 <img src=${answer.image} alt="">
                                                 <div class="quiz-answer-text" data-test="answer-text">
                                                     <p>${answer.text}</p>
