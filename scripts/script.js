@@ -815,8 +815,8 @@ function resetQuiz(){
     //first get item test -> connect to server?
     showQuiz(currentQuizz); //start again
 
-    let quizTitle = document.querySelector('.quiz-title');
-    scrollPage(quizTitle);
+    //scroll to top of the page, not quiz title
+    scrollTo(0,0);
 }
 
 function returnHome(){
@@ -866,7 +866,7 @@ function finishQuiz(quizz){
                     <p>${score}% de acerto: ${currentLevel.title}</p>
                 </div>
                 <div class="quiz-finishing-content">
-                    <img src=${currentLevel.image} alt="" data-test="level-image">
+                    <img src=${currentLevel.image} alt="" data-test="level-img">
                     <div class="quiz-finishing-content-text" data-test="level-text">
                         <p>${currentLevel.text}</p>
                     </div>
