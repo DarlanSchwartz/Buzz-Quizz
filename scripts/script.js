@@ -411,7 +411,7 @@ function tryToProceedToCreateLevels()
         }
         //#endregion
 
-        if(question.answers[1] !=null && !isValidImageURL(question.answers[1].image))
+        if(question.answers[1] != null && !isValidImageURL(question.answers[1].image))
         {
             alertText+= "A url da imagem da pergunta " + (i+1) + "resposta incorreta 1 é invalida";
         }
