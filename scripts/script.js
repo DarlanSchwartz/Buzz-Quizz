@@ -954,12 +954,15 @@ function hideFedd()
 
 function renderAllQuizzes(){
 
+    let userQuizzesIds = [];
+
     //Pegar os quizzes salvos no computador
     if(localStorage.getItem('ids') !=undefined)
     {
         const getIds = localStorage.getItem('ids');
          //transformar os quizzes em uma array
         const convertIds = JSON.parse(getIds);
+        userQuizzesIds = convertIds;
         userQuizzesContainer.innerHTML = "";
         document.querySelector('.create-quizz-area').classList.add('hidden');
         document.querySelector('.user-quizzes').classList.remove('hidden');
@@ -967,6 +970,7 @@ function renderAllQuizzes(){
         for (let i = 0; i < convertIds.length; i++)
         {
             const promisse = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/' + convertIds[i].id);
+            
             promisse.then(renderUserQuizz);
             promisse.catch(console.log);
         }
@@ -981,19 +985,42 @@ function renderAllQuizzes(){
     elementUL.innerHTML = `<div class="title-list-quizzes">Todos os Quizzes</div>`;
 
 
-    for (let i = 0; i < allQuizzes.length; i++) {
+    for (let i = 0; i < allQuizzes.length; i++) 
+    {
         let quizzToRender = allQuizzes[i];
         
-        elementUL.innerHTML += `
-        <li id="${quizzToRender.id}" onclick="openQuizzFromFeed(this)" class="quizz-area">
-            <div data-test="others-quiz" class="image-inside-box">
-                <img class="finalize-creation-quizz-image" src="${quizzToRender.image}" alt="">
-                <div class="image-inside-gradient"></div>
-                <p>${quizzToRender.title}</p>
-            </div>
-        </li>
-        `;
-    };
+        if(userQuizzesIds.length != 0)
+        {
+            for (let index = 0; index < userQuizzesIds.length; index++) {
+                if(quizzToRender.id != Number(userQuizzesIds[index].id))
+                {
+                    elementUL.innerHTML += `
+                    <li id="${quizzToRender.id}" onclick="openQuizzFromFeed(this)" class="quizz-area">
+                        <div data-test="others-quiz" class="image-inside-box">
+                            <img class="finalize-creation-quizz-image" src="${quizzToRender.image}" alt="">
+                            <div class="image-inside-gradient"></div>
+                            <p>${quizzToRender.title}</p>
+                        </div>
+                    </li>
+                    `;
+                }
+            };
+        }
+        else
+        {
+            elementUL.innerHTML += `
+            <li id="${quizzToRender.id}" onclick="openQuizzFromFeed(this)" class="quizz-area">
+                <div data-test="others-quiz" class="image-inside-box">
+                    <img class="finalize-creation-quizz-image" src="${quizzToRender.image}" alt="">
+                    <div class="image-inside-gradient"></div>
+                    <p>${quizzToRender.title}</p>
+                </div>
+            </li>
+            `;
+        }
+
+        
+    }
 }
 
 function openQuizzFromFeed(quizzToOpen)
