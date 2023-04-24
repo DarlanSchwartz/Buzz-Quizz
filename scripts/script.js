@@ -787,7 +787,7 @@ function deleteQuizz(idToDelete, afterEditing)
         };
 
         const deletePromise =  axios.delete("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/" + idToDelete, deleteObjectHeader);
-       if(!afterEditing || quizzToDeleteKey !=null)
+       if(!afterEditing || (!afterEditing && quizzToDeleteKey !=null))
        {
             deletePromise.then(()=>{window.location.reload();
                 quizzIdToDelete = null;});
