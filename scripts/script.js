@@ -411,18 +411,18 @@ function tryToProceedToCreateLevels()
         }
         //#endregion
 
-        if(question.answer[1] !=null && !isValidImageURL(question.answer[1].image))
+        if(question.answers[1] !=null && !isValidImageURL(question.answers[1].image))
         {
             alertText+= "A url da imagem da pergunta " + (i+1) + "resposta incorreta 1 é invalida";
         }
 
-        if(question.answer[2] !=null && !isValidImageURL(question.answer[2].image))
+        if(question.answers[2] !=null && !isValidImageURL(question.answers[2].image))
         {
             alertText+= "A url da imagem da pergunta " + (i+1) + "resposta incorreta 2 é invalida";
         }
 
         
-        if(question.answer[3] !=null && !isValidImageURL(question.answer[3].image))
+        if(question.answers[3] !=null && !isValidImageURL(question.answers[3].image))
         {
             alertText+= "A url da imagem da pergunta " + (i+1) + "resposta incorreta 3 é invalida ";
         }
