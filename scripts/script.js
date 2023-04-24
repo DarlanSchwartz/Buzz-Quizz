@@ -408,24 +408,24 @@ function tryToProceedToCreateLevels()
             hasAllAtLeastOneWrongAnwers = false;
 
             alertText+="Você precisa de pelo menos uma resposta errada em cada pergunta!";
-
-            /*if(question.answers[1].text == "")
-            {
-                //console.log("A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 1 não é valida");
-                alertText+= "A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 1 não é valida\n";
-            }
-            else if(question.answers[2].text == "")
-            {
-                //console.log("A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 2 não é valida");
-                alertText+= "A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 2 não é valida\n";
-            }
-            else if(question.answers[3].text == "")
-            {
-                //console.log("A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 3 não é valida");
-                alertText+= "A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 3 não é valida\n";
-            }*/
         }
         //#endregion
+
+        if(question.answer[1] !=null && !isValidImageURL(question.answer[1].image))
+        {
+            alertText+= "A url da imagem da pergunta " + (i+1) + "resposta incorreta 1 é invalida";
+        }
+
+        if(question.answer[2] !=null && !isValidImageURL(question.answer[2].image))
+        {
+            alertText+= "A url da imagem da pergunta " + (i+1) + "resposta incorreta 2 é invalida";
+        }
+
+        
+        if(question.answer[3] !=null && !isValidImageURL(question.answer[3].image))
+        {
+            alertText+= "A url da imagem da pergunta " + (i+1) + "resposta incorreta 3 é invalida";
+        }
 
         //#region  Checar se a imagem de resposta incorreta não é valida
         /*if(!isValidImageURL(question.answers[1].image) && !isValidImageURL(question.answers[2].image) && !isValidImageURL(question.answers[3].image))
