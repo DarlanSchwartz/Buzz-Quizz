@@ -226,8 +226,6 @@ function proceedToCreateQuestions()
         // pegar os valores do quizz que esta sendo editado e colocar nas caixas
         const allQuestions = document.querySelectorAll(".question-box");
 
-        console.log(editingQuizz.data);
-
         for (let index = 0; index < editingQuizz.data.questions.length; index++) {
             const questionFound = allQuestions[index];
             questionFound.querySelector(".question-fields").querySelector(".question").querySelector(".input-question-text").value = editingQuizz.data.questions[index].title == undefined ? "" :  editingQuizz.data.questions[index].title;
@@ -287,13 +285,6 @@ function tryToProceedToCreateLevels()
         let questionWrongAnswerImageURL1 = questionField.querySelector('.input-wrong-questions-box1').querySelector('.input-wrong-question1-answer-imageURL').value;
         let questionWrongAnswerImageURL2 = questionField.querySelector('.input-wrong-questions-box2').querySelector('.input-wrong-question2-answer-imageURL').value;
         let questionWrongAnswerImageURL3 = questionField.querySelector('.input-wrong-questions-box3').querySelector('.input-wrong-question3-answer-imageURL').value;
-
-
-        console.log(questionWrongAnswerText2);
-        console.log(questionWrongAnswerImageURL2);
-        console.log(questionWrongAnswerText3);
-        console.log(questionWrongAnswerImageURL3);
-
 
         let answerObjects = [];
 
@@ -1098,7 +1089,7 @@ function listAllQuizzes(){
     loadingWindow.classList.remove('hidden');
     const promisse = axios.get('https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes')
     promisse.then(successSearchingQuizzes);
-    promisse.catch(console.log());
+    promisse.catch(console.log);
 }
 
 function renderUserQuizz(response){
