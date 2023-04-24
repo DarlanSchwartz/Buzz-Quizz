@@ -424,7 +424,7 @@ function tryToProceedToCreateLevels()
         
         if(question.answer[3] !=null && !isValidImageURL(question.answer[3].image))
         {
-            alertText+= "A url da imagem da pergunta " + (i+1) + "resposta incorreta 3 é invalida";
+            alertText+= "A url da imagem da pergunta " + (i+1) + "resposta incorreta 3 é invalida ";
         }
 
         //#region  Checar se a imagem de resposta incorreta não é valida
