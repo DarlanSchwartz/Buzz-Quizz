@@ -18,6 +18,7 @@ let quizzCreateLevelsAmount = 0;
 let editingQuizz = null;
 const quizzPostURL = "https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes";
 const createQuizzWindow = document.querySelector(".create-quizz-window");
+let quizzIdToDelete;
 
 const createQuizzFirstStep = document.querySelector(".create-quizz-first-step");
 const createQuizzSecondStep = document.querySelector(".create-quizz-second-step");
@@ -795,9 +796,10 @@ function deleteQuizz(idToDelete, afterEditing)
         };
 
         const deletePromise =  axios.delete("https://mock-api.driven.com.br/api/vm/buzzquizz/quizzes/" + idToDelete, deleteObjectHeader);
-       if(!afterEditing)
+       if(!afterEditing || quizzToDeleteKey !=null)
        {
-            deletePromise.then(()=>{window.location.reload();});
+            deletePromise.then(()=>{window.location.reload();
+                quizzIdToDelete = null;});
        }
 
        deletePromise.catch(()=>{alert("Algo deu errado ao deletar o quizz");});
@@ -1108,15 +1110,27 @@ function renderUserQuizz(response){
                 <div class="user-image-inside-gradient"></div>
                 <img class="modify-buttons" src="./images/Rectangle 43.png" alt="">
                 <ion-icon data-test="edit"onclick="event.stopPropagation(); startEditingQuizz(this)" class="edit-quizz-btn" name="create-outline"></ion-icon>
-                <ion-icon data-test="delete" onclick="event.stopPropagation(); deleteQuizz(this)" class="delete-quizz-btn" name="trash-outline"></ion-icon>
+                <ion-icon data-test="delete" onclick="event.stopPropagation(); setQuizzDeleteId(this)" class="delete-quizz-btn" name="trash-outline"></ion-icon>
             </div>
             <p>${response.data.title}</p>
         </div>
     `;
 }
 
+function CloseDeleteWindow()
+{
+    document.querySelector(".delete-confirmation-window").classList.add("hidden");
+    quizzIdToDelete = null;
+}
 
+function setQuizzDeleteId(quizz)
+{
+    document.querySelector(".delete-confirmation-window").classList.remove("hidden");
+    quizzIdToDelete = quizz.parentNode.parentNode.getAttribute('id');
+}
 
-
-
-
+function deleteQuizzFromId()
+{
+    document.querySelector(".delete-confirmation-window").classList.add("hidden");
+    deleteQuizz(quizzIdToDelete, true);
+}

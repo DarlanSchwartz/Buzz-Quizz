@@ -30,6 +30,17 @@
     <div class="loading-text">Carregando</div>
 </div>
 
+<div class="delete-confirmation-window hidden">
+    <div class="modal-background"></div>
+    <div class="are-you-sure-box">
+        <p>Deletar este quizz?</p>
+        <div class="yes-no-box">
+            <button onclick="deleteQuizzFromId()">Sim</button>
+            <button onclick="event.stopPropagation(); CloseDeleteWindow()">Não</button>
+        </div>
+    </div>
+</div>
+
 <div class="list-All-Quizzes-Window">
     <div class="container">
         <div class="create-quizz-area hidden">

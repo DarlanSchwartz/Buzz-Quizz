@@ -22,6 +22,71 @@
     top: -5px;
 }
 
+.delete-confirmation-window,.modal-background{
+    width: 100%;
+    height: 100%;
+}
+
+.modal-background{
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 6;
+}
+
+.are-you-sure-box{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 100px;
+    z-index:7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.yes-no-box{
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    box-sizing: border-box;
+}
+
+.yes-no-box button
+{
+    width: 50px;
+    height: 20px;
+    margin-top: 30px;
+    border: 0;
+    color: white;
+    background-color: red;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.yes-no-box button:hover
+{
+    color: red;
+    background-color: white;
+    border: 1px dashed red;
+}
+
+.are-you-sure-box p
+{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 22px;
+    margin-top: 10px;
+}
+
 .user-quizzes{
     width: 1050px;
     height: auto;
