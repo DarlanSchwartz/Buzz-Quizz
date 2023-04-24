@@ -225,18 +225,32 @@ function proceedToCreateQuestions()
         // pegar os valores do quizz que esta sendo editado e colocar nas caixas
         const allQuestions = document.querySelectorAll(".question-box");
 
+        console.log(editingQuizz.data);
+
         for (let index = 0; index < editingQuizz.data.questions.length; index++) {
             const questionFound = allQuestions[index];
             questionFound.querySelector(".question-fields").querySelector(".question").querySelector(".input-question-text").value = editingQuizz.data.questions[index].title == undefined ? "" :  editingQuizz.data.questions[index].title;
             questionFound.querySelector(".question-fields").querySelector(".question").querySelector(".input-question-color").value = editingQuizz.data.questions[index].color == undefined ? "" :  editingQuizz.data.questions[index].color;
             questionFound.querySelector(".question-fields").querySelector(".correct-answer").querySelector(".input-question-answer-text").value = editingQuizz.data.questions[index].answers[0].text  == undefined ? "" : editingQuizz.data.questions[index].answers[0].text;
             questionFound.querySelector(".question-fields").querySelector(".correct-answer").querySelector(".input-question-answer-imageURL").value = editingQuizz.data.questions[index].answers[0].image  == undefined ? "" : editingQuizz.data.questions[index].answers[0].image;
-            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box1").querySelector(".input-wrong-question1-answer-text").value = editingQuizz.data.questions[index].answers[1].text  == undefined ? "" : editingQuizz.data.questions[index].answers[1].text;
-            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box1").querySelector(".input-wrong-question1-answer-imageURL").value = editingQuizz.data.questions[index].answers[1].image  == undefined ? "" : editingQuizz.data.questions[index].answers[1].image;
-            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box2").querySelector(".input-wrong-question2-answer-text").value = editingQuizz.data.questions[index].answers[2].text  == undefined ? "" :  editingQuizz.data.questions[index].answers[2].text;
-            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box2").querySelector(".input-wrong-question2-answer-imageURL").value = editingQuizz.data.questions[index].answers[2].image  == undefined ? "" : editingQuizz.data.questions[index].answers[2].image;
-            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box3").querySelector(".input-wrong-question3-answer-text").value = editingQuizz.data.questions[index].answers[3].text  == undefined ? "" : editingQuizz.data.questions[index].answers[3].text;
-            questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box3").querySelector(".input-wrong-question3-answer-imageURL").value = editingQuizz.data.questions[index].answers[3].image  == undefined ? "" : editingQuizz.data.questions[index].answers[3].image;
+            if(editingQuizz.data.questions[index] !=undefined)
+            {
+                if(editingQuizz.data.questions[index].answers[1] !=undefined)
+                {
+                    questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box1").querySelector(".input-wrong-question1-answer-text").value = editingQuizz.data.questions[index].answers[1].text  == undefined ? "" : editingQuizz.data.questions[index].answers[1].text;
+                    questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box1").querySelector(".input-wrong-question1-answer-imageURL").value = editingQuizz.data.questions[index].answers[1].image  == undefined ? "" : editingQuizz.data.questions[index].answers[1].image;
+                }
+                if(editingQuizz.data.questions[index].answers[2] !=undefined)
+                {
+                    questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box2").querySelector(".input-wrong-question2-answer-text").value = editingQuizz.data.questions[index].answers[2].text  == undefined ? "" :  editingQuizz.data.questions[index].answers[2].text;
+                    questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box2").querySelector(".input-wrong-question2-answer-imageURL").value = editingQuizz.data.questions[index].answers[2].image  == undefined ? "" : editingQuizz.data.questions[index].answers[2].image;
+                }
+                if(editingQuizz.data.questions[index].answers[3] !=undefined)
+                {
+                    questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box3").querySelector(".input-wrong-question3-answer-text").value = editingQuizz.data.questions[index].answers[3].text  == undefined ? "" : editingQuizz.data.questions[index].answers[3].text;
+                    questionFound.querySelector(".question-fields").querySelector(".input-wrong-questions-box3").querySelector(".input-wrong-question3-answer-imageURL").value = editingQuizz.data.questions[index].answers[3].image  == undefined ? "" : editingQuizz.data.questions[index].answers[3].image;
+                }
+            }
         }
      }
 
@@ -268,41 +282,53 @@ function tryToProceedToCreateLevels()
         let questionWrongAnswerText1 = questionField.querySelector('.input-wrong-questions-box1').querySelector('.input-wrong-question1-answer-text').value;
         let questionWrongAnswerText2 = questionField.querySelector('.input-wrong-questions-box2').querySelector('.input-wrong-question2-answer-text').value;
         let questionWrongAnswerText3 = questionField.querySelector('.input-wrong-questions-box3').querySelector('.input-wrong-question3-answer-text').value;
-
+        
         let questionWrongAnswerImageURL1 = questionField.querySelector('.input-wrong-questions-box1').querySelector('.input-wrong-question1-answer-imageURL').value;
         let questionWrongAnswerImageURL2 = questionField.querySelector('.input-wrong-questions-box2').querySelector('.input-wrong-question2-answer-imageURL').value;
         let questionWrongAnswerImageURL3 = questionField.querySelector('.input-wrong-questions-box3').querySelector('.input-wrong-question3-answer-imageURL').value;
+
+
+        console.log(questionWrongAnswerText2);
+        console.log(questionWrongAnswerImageURL2);
+        console.log(questionWrongAnswerText3);
+        console.log(questionWrongAnswerImageURL3);
+
+
+        let answerObjects = [];
+
+        answerObjects.push({text: questionCorrectAnswerText,
+            image: questionCorrectAnswerImageURL,
+            isCorrectAnswer: true});
+       
+
+        if(questionWrongAnswerText1 !=""&& questionWrongAnswerImageURL1 !="")
+        {
+            answerObjects.push({text: questionWrongAnswerText1,
+                image: questionWrongAnswerImageURL1,
+                isCorrectAnswer: false});
+        }
+        if(questionWrongAnswerText2 !=""&& questionWrongAnswerImageURL2 !="")
+        {
+            answerObjects.push({text: questionWrongAnswerText2,
+                image: questionWrongAnswerImageURL2,
+                isCorrectAnswer: false});
+        }
+        if(questionWrongAnswerText3 !=""&& questionWrongAnswerImageURL3 !="")
+        {
+            answerObjects.push({text: questionWrongAnswerText3,
+                image: questionWrongAnswerImageURL3,
+                isCorrectAnswer: false});
+        }
+
 
         quizzCreateQuestions.push(
         {
             title: questionTitle,
             color: questionColor,
-            answers: [
-                {
-                    text: questionCorrectAnswerText,
-                    image: questionCorrectAnswerImageURL,
-                    isCorrectAnswer: true
-                },
-                {
-                    text: questionWrongAnswerText1,
-                    image: questionWrongAnswerImageURL1,
-                    isCorrectAnswer: false
-                },
-                {
-                    text: questionWrongAnswerText2,
-                    image: questionWrongAnswerImageURL2,
-                    isCorrectAnswer: false
-                },
-                {
-                    text: questionWrongAnswerText3,
-                    image: questionWrongAnswerImageURL3,
-                    isCorrectAnswer: false
-                }
-            ]
+            answers: answerObjects
         }
         );
     });
-
 
     let hasAllCorrectAnswers = true;
     let hasAllCorrectAnswersImage = true;
@@ -362,7 +388,7 @@ function tryToProceedToCreateLevels()
         {
             hasAllCorrectAnswersImage = false;
             //console.log("A url de imagem da pergunta número " + (i+1)+ " não é valida");
-            alertText+= "A url de imagem da pergunta número " + (i+1)+ " não é valida\n";
+            alertText+= "A url de imagem da resposta correta da pergunta número " + (i+1)+ " não é valida\n";
         }
         else
         {
@@ -370,7 +396,7 @@ function tryToProceedToCreateLevels()
         }
         //#endregion
 
-        if(question.answers[1].text == "" && question.answers[2].text == "" && question.answers[3].text == "")
+        /*if(question.answers[1].text == "" && question.answers[2].text == "" && question.answers[3].text == "")
         {
             hasAllWrongAnswers = false;
             alertText+= "Todas as respostas erradas da pergunta número " + (i+1)+ " não são válidas\n";
@@ -381,15 +407,17 @@ function tryToProceedToCreateLevels()
         {
             hasAllWrongAnswersImage = false;
             alertText+= "Todas as imagens de respostas erradas da pergunta número " + (i+1)+ " não são válidas\n";
-        }
+        }*/
 
 
         //#region  Checar se a resposta incorreta não é valida
-        if(question.answers[1].text == "" && question.answers[2].text == "" && question.answers[3].text == "")
+        if(question.answers[1] == null && question.answers[2] == null && question.answers[3] == null)
         {
             hasAllAtLeastOneWrongAnwers = false;
 
-            if(question.answers[1].text == "")
+            alertText+="Você precisa de pelo menos uma resposta errada em cada pergunta!";
+
+            /*if(question.answers[1].text == "")
             {
                 //console.log("A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 1 não é valida");
                 alertText+= "A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 1 não é valida\n";
@@ -403,15 +431,24 @@ function tryToProceedToCreateLevels()
             {
                 //console.log("A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 3 não é valida");
                 alertText+= "A resposta incorreta da pergunta: " + (i+1) + " resposta incorreta 3 não é valida\n";
-            }
+            }*/
         }
         //#endregion
 
         //#region  Checar se a imagem de resposta incorreta não é valida
-        if(!isValidImageURL(question.answers[1].image) && !isValidImageURL(question.answers[2].image) && !isValidImageURL(question.answers[3].image))
+        /*if(!isValidImageURL(question.answers[1].image) && !isValidImageURL(question.answers[2].image) && !isValidImageURL(question.answers[3].image))
         {
             hasAllAtLeastOneWrongAnwersImage = false;
+        }*/
+
+        if(hasAllAtLeastOneWrongAnwers)
+        {
+            if((question.answers[1] == null || (question.answers[1] != null && !isValidImageURL(question.answers[1].image))) && (question.answers[2] == null || (question.answers[2] != null && !isValidImageURL(question.answers[2].image))) && (question.answers[3] == null || (question.answers[3] != null && !isValidImageURL(question.answers[3].image))))
+            {
+                hasAllAtLeastOneWrongAnwersImage = false;
+            }
         }
+
         //#endregion
 
         i++;
@@ -424,7 +461,7 @@ function tryToProceedToCreateLevels()
 
     // Servidor não ta deixando enviar quizzes com só respostas em cada pergunta
 
-    if(hasAllWrongAnswers && hasAllWrongAnswersImage && hasAllCorrectAnswers && hasAllAtLeastOneWrongAnwers && hasAllCorrectAnswersImage && hasAllAtLeastOneWrongAnwersImage && hasAllTitlesLenghtCorrect && hasAllCorrectColors)
+    if(hasAllCorrectAnswers && hasAllAtLeastOneWrongAnwers && hasAllCorrectAnswersImage && hasAllAtLeastOneWrongAnwersImage && hasAllTitlesLenghtCorrect && hasAllCorrectColors)
     {
         proceedToCreateLevels();
     }
@@ -991,6 +1028,9 @@ function renderAllQuizzes(){
         document.querySelector('.create-quizz-area').classList.remove('hidden');
         document.querySelector('.user-quizzes').classList.add('hidden');
     }
+
+    let idsQuizzesString = "";
+    userQuizzesIds.forEach(quiz =>{idsQuizzesString+= (quiz.id + "");});
     
     const elementUL = document.querySelector('.container-quizzes');
     elementUL.innerHTML = `<div class="title-list-quizzes">Todos os Quizzes</div>`;
@@ -1002,8 +1042,9 @@ function renderAllQuizzes(){
         
         if(userQuizzesIds.length != 0)
         {
-            for (let index = 0; index < userQuizzesIds.length; index++) {
-                if(quizzToRender.id != Number(userQuizzesIds[index].id))
+            
+                let isUserQuizz = idsQuizzesString.includes(quizzToRender.id);
+                if(isUserQuizz === false)
                 {
                     elementUL.innerHTML += `
                     <li id="${quizzToRender.id}" onclick="openQuizzFromFeed(this)" class="quizz-area">
@@ -1015,7 +1056,6 @@ function renderAllQuizzes(){
                     </li>
                     `;
                 }
-            };
         }
         else
         {
