@@ -97,8 +97,11 @@
 .quiz-answer{
     width: 330px;
     height: 210px;
-    cursor: pointer;
     margin-top:18px;
+}
+
+.pointer{
+    cursor: pointer;
 }
 
 .quiz-answer img{
