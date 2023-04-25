@@ -330,6 +330,7 @@ function tryToProceedToCreateLevels()
     let hasAllTitlesLenghtCorrect = true;
     let hasAllWrongAnswers = true;
     let hasAllWrongAnswersImage = true;
+    let everyAnswerHasValidImage = true;
 
     let alertText = "";
 
@@ -441,6 +442,13 @@ function tryToProceedToCreateLevels()
             }
         }
 
+        for (let index = 0; index < 3; index++) {
+            if(question.answers[index] !="" && !isValidImageURL(question.answers[index]))
+            {
+                everyAnswerHasValidImage = false;
+            }
+        }
+
         //#endregion
 
         i++;
@@ -453,7 +461,7 @@ function tryToProceedToCreateLevels()
 
     // Servidor não ta deixando enviar quizzes com só respostas em cada pergunta
 
-    if(hasAllCorrectAnswers && hasAllAtLeastOneWrongAnwers && hasAllCorrectAnswersImage && hasAllAtLeastOneWrongAnwersImage && hasAllTitlesLenghtCorrect && hasAllCorrectColors)
+    if(everyAnswerHasValidImage && hasAllCorrectAnswers && hasAllAtLeastOneWrongAnwers && hasAllCorrectAnswersImage && hasAllAtLeastOneWrongAnwersImage && hasAllTitlesLenghtCorrect && hasAllCorrectColors)
     {
         proceedToCreateLevels();
     }
