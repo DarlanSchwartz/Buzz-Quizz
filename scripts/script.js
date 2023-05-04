@@ -443,7 +443,7 @@ function tryToProceedToCreateLevels()
         }
 
         for (let index = 0; index < 3; index++) {
-            if(question.answers[index] !="" && !isValidImageURL(question.answers[index]))
+            if( question.answers[index] !=null &&  question.answers[index].text !="" && !isValidImageURL(question.answers[index].image))
             {
                 everyAnswerHasValidImage = false;
             }
